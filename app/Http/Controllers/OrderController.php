@@ -238,7 +238,16 @@ class OrderController extends Controller
             );
             return redirect()->route('orders.index')->with($notification);
         }
-        $order_data = $this->order->with('order_products')->where('order_no', $request->order_no)->first();
+        $vendor_id = \App\Models\Vendor::where('user_id', auth()->user()->id)->pluck('id')->first();
+        if(auth()->user()->roles == 'vendor'){
+            $order_data = \App\Models\Order::with(['order_products' => function($query) use ($vendor_id) {
+                $query->whereHas('products', function ($query) use ($vendor_id) {
+                    $query->where('vendor_id', $vendor_id);
+                });
+            }])->where('order_no',$request->order_no)->first();
+        } else {
+            $order_data = $this->order->with('order_products')->where('order_no', $request->order_no)->first();
+        }        
         $area_id = AddressBook::where('id', $order_data->address_book_id)->first();
         $delivery_charge = Area::where('id', $area_id->area)->first();
         $normal_charge = '';

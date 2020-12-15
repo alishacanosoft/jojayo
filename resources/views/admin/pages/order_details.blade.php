@@ -14,6 +14,13 @@
 <div class="row">
    <div class="col-sm-12">
    <h3>Order details for order No. {{ $order_data->order_no }}</h3>
+   @php 
+   $total_amount = 0;
+   foreach($order_data->order_products as $amount_data){
+      $order_detail = App\Models\ProductSize::with('product')->where('product_id', $amount_data->product_id)->first();
+      $total_amount = $total_amount + $order_detail->selling_price;
+   }
+   @endphp
    </div>
    <div class="col-sm-12 col-lg-5 col-md-5">
       <span class="group-title">Customer Information</span>
@@ -26,10 +33,10 @@
             <span>Payment Method <tag class="text-dark"> COD</tag></span>
          </div>
          <div class="col-sm-5 block-element" style="border-left:1px solid #eee">
-            <span>Subtotal <tag class="text-dark"> {{ number_format($order_data->total_amount) }}.00</tag></span>
+            <span>Subtotal <tag class="text-dark"> {{ number_format($total_amount) }}.00</tag></span>
             <span>Shipping	<tag class="text-dark"> +{{$charge}}.00</tag></span>
             <span>Jojayo Discount <tag class="text-dark"> -0.00</tag></span>
-            <span>Grand Total <tag class="text-dark"> {{ number_format($charge +  $order_data->total_amount) }}</tag></span>
+            <span>Grand Total <tag class="text-dark"> {{ number_format($charge +  $total_amount) }}</tag></span>
          </div>
       </div>
    </div>
@@ -38,7 +45,7 @@
       <hr style="border-top:5px solid #e4eaec; margin: 10px 0px">
       <span>Automatic Shipping Fee	-{{$normal_charge}}.00</span>
       <span>Shipping Fee (Paid By Customer)	{{$charge}}.00</span>
-      <span>Items Amount {{ number_format($order_data->total_amount) }}.00</span>
+      <span>Items Amount {{ number_format($total_amount) }}.00</span>
    </div>
    <div class="col-sm-12 col-lg-2 col-md-2 block-element">
       <span class="group-title">Billing Address</span>

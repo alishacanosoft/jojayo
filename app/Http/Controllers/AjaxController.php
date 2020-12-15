@@ -627,47 +627,105 @@ class AjaxController extends Controller
             $data_arr = array();
             if (!empty($request->order_no)) {
                 $order_id = Order::where('order_no', $request->order_no)->first();
-                $records = ProductOrder::where('order_id', $order_id->id)->get();
-                foreach ($records as $record) {
-                    $id = $record->id;
-                    $order_detail = ProductSize::with('product')->where('product_id', $record->product_id)->first(); //dd($order_detail);
-                    $user_detail = Order::where('id',1)->first();
-                    $address_book_data = AddressBook::where('id', $user_detail->address_book_id)->first();
-                    $area_detail = @Area::where('id', $address_book_data->area)->first();
-                    if ($user_detail->delivery_type == 'express') {
-                        $deliver_charge = @$area_detail->express_charge;
-                    } else {
-                        $deliver_charge = @$area_detail->delivery_charge;
+                if(auth()->user()->roles == 'vendor'){
+                    $vendor_id = \App\Models\Vendor::where('user_id', auth()->user()->id)->pluck('id')->first();
+                    $records = \App\Models\Order::with(['order_products' => function($query) use ($vendor_id) {
+                            $query->whereHas('products', function ($query) use ($vendor_id) {
+                                $query->where('vendor_id', $vendor_id);
+                            });
+                    }])->where('order_no',$request->order_no)->get();
+                    foreach ($records as $record) {
+                        foreach($record->order_products as $recorded){                            
+                            $id = $record->id;
+                            
+                            $order_detail = ProductSize::with('product')->where('product_id', $recorded->product_id)->first();
+                            $user_detail = Order::where('id',1)->first();
+                            $address_book_data = AddressBook::where('id', $user_detail->address_book_id)->first();
+                            $area_detail = @Area::where('id', $address_book_data->area)->first();
+                            if ($user_detail->delivery_type == 'express') {
+                                $deliver_charge = @$area_detail->express_charge;
+                            } else {
+                                $deliver_charge = @$area_detail->delivery_charge;
+                            }
+                            $seller_sku = $order_detail->product->sku;
+                            $jojayo_sku = $order_detail->product->jojayo_sku;
+                            $product_name = $order_detail->product->name;
+                            $price = $order_detail->selling_price;
+                            $deliver_charge = @$deliver_charge;
+                            $commission_data = Commission::where('max_range', '<=' ,$price)->first();
+                            $vendor_commission = VendorCommission::where('commission_id', $commission_data->id)->where('vendor_id', $order_detail->product->vendor_id)->first();
+                            if(date('d', strtotime($user_detail->created_at)) > 7 && date('d', strtotime($user_detail->created_at)) <= 14){
+                            $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('14 F Y',strtotime($user_detail->created_at));
+                            } elseif(date('d', strtotime($user_detail->created_at)) > 14 && date('d', strtotime($user_detail->created_at)) <= 21) {
+                                $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('21 F Y',strtotime($user_detail->created_at));
+                            } elseif(date('d', strtotime($user_detail->created_at)) > 21 && date('d', strtotime($user_detail->created_at)) <= 28) {
+                                $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('28 F Y',strtotime($user_detail->created_at));
+                            } elseif(date('d', strtotime($user_detail->created_at)) <= 7) {
+                                $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('7 F Y',strtotime($user_detail->created_at));
+                            }
+                            $data_arr[] = array(
+                                "seller_sku" => $seller_sku,
+                                "jojayo_sku" => $jojayo_sku,
+                                "product" => $product_name,
+                                "price" => $price,
+                                "delivery_type" => ucfirst($user_detail->delivery_type),
+                                "shipping" => $deliver_charge,
+                                "status" => ucfirst($user_detail->status),
+                                "commission" => ($vendor_commission->percent / 100) * $price,
+                                "created_at" => date('Y-m-d H:i:s',strtotime($user_detail->created_at)),
+                                "transaction" => $account_statement
+                            );
+                        }
                     }
-                    $seller_sku = $order_detail->product->sku;
-                    $jojayo_sku = $order_detail->product->jojayo_sku;
-                    $product_name = $order_detail->product->name;
-                    $price = $order_detail->selling_price;
-                    $deliver_charge = @$deliver_charge;
-                    $commission_data = Commission::where('max_range', '<=' ,$price)->first();
-                    $vendor_commission = VendorCommission::where('commission_id', $commission_data->id)->where('vendor_id', $order_detail->product->vendor_id)->first();
-                    if(date('d', strtotime($user_detail->created_at)) > 7 && date('d', strtotime($user_detail->created_at)) <= 14){
-                      $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('14 F Y',strtotime($user_detail->created_at));
-                    } elseif(date('d', strtotime($user_detail->created_at)) > 14 && date('d', strtotime($user_detail->created_at)) <= 21) {
-                        $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('21 F Y',strtotime($user_detail->created_at));
-                    } elseif(date('d', strtotime($user_detail->created_at)) > 21 && date('d', strtotime($user_detail->created_at)) <= 28) {
-                        $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('28 F Y',strtotime($user_detail->created_at));
-                    } elseif(date('d', strtotime($user_detail->created_at)) <= 7) {
-                        $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('7 F Y',strtotime($user_detail->created_at));
+                } else {
+                    $records = ProductOrder::where('order_id', $order_id->id)->get();
+                    foreach ($records as $record) {
+                        $id = $record->id;
+                        // if(auth()->user()->roles == 'vendor'){
+                        //     $order_detail = ProductSize::with('product')->where('product_id', $record['order_products'][0]->product_id)->first();
+                        // } else {
+                        // $order_detail = ProductSize::with('product')->where('product_id', $record->product_id)->first();
+                        // }
+                        $order_detail = ProductSize::with('product')->where('product_id', $record->product_id)->first();
+                        $user_detail = Order::where('id',1)->first();
+                        $address_book_data = AddressBook::where('id', $user_detail->address_book_id)->first();
+                        $area_detail = @Area::where('id', $address_book_data->area)->first();
+                        if ($user_detail->delivery_type == 'express') {
+                            $deliver_charge = @$area_detail->express_charge;
+                        } else {
+                            $deliver_charge = @$area_detail->delivery_charge;
+                        }
+                        $seller_sku = $order_detail->product->sku;
+                        $jojayo_sku = $order_detail->product->jojayo_sku;
+                        $product_name = $order_detail->product->name;
+                        $price = $order_detail->selling_price;
+                        $deliver_charge = @$deliver_charge;
+                        $commission_data = Commission::where('max_range', '<=' ,$price)->first();
+                        $vendor_commission = VendorCommission::where('commission_id', $commission_data->id)->where('vendor_id', $order_detail->product->vendor_id)->first();
+                        if(date('d', strtotime($user_detail->created_at)) > 7 && date('d', strtotime($user_detail->created_at)) <= 14){
+                          $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('14 F Y',strtotime($user_detail->created_at));
+                        } elseif(date('d', strtotime($user_detail->created_at)) > 14 && date('d', strtotime($user_detail->created_at)) <= 21) {
+                            $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('21 F Y',strtotime($user_detail->created_at));
+                        } elseif(date('d', strtotime($user_detail->created_at)) > 21 && date('d', strtotime($user_detail->created_at)) <= 28) {
+                            $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('28 F Y',strtotime($user_detail->created_at));
+                        } elseif(date('d', strtotime($user_detail->created_at)) <= 7) {
+                            $account_statement = date('d F Y',strtotime($user_detail->created_at)).' - '.date('7 F Y',strtotime($user_detail->created_at));
+                        }
+                        $data_arr[] = array(
+                            "seller_sku" => $seller_sku,
+                            "jojayo_sku" => $jojayo_sku,
+                            "product" => $product_name,
+                            "price" => $price,
+                            "delivery_type" => ucfirst($user_detail->delivery_type),
+                            "shipping" => $deliver_charge,
+                            "status" => ucfirst($user_detail->status),
+                            "commission" => ($vendor_commission->percent / 100) * $price,
+                            "created_at" => date('Y-m-d H:i:s',strtotime($user_detail->created_at)),
+                            "transaction" => $account_statement
+                        );
                     }
-                    $data_arr[] = array(
-                        "seller_sku" => $seller_sku,
-                        "jojayo_sku" => $jojayo_sku,
-                        "product" => $product_name,
-                        "price" => $price,
-                        "delivery_type" => ucfirst($user_detail->delivery_type),
-                        "shipping" => $deliver_charge,
-                        "status" => ucfirst($user_detail->status),
-                        "commission" => ($vendor_commission->percent / 100) * $price,
-                        "created_at" => date('Y-m-d H:i:s',strtotime($user_detail->created_at)),
-                        "transaction" => $account_statement
-                    );
                 }
+                
                 return response()->json(['data' => $data_arr]);
             } else{
                 return response()->json(['data' => "gey there"]);

@@ -536,6 +536,9 @@
     .font-15{
         font-size:15px
     }
+    span.validation-errors {
+        font-size: 11px;
+    }
 </style>
 <body>
 <div class="container">
@@ -550,9 +553,9 @@
                     <p>Vendor Selling Point</p>
                 </div>
              
-                @if(!empty($notification))
+                @if(Session::has('message'))
                 <div class="success-msg">
-                    <p class="active">Congratulations! You are registered as a vendor now! You should receive a call soon.</p>                    
+                    <p class="active">{{ Session::get('message') }}</p>                    
                 </div>
                 @endif
             </div>
@@ -571,11 +574,17 @@
                         <div class="form-group">
                             <label for="loginemail">Email Adderss</label>
                             <input type="email" name="email" id="loginemail" required>
+                            @if ($errors->has('email'))
+                            <span class="validation-errors text-danger">{{ $errors->first('email') }}</span>
+                            @endif
                         </div>
 
                         <div class="form-group">
                             <label for="loginPassword">Password</label>
                             <input type="password" name="password" id="loginPassword" required>
+                            @if ($errors->has('password'))
+                            <span class="validation-errors text-danger">{{ $errors->first('password') }}</span>
+                            @endif
                         </div>
 
                         <div class="flex-sb-m w-full">

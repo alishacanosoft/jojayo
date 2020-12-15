@@ -606,7 +606,7 @@ die;
     }
     
     public function getVendorData($id){
-        $data = Statement::where('vendor_id', $id)->groupBy('order_created')->get(); //dd($data);
+        $data = Statement::where('vendor_id', $id)->groupBy('order_created')->get();
         return view('admin.pages.ajax.date', compact('data'));
     }
     
@@ -620,7 +620,7 @@ die;
         } elseif(date('d', strtotime($date)) <= 7){
             $end_date = date('Y-m-7',strtotime($date));
         }
-        $data = Statement::where('vendor_id', $id)->whereBetween('order_created', [$date, $end_date])->groupBy('order_created')->get();        
+        $data = Statement::where('vendor_id', $id)->whereBetween('order_created', [$date, $end_date])->groupBy('order_id')->get();        
         return view('admin.pages.finance_table', compact('data','id'));        
     }
 

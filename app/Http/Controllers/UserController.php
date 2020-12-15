@@ -140,21 +140,33 @@ class UserController extends Controller
             Mail::to($data['email'])->send(new CustomerVerification($customer_data));
             return redirect('/customer/dashboard');
         }
-        if($status){
-            $notification = array(
-                'alert-type' => 'success',
-                'message' => 'User added successfully.'
-            );
-        } else {
-            $notification = array(
-                'alert-type' => 'error',
-                'message' => 'Problem while adding user.'
-            );
-        }
+        
         if($request->roles == 'vendor'){
-            return view('admin.pages.vendor_login', compact('notification'));
+            if($status){
+                $notification = array(
+                    'alert-type' => 'success',
+                    'message' => 'Congratulations! You are registered as a vendor now! You should receive a call soon.'
+                );
+            } else {
+                $notification = array(
+                    'alert-type' => 'error',
+                    'message' => 'Registration failed.'
+                );
+            }
+            return redirect()->route('vendorLogin')->with($notification);           
         } else {
-            return redirect()->route('users.index', compact('notification'));
+            if($status){
+                $notification = array(
+                    'alert-type' => 'success',
+                    'message' => 'User added successfully'
+                );
+            } else {
+                $notification = array(
+                    'alert-type' => 'error',
+                    'message' => 'Problem creating user.'
+                );
+            }
+            return redirect()->route('users.index')->with($notification);
         }
     }
 

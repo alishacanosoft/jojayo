@@ -45,9 +45,9 @@
             }
             }
             @endphp
-               <tr data-toggle="collapse" data-target="#demo{{$order_detail->order_no}}" class="accordion-toggle">
-                  <td><button class="btn btn-default btn-xs"><span class="fa fa-plus"></span></button></td>
-                  <td>{{ $order_detail->order_no }}</td>
+               <tr>
+                  <td data-toggle="collapse" data-target="#demo{{$order_detail->order_no}}" class="accordion-toggle"><button class="btn btn-default btn-xs"><span class="fa fa-plus"></span></button></td>
+                  <td><form target="_blank" action="/auth/order-details"><input type="hidden" value="{{ $order_detail->order_no }}" name="order_no"><button class="btn-transparent" type="submit">{{ $order_detail->order_no }}</button></form></td>
                   <td><form target="_blank" action="{{ route('transaction') }}"><input type="hidden" name="vendor_id" value="{{ $id }}"><input type="hidden" name="transaction_no" value="{{ $data_detail->transaction_no }}"><button class="btn-transparent">{{ $data_detail->transaction_no }}</button></form></td>
                   <td>{{ $charge }}.00</td>
                   <td>{{ number_format($order_price) }}.00</td>
