@@ -87,9 +87,10 @@ class FrontController extends Controller
         
         $men_fashion = ProductService::getProduct("Men's Fashion", 20);
         $women_fashion = ProductService::getProduct("Women's Fashion", 20); //dd($women_fashion);
+        $kid_fashion = ProductService::getProduct("Kid's Fashion", 20); //dd($women_fashion);
         $available_brands = $this->brand->get();
         $all_slider = $this->slider->get();
-        return view('frontend.pages.index', compact('latest_products', 'available_brands', 'women_fashion', 'men_fashion', 'all_slider', 'flash', 'end_time'));
+        return view('frontend.pages.index', compact('latest_products', 'available_brands', 'women_fashion', 'kid_fashion','men_fashion', 'all_slider', 'flash', 'end_time'));
     }
 
     public function singleProduct($slug)

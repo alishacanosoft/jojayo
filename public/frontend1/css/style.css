@@ -8205,7 +8205,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-product .ps-product__price.sale {
-  color: #f30;
+  color: #690;
 }
 
 .ps-product .ps-product__price.sale del {
@@ -8586,7 +8586,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .ps-product--horizontal .ps-product__price {
   font-size: 16px;
-  color: #000;
+  color: #690;
 }
 
 .ps-product--horizontal .ps-product__price.sale {

@@ -398,13 +398,7 @@
                     <button><i class="icon-magnifier"></i></button>
                 </div>
 
-                <div class="search-wrapper">
-                <input type="text" name="s" class="search-field" autocomplete="off" placeholder="I'm shopping for...">
-                <input type="hidden" name="post_type" value="product">
-                <div class="search-results woocommerce"></div>
-                </div>
-                <button type="submit" class="search-submit mf-background-primary">Search</button>
-                </div>
+              
             </form>
         </div>
       <div class="navigation__content"></div>
