@@ -1,0 +1,26 @@
+.div_border
+{
+    border: 2px solid lightgray;
+    padding: 0px 10px 10px 10px;
+    height: 50%;
+    width:80%;
+    position: relative;
+
+}
+.div_border .twitter-embed-image
+{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width:30px;
+    height:30px;
+    padding: 5px;
+}
+.div_border a
+{
+    color: dodgerblue;
+}
+.div_border:hover
+{
+    cursor: move;
+}
