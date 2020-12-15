@@ -1,0 +1,63 @@
+[22-Nov-2020 12:14:35 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
+[22-Nov-2020 12:14:41 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
+[22-Nov-2020 12:14:45 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
+[22-Nov-2020 12:14:55 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
+[22-Nov-2020 12:15:02 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
+[22-Nov-2020 12:15:08 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
+[22-Nov-2020 12:15:17 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
+[22-Nov-2020 12:15:21 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
+[22-Nov-2020 12:15:24 Asia/Kathmandu] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'forge'@'localhost' (using password: NO) in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php:70
+Stack trace:
+#0 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(70): PDO->__construct('mysql:host=127....', 'forge', '', Array)
+#1 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/Connector.php(46): Illuminate\Database\Connectors\Connector->createPdoConnection('mysql:host=127....', 'forge', '', Array)
+#2 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/MySqlConnector.php(24): Illuminate\Database\Connectors\Connector->createConnection('mysql:host=127....', Array, Array)
+#3 /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connectors/ConnectionFactory.php(182): Illuminate\Database\Connectors\MySqlConnector->connect(Array)
+#4 [internal function]: Illuminate in /home/jojayo/public_html/vendor/laravel/framework/src/Illuminate/Database/Connection.php on line 665
