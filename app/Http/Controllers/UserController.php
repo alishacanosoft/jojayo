@@ -104,8 +104,8 @@ class UserController extends Controller
             $vendor_data['user_id'] = $user_id;
             $vendor_data['company'] = $request->company;
             $vendor_data['company_address'] = $request->company_address;
-            $vendor_data['vendor_address'] = $request->vendor_address;
-            $vendor_data['status'] = $request->status;
+            $vendor_data['vendor_address'] = $request->vendor_address ? $request->vendor_address : $request->company_address;
+            $vendor_data['status'] = $request->status ? $request->status : 'unverified';
             $this->vendor->fill($vendor_data);
             $vendor_data = $this->vendor->save();
             $vendor_id = $this->vendor->id;
@@ -140,13 +140,34 @@ class UserController extends Controller
             Mail::to($data['email'])->send(new CustomerVerification($customer_data));
             return redirect('/customer/dashboard');
         }
-
-        if($status){
-            $request->session()->flash('success','User created successfully.');
+        
+        if($request->roles == 'vendor'){
+            if($status){
+                $notification = array(
+                    'alert-type' => 'success',
+                    'message' => 'Congratulations! You are registered as a vendor now! You should receive a call soon.'
+                );
+            } else {
+                $notification = array(
+                    'alert-type' => 'error',
+                    'message' => 'Registration failed.'
+                );
+            }
+            return redirect()->route('vendorLogin')->with($notification);           
         } else {
-            $request->session()->flash('error','Problem while creating user.');
+            if($status){
+                $notification = array(
+                    'alert-type' => 'success',
+                    'message' => 'User added successfully'
+                );
+            } else {
+                $notification = array(
+                    'alert-type' => 'error',
+                    'message' => 'Problem creating user.'
+                );
+            }
+            return redirect()->route('users.index')->with($notification);
         }
-        return redirect()->route('users.index');
     }
 
     public function customerSignUp(Request $request){

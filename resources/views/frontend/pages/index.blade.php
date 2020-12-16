@@ -1,7 +1,6 @@
 @extends('frontend.layouts.master')
 @section('content')
     <div id="homepage-1">
-
         <div class="ps-home-banner ps-home-banner--1">
             <div class="ps-container">
             <div class="ps-section__left">

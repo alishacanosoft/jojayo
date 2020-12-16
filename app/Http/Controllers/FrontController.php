@@ -607,7 +607,7 @@ die;
     }
     
     public function getVendorData($id){
-        $data = Statement::where('vendor_id', $id)->groupBy('order_created')->get(); //dd($data);
+        $data = Statement::where('vendor_id', $id)->groupBy('order_created')->get();
         return view('admin.pages.ajax.date', compact('data'));
     }
     
@@ -621,7 +621,7 @@ die;
         } elseif(date('d', strtotime($date)) <= 7){
             $end_date = date('Y-m-7',strtotime($date));
         }
-        $data = Statement::where('vendor_id', $id)->whereBetween('order_created', [$date, $end_date])->groupBy('order_created')->get();        
+        $data = Statement::where('vendor_id', $id)->whereBetween('order_created', [$date, $end_date])->groupBy('order_id')->get();        
         return view('admin.pages.finance_table', compact('data','id'));        
     }
 
@@ -648,6 +648,10 @@ die;
         $data['due_amount'] = $request->due_amount;
         $status = Statement::where('transaction_no', $request->transaction_no)->update(array('paid_amount' => $request->paid_amount, 'due_amount' => $request->due_amount, 'status' => $request->status, 'narration' => $request->narration));
         return redirect()->back();
+    }
+
+    public function vendorLogin(){
+        return view('admin.pages.vendor_login');
     }
 
 }

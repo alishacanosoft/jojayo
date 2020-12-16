@@ -25,6 +25,8 @@ Route::get('/login', function () {
     }
 })->name('signinform');
 
+Route::get('/vendor/login', 'FrontController@vendorLogin')->name('vendorLogin');
+
 Route::get('/signup', function () {
     if (Auth::user()->roles == 'customers') {
         return redirect('/dashboard');
@@ -164,6 +166,8 @@ Route::get('/get_cart_content/', 'FrontController@cartContent')->name('cart.cont
 
 Route::get('/get_cart_count/', 'CartController@cartCount')->name('cart.count');
 
+Route::resource('users', 'UserController');
+
 Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
 
     Route::get('/expenses', 'ProductExpenseController@index')->name('record-list');
@@ -217,8 +221,6 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     Route::resource('orders', 'OrderController');
 
     Route::resource('product_categories', 'ProductCategoryController');
-
-    Route::resource('users', 'UserController');
 
     Route::get('vendors/{id}/percent', 'UserController@percent')->name('vendors.percent');
 

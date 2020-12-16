@@ -118,7 +118,4 @@
 <script src="/admin/js/parsley.min.js"></script>
 
 </body>
-
-
-<!-- Mirrored from ultimate.codexcube.com/login by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 01 Jun 2020 05:25:06 GMT -->
 </html>
