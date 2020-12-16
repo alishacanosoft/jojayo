@@ -8,22 +8,32 @@
     <title>Seller Login</title>
     <link rel="icon" href="favicon" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link rel="stylesheet" href="/admin/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/admin/css/toastr.min.css">
     <link rel="stylesheet" href="/admin/css/bootstrap.min.css" id="bscss">
-    <link rel="stylesheet" href="/admin/css/app.min.css" id="maincss">
     <script src="/admin/js/jquery.min.js"></script>
 </head>
 <style>
     body {
-        font-family: "Ubuntu", sans-serif;
-        background-image: linear-gradient(to left, #74ebd54a, #9face66e);
+        font-family: "Ubuntu";
+        /*background-image: linear-gradient(to left, #74ebd54a, #9face66e);*/
+        background: url('/images/ecommerce.png')no-repeat fixed;
     }
-    ::-webkit-scrollbar{
-        width: 1px
+
+    body::before{
+        content: "";
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #7f8ca273;
+        z-index: -1;
     }
+
     .container {
-        max-width: 1000px;
+        max-width: 1100px;
     }
 
     a {
@@ -48,14 +58,14 @@
 
     .brand {
         padding: 20px;
-        background-size: cover;
         color: #fff;
-        min-height: 540px;
+        min-height: 555px;
         position: relative;
         box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
         transition: all 0.6s cubic-bezier(1, -0.375, 0.285, 0.995);
         z-index: 9999;
-        background: url('/images/e-commerce-banner.jpg') no-repeat center center fixed;
+        background-size: 150px;
+        background: url('/images/evendor.jpg') 50% 50% no-repeat;
     }
     .brand.active {
         width: 100%;
@@ -68,7 +78,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        background: #4343657a;
+        background: #09091075;
         z-index: -1;
     }
     .brand a.logo {
@@ -88,13 +98,14 @@
         position: absolute;
         top: 50%;
         left: 50%;
+        width: 100%;
         transform: translate(-50%, -50%);
         text-align: center;
         transition: all 0.6s;
     }
     .brand .heading.active {
-        top: 100px;
-        left: 100px;
+        top: -400px;
+        left: -430px;
         transform: translate(0);
     }
     .brand .heading h2 {
@@ -110,28 +121,28 @@
         text-transform: uppercase;
         letter-spacing: 2px;
         white-space: 4px;
-        font-family: "Ubuntu", sans-serif;
+        font-family: "Ubuntu";
     }
     .brand .success-msg {
         width: 100%;
         text-align: center;
         position: absolute;
-        top: 22%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        margin-top: 50px;
-        padding: 8px;
+        margin-top: 60px;
     }
     .brand .success-msg p {
-        font-size:15px;
+        font-size: 25px;
         font-weight: 400;
-        font-family: "Ubuntu", sans-serif;
+        font-family: "Ubuntu";
     }
     .brand .success-msg a {
-        font-size: 12px;
+        font-size: 15px;
+        font-weight: bold;
         text-transform: uppercase;
         padding: 8px 30px;
-        background: #f95959;
+        background-image: linear-gradient(to left, #74ebd5, #9face6);
         text-decoration: none;
         color: #fff;
         border-radius: 30px;
@@ -146,12 +157,15 @@
         opacity: 1;
     }
 
+    .image-descp{
+        width: 90%;
+    }
     .form {
         position: relative;
     }
     .form .form-peice {
         background: #fff;
-        min-height: 505px;
+        min-height: 520px;
         margin-top: 15px;
         box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
         color: #bbbbbb;
@@ -161,7 +175,8 @@
         top: 0;
         left: -30%;
         width: 130%;
-        overflow: scroll;
+        overflow-x: hidden;
+        overflow-y: scroll;
     }
     .form .form-peice.switched {
         transform: translateX(-100%);
@@ -191,7 +206,7 @@
         font-size: 12px;
         font-weight: 400;
         text-transform: uppercase;
-        font-family: "Ubuntu", sans-serif;
+        font-family: "Ubuntu";
         transform: translateY(36px);
         transition: all 0.4s;
         cursor: text;
@@ -200,14 +215,22 @@
         margin-left: 10px;
     }
     .form form label.active {
-        transform: translateY(13px);
-        font-size: 10px;
+        transform: translateY(5px);
+        font-size: 11px;
     }
     .form form label.fontSwitch {
-        font-family: "Ubuntu", sans-serif !important;
+        font-family: "Ubuntu";
         font-weight: 600;
     }
-    .form form input:not([type=submit]) {
+    .dotted-section h6:before, .dotted-section h6:after {
+        display: inline-block;
+        margin: 0 6px 4px 6px;
+        content: " ";
+        text-shadow: none;
+        border: 1px dashed #dedede;
+        width: 80px;
+        }
+    /* .form form input:not([type=submit]) {
         width: 100%;
         border: none;
         border-bottom: 1px solid #ebebeb;
@@ -223,6 +246,21 @@
         border-bottom: 2px solid #9face6;
         -webkit-box-shadow: none !important;
         box-shadow: none !important;
+    } */
+
+    .form form input:not([type=submit]) {
+        width: 100%;
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        font-size: 14px;
+        font-weight: 500;
+        color: #5a606f;
+    }
+
+    .form form input:not([type=submit]):focus {
+        border: 2px solid #9face6;
     }
 
     .form form input:not([type=submit]).hasError {
@@ -230,7 +268,7 @@
     }
     .form form span.error {
         color: #f95959;
-        font-family: "Ubuntu", sans-serif;
+        font-family: "Ubuntu";
         font-size: 12px;
         position: absolute;
         bottom: -20px;
@@ -253,12 +291,12 @@
         border-radius: 30px;
         margin-right: 20px;
         border: none;
-        font-family: "Ubuntu", sans-serif;
+        font-family: "Ubuntu";
     }
     .form form .CTA a.switch {
         font-size: 13px;
         font-weight: 400;
-        font-family: "Ubuntu", sans-serif;
+        font-family: "Ubuntu";
         color: #bbbbbb;
         text-decoration: underline;
         transition: all 0.3s;
@@ -267,10 +305,35 @@
         color: #f95959;
     }
 
+    .center{
+        text-align: center;
+        display: block;
+        padding: 20px;
+    }
+
     @media (max-width: 768px) {
+
+        .brand .heading {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            transition: all 0.6s;
+        }
+        .image-descp {
+            width: 50%;
+        }
+
         .container {
             overflow: hidden;
         }
+
+        .center{
+            padding: 0;
+        }
+
 
         section#formHolder {
             padding: 0;
@@ -330,6 +393,11 @@
     }
 
     @media (max-width: 480px) {
+
+        .image-descp {
+            width: 90%;
+        }
+
         section#formHolder .form {
             width: 100vw;
             margin-left: 0;
@@ -339,6 +407,7 @@
             font-size: 50px !important;
         }
     }
+
 
     .flex-sb-m {
         display: flex;
@@ -365,7 +434,7 @@
 
     div.contact100-form-checkbox .label-checkbox100 {
         font-size: 12px;
-        color: #999999;
+        color: #5a606f;
         line-height: 1.4;
         display: block;
         position: relative;
@@ -402,7 +471,7 @@
     .txt1 {
         font-size: 12px;
         line-height: 1.4;
-        color: #999999;
+        color: #5a606f;
         transform: translateY(12px);
     }
 
@@ -411,12 +480,19 @@
         padding-top: 10px;
     }
     .header-form span{
-        color: #838a9a;
+        color: #5a606f;
+    }
+
+    .create-account{
+        padding-top: 15px;
+        text-align: center;
+        color: #5a606f;
     }
 
     .access-login{
         padding-top: 15px;
         text-align: center;
+        color:#5a606f;
     }
 
 
@@ -425,7 +501,7 @@
     .file-upload {
         display: block;
         text-align: center;
-        font-family: "Ubuntu", sans-serif;
+        font-family: "Ubuntu";
         font-size: 12px;
         padding-top: 25px;
     }
@@ -498,7 +574,6 @@
         opacity: 0.65;
     }
     .file-upload .file-select.file-select-disabled:hover {
-        cursor: default;
         display: block;
         border: 2px solid #dce4ec;
         color: #34495e;
@@ -525,19 +600,8 @@
         padding: 0 10px;
     }
 
-    .account-social h6:before, .account-social h6:after {
-    display: inline-block;
-    margin: 0 6px 4px 6px;
-    content: " ";
-    text-shadow: none;
-    border: 1px dashed #dedede;
-    width: 80px;
-    }
-    .font-15{
-        font-size:15px
-    }
-    span.validation-errors {
-        font-size: 11px;
+    ::-webkit-scrollbar{
+        width: 1px
     }
 </style>
 <body>
@@ -548,16 +612,19 @@
 
             <!-- Brand Box -->
             <div class="col-sm-6 brand">
-                <div class="heading">
+                <div class="center">
                     <a href="#" class="logo"><img src="/images/admin_logo.png" class="m-r-sm"></a>
+                </div>
+
+                <div class="heading">
                     <p>Vendor Selling Point</p>
+                    <img src="/images/jojayo-descp.png" class="m-r-sm image-descp">
                 </div>
-             
-                @if(Session::has('message'))
+
                 <div class="success-msg">
-                    <p class="active">{{ Session::get('message') }}</p>                    
+                    <p>Congratulations! You are registered as a vendor now !</p>
+                    <a href="#" class="profile"> Get Started here </a>
                 </div>
-                @endif
             </div>
 
 
@@ -605,7 +672,7 @@
                             <input type="submit" value="Login">
                         </div>
                         <br>
-                        <div class="account-social text-center">
+                        <div class="dotted-section text-center">
                             <h6 class="font-15">Want to sign up as Vendor?</h6>
                             <a href="#" class="switch font-15">Click here !</a>
                         </div>
@@ -615,7 +682,7 @@
 
                 <!-- Signup Form -->
                 <div class="signup form-peice switched">
-                    <form class="signup-form" action="{{ route('users.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
+                <form class="signup-form" action="{{ route('users.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                         @csrf  
                         <br><br><br>                      
                         <div class="header-form">
@@ -657,7 +724,7 @@
                         </div>
                         <div class="file-upload">
                             <div class="file-select">
-                                    <div class="file-select-button" id="fileName">Choose Profile Image</div>
+                                <div class="file-select-button" id="fileName">Choose Profile Image</div>
                                 <div class="file-select-name" id="noFile">No Image chosen...</div>
                                 <input type="hidden" name="roles" value="vendor">
                                 <input type="file" name="image" id="chooseFile">
@@ -668,7 +735,7 @@
                             <input type="submit" value="Signup Now" id="submit"/>
                         </div>
                         <br>
-                        <div class="account-social text-center">
+                        <div class="dotted-section text-center">
                             <h6 class="font-15">Or Already have an account?</h6>
                             <a href="#" class="switch font-15">Sign In !</a>
                         </div>                        
@@ -704,8 +771,8 @@
 
         var usernameError = true,
             emailError    = true,
-            passwordError = true,
-            passConfirm   = true;
+            passwordError = true;
+            // passConfirm   = true;
 
         // Detect browser for css purpose
         if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
@@ -756,6 +823,14 @@
                 }
             }
 
+            //PassWord confirmation
+            // if ($('.pass').val() !== $('.passConfirm').val()) {
+            //     $('.passConfirm').siblings('.error').text('Passwords don\'t match').fadeIn().parent('.form-group').addClass('hasError');
+            //     passConfirm = false;
+            // } else {
+            //     $('.passConfirm').siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+            //     passConfirm = false;
+            // }
 
             // label effect
             if ($(this).val().length > 0) {
@@ -781,10 +856,18 @@
 
         // Form submit
         $('form.signup-form').submit(function (event) {
-            //event.preventDefault();
-
-            if (usernameError == true || emailError == true || passwordError == true || passConfirm == true) {
-                $('.name, .email, .pass, .passConfirm').blur();
+            // $("input[name='roles']").attr('type','text');
+            event.preventDefault();            
+            $.ajax({
+                url: "{{ route('users.store') }}",
+                type: 'post',
+                data:$('.signup-form').serialize(),
+                success:function(response){
+                    alert('hehehe')
+                }
+            });
+            if (usernameError == true || emailError == true || passwordError == true) {
+                $('.name, .email, .pass').blur();
             } else {
                 $('.signup, .login').addClass('switched');
 
@@ -815,6 +898,9 @@
                 $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
             }
         });
+
+
     });
+
 </script>
 </html>
