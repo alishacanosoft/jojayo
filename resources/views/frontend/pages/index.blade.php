@@ -213,7 +213,7 @@
                           @endif
 
                           <ul class="ps-product__actions">
-                            <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
+                            <li><a href="{{ route('single-product', $women_products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                             <li><a href="#" data-placement="top" class="btn-quick-view" value="{{ $women_products->id }}"title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
                             <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
                           </ul>
@@ -288,7 +288,7 @@
                                           <div class="ps-product__badge">-{{ $discount }} NPR </div>
                                       @endif
                                       <ul class="ps-product__actions">
-                                           <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
+                                           <li><a href="{{ route('single-product', $men_products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                                           <li><a href="#" data-placement="top" class="btn-quick-view"
                                                   value="{{ $men_products->id }}" title="Quick View" data-toggle="modal"
                                                   data-target="#product-quickview"><i class="icon-eye"></i></a></li>
@@ -364,7 +364,7 @@
                                           <div class="ps-product__badge">-{{ $discount }} NPR </div>
                                       @endif
                                       <ul class="ps-product__actions">
-                                         <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
+                                         <li><a href="{{ route('single-product', $kid_products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                                           <li><a href="#" data-placement="top" class="btn-quick-view"
                                                   value="{{ $kid_products->id }}" title="Quick View" data-toggle="modal"
                                                   data-target="#product-quickview"><i class="icon-eye"></i></a></li>

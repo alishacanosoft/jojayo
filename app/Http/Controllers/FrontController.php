@@ -655,4 +655,9 @@ die;
         return view('admin.pages.vendor_login');
     }
 
+    public function getVendorProduct($id){
+        $data = $this->products->where('vendor_id', $id)->get();
+        return response()->json($data);
+    }
+
 }

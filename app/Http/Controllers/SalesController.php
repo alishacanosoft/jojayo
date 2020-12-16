@@ -8,6 +8,7 @@ use App\Models\Sales;
 use App\Models\Region;
 use App\Models\ProductSize;
 use App\Models\Product;
+use App\Models\Vendor;
 use App\Models\Payment;
 
 class SalesController extends Controller
@@ -19,11 +20,12 @@ class SalesController extends Controller
     protected $payments = null;
     protected $region = null;
 
-    public function __construct(Sales $sales, ProductSize $product_sizes, Product $products, Payment $payments, Region $region){
+    public function __construct(Sales $sales, ProductSize $product_sizes, Product $products, Payment $payments, Region $region, Vendor $vendor){
         $this->sales = $sales;
         $this->product_sizes = $product_sizes;
         $this->products = $products;
         $this->payments = $payments;
+        $this->vendor = $vendor;
         $this->region = $region;
         //$this->authorizeResource(Sales::class, 'sales');
     }
@@ -37,10 +39,10 @@ class SalesController extends Controller
     {
         $sales_list = $this->sales->get();
         $methods = $this->payments->get();
-        $product_list = $this->products->get();
+        $vendor_list = $this->vendor->get();
         $all_region = $this->region->get();
         $active_tab = 'manage';
-        return view('admin.pages.sales', compact('sales_list', 'active_tab','product_list', 'methods','all_region'));
+        return view('admin.pages.sales', compact('sales_list', 'active_tab','vendor_list', 'methods','all_region'));
     }
 
     /**

@@ -114,14 +114,16 @@
                     </ul>
                 </li>
                 <li class='sub-menu '>
-                        <a data-toggle='collapse' href='#sales'> <em class='fa fa-shopping-basket'></em><span>Sales & Orders</span></a>
+                        <a data-toggle='collapse' href='#sales'> <em class='fa fa-shopping-basket'></em><span>@if (Auth::user()->admin())Sales &@endif Orders</span></a>
                         <ul id=sales class='nav s-menu sidebar-subnav collapse'>
                             <li class="sidebar-subnav-header">Sales
                             </li>
+                            @if (Auth::user()->admin())
                             <li class=''>
                                 <a title='Items' href="{{ route('sales.index') }}">
                                     <em class='fa fa-cube'></em><span>All Sales</span></a>
                             </li>
+                            @endif
                             <li class=''>
                                 <a title='Supplier' href="{{ route('orders.index') }}">
                                     <em class='icon-briefcase'></em><span>All Orders</span></a>

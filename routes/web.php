@@ -312,6 +312,8 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     Route::post('/print_finance', 'FrontController@printFinance')->name('printFinance');
     Route::get('get/transaction/detail', 'FrontController@transaction')->name('transaction');
     Route::post('get/transaction/detail', 'FrontController@updateTransaction')->name('updateTransaction');
+
+    Route::get('/vendor-product/{id}', 'FrontController@getVendorProduct')->name('getVendorProduct');
 });
 
 Route::group(['middleware' => ['auth', 'customers']], function () {

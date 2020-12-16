@@ -104,16 +104,27 @@
                     <div class="card-block">
                         <div class="row">
                             <div class="col-12">
+                            <div class="form-group row">
+                                    <label class="col-sm-2 control-label">Vendor Name<span class="text-danger">*</span></label>
+                                    <div class="col-md-8 col-lg-10">
+                                        <select class="product form-control select_box select2-hidden-accessible" name="vendor_id" id="vendor_id">
+                                            @if(!empty($vendor_list))
+                                                <option>--Select vendor--</option>
+                                                @foreach($vendor_list as $lists)
+                                                    <option value="{{ $lists['id'] }}" {{ (collect(old('vendor_id'))->contains($lists->id)) ? 'selected':'' }} {{ @$data->vendor_id == $lists->id ? 'selected' : '' }}>{{ $lists['company'] }}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                        @if($errors->has('vendor_id'))
+                                            <span class='validation-errors text-danger'>{{ $errors->first('vendor_id') }}</span>
+                                        @endif
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2 control-label">Product Name<span class="text-danger">*</span></label>
                                     <div class="col-md-8 col-lg-10">
-                                        <select class="product form-control select_box select2-hidden-accessible" name="product_id" id="product_id">
-                                            @if(!empty($product_list))
-                                                <option>--Select product--</option>
-                                                @foreach($product_list as $lists)
-                                                    <option value="{{ $lists['id'] }}" {{ (collect(old('product_id'))->contains($lists->id)) ? 'selected':'' }} {{ @$data->product_id == $lists->id ? 'selected' : '' }}>{{ $lists['name'] }}</option>
-                                                @endforeach
-                                            @endif
+                                        <select class="product form-control" name="product_id" id="product_id">
+                                            <option value=""></option>                                            
                                         </select>
                                         @if($errors->has('product_id'))
                                             <span class='validation-errors text-danger'>{{ $errors->first('product_id') }}</span>
@@ -394,8 +405,23 @@
              }
           });
     });
-    $(document).ready(function() {
-        $('.product').select2();
+    $("#product_id").attr("disabled", true);
+    $('#vendor_id').on('change', function(){
+        let vendor_id = $(this).val();
+        $.ajax({
+            method: "GET",
+            url: "/auth/vendor-product/"+vendor_id,
+            success: function(response){                
+                $.each(response, function(key, value) {
+                    $('#product_id').append('<option value="'+response[key]['id']+'">'+response[key]['name']+'</option>');
+                });
+                $("#product_id").select2({
+                    placeholder: "Please select a product from vendor",
+                    allowClear: true
+                });
+                $("#product_id").attr("disabled", false);
+            }
+        });
     });
     $('#product_id').on('change', function(){
         var product_id = $('#product_id').val();
