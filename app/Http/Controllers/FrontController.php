@@ -176,7 +176,8 @@ class FrontController extends Controller
         if ($request->ajax()) {
             return response()->json($all_products);
         }
-        return view('frontend.pages.shop', compact('all_products', 'lastpage', 'requested'));
+        $brands = $this->brand->get();
+        return view('frontend.pages.shop', compact('all_products', 'lastpage', 'requested','brands'));
     }
 
     public function flash(Request $request)

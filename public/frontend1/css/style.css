@@ -1873,7 +1873,7 @@ button {
   border: none;
   border: 1px solid #ddd;
   transition: all .4s ease;
-  box-shado: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
   background-color: transparent;
   border-radius: 4px;
   visibility: hidden;
@@ -8209,7 +8209,8 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-product .ps-product__price.sale del {
-  color: #666;
+  color: #e60000;
+    font-size: 12px;
 }
 
 .ps-product .ps-product__actions {
@@ -17537,5 +17538,10 @@ a#scroll-top:hover {
   margin-bottom: 60px;
 
 }
+}
+
+
+.ps-shop-brand .owl-slider-brand a img {
+  width: 111px;
 }
 
