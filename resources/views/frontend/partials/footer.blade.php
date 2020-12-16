@@ -8,8 +8,8 @@
               
               <p><a href="tel:{{ $sensitive_data->mobile }}"> <i class="icon-telephone"></i> {{ $sensitive_data->mobile }}</a> & 
               <a href="tel:{{ $sensitive_data->mobile1 }}">{{ $sensitive_data->mobile1}}</a> </p>
-              <p><i class="icon-location"> </i>{{ $sensitive_data->location }}</p>
-              <p><a href="mailto:{{ $sensitive_data->email }}"><i class="icon-map-marker"> </i>{{ $sensitive_data->email }}</a></p>
+              <p><i class="icon-map-marker"> </i>{{ $sensitive_data->location }}</p>
+              <p><a href="mailto:{{ $sensitive_data->email }}"><i class="icon-envelope"> </i>{{ $sensitive_data->email }}</a></p>
               <ul class="ps-list--social">
                 <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
