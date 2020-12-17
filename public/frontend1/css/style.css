@@ -3246,7 +3246,7 @@ textarea.form-control {
   display: inline-block;
   position: relative;
   vertical-align: top;
-  font-size: 0;
+  /* font-size: 0; */
 }
 
 .pagination li {
@@ -8335,7 +8335,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-product .ps-product__content > p {
-  color: #000;
+  color: #690;
 }
 
 .ps-product .ps-product__content.hover {
@@ -8435,6 +8435,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .ps-product--wide .ps-product__price {
   font-size: 18px;
   font-weight: 600;
+  color: #690;
 }
 
 .ps-product--wide .ps-product__vendor {
@@ -17543,5 +17544,9 @@ a#scroll-top:hover {
 
 .ps-shop-brand .owl-slider-brand a img {
   width: 111px;
+}
+
+a.btn-quick-view :hover {
+    cursor: pointer;
 }
 
