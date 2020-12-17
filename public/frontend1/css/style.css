@@ -3246,7 +3246,7 @@ textarea.form-control {
   display: inline-block;
   position: relative;
   vertical-align: top;
-  font-size: 0;
+  /* font-size: 0; */
 }
 
 .pagination li {
@@ -8337,7 +8337,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-product .ps-product__content > p {
-  color: #000;
+  color: #690;
 }
 
 .ps-product .ps-product__content.hover {
@@ -8437,6 +8437,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 .ps-product--wide .ps-product__price {
   font-size: 18px;
   font-weight: 600;
+  color: #690;
 }
 
 .ps-product--wide .ps-product__vendor {
@@ -8623,6 +8624,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   .ps-product--horizontal .ps-product__content {
     padding-left: 10px;
   }
+  
 }
 
 .ps-product--cart {
@@ -9742,6 +9744,11 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     width: 100%;
     margin-right: 0;
   }
+
+  .ps-product__shopping > * {
+    margin-bottom: inherit;
+  }
+
 }
 
 @media (max-width: 375px) {
@@ -17528,6 +17535,10 @@ a#scroll-top:hover {
   text-align: center;
 }
 
+.backtotop {
+  margin-bottom: 80px;
+}
+
 }
 
 @media (max-width: 768px){
@@ -17538,8 +17549,12 @@ a#scroll-top:hover {
 
 .ps-footer__copyright{
   margin-bottom: 60px;
-
 }
+
+.backtotop {
+  margin-bottom: 80px;
+}
+
 }
 
 
@@ -17547,3 +17562,43 @@ a#scroll-top:hover {
   width: 111px;
 }
 
+a.btn-quick-view :hover {
+    cursor: pointer;
+}
+
+a.header__back:hover {
+  color: #ffffff;
+}
+
+a.ps-btn.btn-add-cart:hover {
+  color: #fff;
+}
+
+.navigation--mobile-product a.ps-btn.ps-btn--black.btn-add-cart:hover {
+  color: #27aae1;
+  background: black;
+}
+
+.navigation--mobile-product a.ps-btn.btn-buy-now:hover {
+  background-color: #27aae1;
+  color: #fff!important;
+}
+
+del.discount-product {
+    color: #666;
+}
+
+.related-products{
+    padding-top: 0px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e1e1e1;
+}
+
+.available-items {
+  margin-top: 20px;
+}
+
+
+.ps-product--detail .ps-product__sharing a.instagram {
+  background-color: #833AB4;
+}

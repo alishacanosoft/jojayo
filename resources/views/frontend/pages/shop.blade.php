@@ -63,14 +63,27 @@
             </aside>
             <aside class="widget widget_shop">
             @include('frontend.pages.filters.brands')
+            
               
-              <figure>
+            <figure>
                 <h4 class="widget-title">By Price</h4>
-                <div id="nonlinear"></div>
-                <p class="ps-slider__meta">Price:<span class="ps-slider__value">$<span class="ps-slider__min"></span></span>-<span class="ps-slider__value">$<span class="ps-slider__max"></span></span></p>
-              </figure>
+                <div class="form-row" style="height: 35px;">
+                    <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
+                        <input type="number" value="{{$requested['min_price']>0?$requested['min_price']:''}}" min="100" class="form-control" placeholder="150" id="minPrice" style="height: 32px;padding:2px 8px;">
+                    </div>
+                    <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
+                        <input type="number" value="{{$requested['max_price']>0?$requested['max_price']:''}}" min="200" class="form-control" placeholder="250" id="maxPrice" style="height: 32px;padding:2px 8px;">
+                    </div>
+                    <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
+                        <button class="btn btn-primary" style="padding: 5px 10px;" id="byPrice">
+                            <i class="fa fa-caret-right" style="font-size: 20px"></i>
+                        </button>
+                    </div>
+                </div>
+            </figure>
+
               <figure>
-                <h4 class="widget-title">By Price</h4>
+                <h4 class="widget-title">By Rating</h4>
                 <div class="ps-checkbox">
                   <input class="form-control" type="checkbox" id="review-1" name="review">
                   <label for="review-1"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i></span><small>(13)</small></label>
@@ -92,58 +105,34 @@
                   <label for="review-5"><span><i class="fa fa-star rate"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><small>(1)</small></label>
                 </div>
               </figure>
-              <figure>
-                <h4 class="widget-title">By Color</h4>
-                            <div class="ps-checkbox ps-checkbox--color color-1 ps-checkbox--inline">
-                              <input class="form-control" type="checkbox" id="color-1" name="size">
-                              <label for="color-1"></label>
-                            </div>
-                            <div class="ps-checkbox ps-checkbox--color color-2 ps-checkbox--inline">
-                              <input class="form-control" type="checkbox" id="color-2" name="size">
-                              <label for="color-2"></label>
-                            </div>
-                            <div class="ps-checkbox ps-checkbox--color color-3 ps-checkbox--inline">
-                              <input class="form-control" type="checkbox" id="color-3" name="size">
-                              <label for="color-3"></label>
-                            </div>
-                            <div class="ps-checkbox ps-checkbox--color color-4 ps-checkbox--inline">
-                              <input class="form-control" type="checkbox" id="color-4" name="size">
-                              <label for="color-4"></label>
-                            </div>
-                            <div class="ps-checkbox ps-checkbox--color color-5 ps-checkbox--inline">
-                              <input class="form-control" type="checkbox" id="color-5" name="size">
-                              <label for="color-5"></label>
-                            </div>
-                            <div class="ps-checkbox ps-checkbox--color color-6 ps-checkbox--inline">
-                              <input class="form-control" type="checkbox" id="color-6" name="size">
-                              <label for="color-6"></label>
-                            </div>
-                            <div class="ps-checkbox ps-checkbox--color color-7 ps-checkbox--inline">
-                              <input class="form-control" type="checkbox" id="color-7" name="size">
-                              <label for="color-7"></label>
-                            </div>
-                            <div class="ps-checkbox ps-checkbox--color color-8 ps-checkbox--inline">
-                              <input class="form-control" type="checkbox" id="color-8" name="size">
-                              <label for="color-8"></label>
-                            </div>
-              </figure>
+
+            
               <figure class="sizes">
-                <h4 class="widget-title">BY SIZE</h4><a href="#">L</a><a href="#">M</a><a href="#">S</a><a href="#">XL</a>
+                <h4 class="widget-title">BY SIZE</h4>
+                <a href="#">L</a>
+                <a href="#">M</a>
+                <a href="#">S</a>
+                <a href="#">XL</a>
               </figure>
             </aside>
           </div>
+
+
+                
           <div class="ps-layout__right">    
-           
             <div class="ps-shopping ps-tab-root">
               <div class="ps-shopping__header">
-                <p><strong> 36</strong> Products found</p>
+                <p><strong> {{$allcount}}</strong> Products found</p>
+                
                 <div class="ps-shopping__actions">
-                  <select class="ps-select" data-placeholder="Sort Items">
-                    <option>Sort by latest</option>
-                    <option>Sort by popularity</option>
-                    <option>Sort by average rating</option>
-                    <option>Sort by price: low to high</option>
-                    <option>Sort by price: high to low</option>
+                
+                  <select class="ps-select" id="onSort" data-placeholder="Sort Items">
+                   <option selected disabled>Choose one for filter</option>
+                    <option value="latest" {{$requested['sort']=='latest'?'selected':''}}>Sort by latest</option>
+                    <option value="oldest" {{$requested['sort']=='oldest'?'selected':''}}>Sort by older</option>
+                    <option value="asc" {{$requested['sort']=='asc'?'selected':''}}>Name(A-Z)</option>
+                    <option value="desc" {{$requested['sort']=='desc'?'selected':''}}>Name(Z-A)</option>
+
                   </select>
                   <div class="ps-shopping__view">
                     <p>View</p>
@@ -155,736 +144,106 @@
                 </div>
               </div>
               <div class="ps-tabs">
+
                 <div class="ps-tab active" id="tab-1">
-                  <div class="ps-shopping-product">
-                    <div class="row">
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/1.jpg" alt=""></a>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">ROBERT’S STORE</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Apple iPhone Retina 6s Plus 64GB</a>
-                                                      <p class="ps-product__price">$1310.00</p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Apple iPhone Retina 6s Plus 64GB</a>
-                                                      <p class="ps-product__price">$1310.00</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/1.jpg" alt=""></a>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Young Shop</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Apple iPhone Retina 6s Plus 64GB</a>
-                                                      <p class="ps-product__price">$1150.00</p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Apple iPhone Retina 6s Plus 64GB</a>
-                                                      <p class="ps-product__price">$1150.00</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/2.jpg" alt=""></a>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Go Pro</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Marshall Kilburn Portable Wireless Speaker</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>01</span>
-                                                      </div>
-                                                      <p class="ps-product__price">$42.99 - $60.00</p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Marshall Kilburn Portable Wireless Speaker</a>
-                                                      <p class="ps-product__price">$42.99 - $60.00</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/3.jpg" alt=""></a>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Go Pro</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Herschel Leather Duffle Bag In Brown Color</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>01</span>
-                                                      </div>
-                                                      <p class="ps-product__price">$125.30</p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Herschel Leather Duffle Bag In Brown Color</a>
-                                                      <p class="ps-product__price">$125.30</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/4.jpg" alt=""></a>
-                                                    <div class="ps-product__badge hot">hot</div>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Global Office</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Xbox One Wireless Controller Black Color</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>01</span>
-                                                      </div>
-                                                      <p class="ps-product__price">$55.99</p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Xbox One Wireless Controller Black Color</a>
-                                                      <p class="ps-product__price">$55.99</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/5.jpg" alt=""></a>
-                                                    <div class="ps-product__badge">-37%</div>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Robert's Store</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Grand Slam Indoor Of Show Jumping Novel</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>01</span>
-                                                      </div>
-                                                      <p class="ps-product__price sale">$32.99 <del>$41.00 </del></p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Grand Slam Indoor Of Show Jumping Novel</a>
-                                                      <p class="ps-product__price sale">$32.99 <del>$41.00 </del></p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/6.jpg" alt=""></a>
-                                                    <div class="ps-product__badge">-5%</div>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Youngshop</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Sound Intone I65 Earphone White Version</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>01</span>
-                                                      </div>
-                                                      <p class="ps-product__price sale">$100.99 <del>$106.00 </del></p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Sound Intone I65 Earphone White Version</a>
-                                                      <p class="ps-product__price sale">$100.99 <del>$106.00 </del></p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/7.jpg" alt=""></a>
-                                                    <div class="ps-product__badge">-16%</div>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Youngshop</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Korea Long Sofa Fabric In Blue Navy Color</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>01</span>
-                                                      </div>
-                                                      <p class="ps-product__price sale">$567.89 <del>$670.20 </del></p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Korea Long Sofa Fabric In Blue Navy Color</a>
-                                                      <p class="ps-product__price sale">$567.89 <del>$670.20 </del></p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/8.jpg" alt=""></a>
-                                                    <div class="ps-product__badge">-16%</div>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Young shop</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Unero Military Classical Backpack</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>02</span>
-                                                      </div>
-                                                      <p class="ps-product__price sale">$35.89 <del>$42.20 </del></p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Unero Military Classical Backpack</a>
-                                                      <p class="ps-product__price sale">$35.89 <del>$42.20 </del></p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/9.jpg" alt=""></a>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Young shop</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Rayban Rounded Sunglass Brown Color</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>02</span>
-                                                      </div>
-                                                      <p class="ps-product__price">$35.89</p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Rayban Rounded Sunglass Brown Color</a>
-                                                      <p class="ps-product__price">$35.89</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/10.jpg" alt=""></a>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Go Pro</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>01</span>
-                                                      </div>
-                                                      <p class="ps-product__price">$29.39 - $39.99</p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
-                                                      <p class="ps-product__price">$29.39 - $39.99</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
-                                  <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
-                                                <div class="ps-product">
-                                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/11.jpg" alt=""></a>
-                                                    <ul class="ps-product__actions">
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                                      <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><i class="icon-chart-bars"></i></a></li>
-                                                    </ul>
-                                                  </div>
-                                                  <div class="ps-product__container"><a class="ps-product__vendor" href="#">Robert's Store</a>
-                                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Men’s Sports Runnning Swim Board Shorts</a>
-                                                      <div class="ps-product__rating">
-                                                                    <select class="ps-rating" data-read-only="true">
-                                                                      <option value="1">1</option>
-                                                                      <option value="1">2</option>
-                                                                      <option value="1">3</option>
-                                                                      <option value="1">4</option>
-                                                                      <option value="2">5</option>
-                                                                    </select><span>01</span>
-                                                      </div>
-                                                      <p class="ps-product__price">$13.43</p>
-                                                    </div>
-                                                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Men’s Sports Runnning Swim Board Shorts</a>
-                                                      <p class="ps-product__price">$13.43</p>
-                                                    </div>
-                                                  </div>
-                                                </div>
-                                  </div>
+                    <div class="ps-shopping-product">
+                    <div class="row" id="product-data">
+                    @if(!empty($all_products))
+                        @foreach($all_products as $key => $product_list)
+                        @php
+                        // $product_image = (isset($product_list->images)&&count($product_list->images)>0)?$product_list->images[0]->image:'';
+                        $starting_price = App\Models\ProductSize::where('product_id', $product_list->id)->first();
+                        $product_image = (count($product_list->images)>0)?product_img($product_list->images[0]['images'][0]['image']):'';
+                        @endphp                         
+
+                        <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6 ">
+                            <div class="ps-product">
+                                    <div class="ps-product__thumbnail">
+                                    <a href="{{ route('single-product', $product_list->slug) }}"><img src="{{ $product_image ? $product_image : asset('/images/noimage.png')}}" alt="{{$product_list->slug}}"></a>
+                                        <ul class="ps-product__actions">
+                                            <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
+                                            <li><a data-placement="top" class="btn-quick-view" value="{{ $product_list->id }}" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
+                                            <li><a data-toggle="tooltip" data-placement="bottom" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <?php 
+                               $rout = App\Models\SecondaryCategory::find($product_list->productCategory->secondary_category_id)->select('slug')->get();
+                            //    print_r(isset($rout[$key]) ? $rout[$key]->slug : '');
+
+                              ?>
+                                <div class="ps-product__container"><a class="ps-product__vendor" href="{{ route('categories.sec',[isset($rout[$key]) ? $rout[$key]->slug : '',$product_list->productCategory->slug]) }}">{{ $product_list->productCategory->name }}</a>
+                                <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $product_list->slug) }}">{{ $product_list->name }}</a>
+                                <div class="ps-product__rating">
+                                    <select class="ps-rating" data-read-only="true">
+                                        <option value="1">1</option>
+                                        <option value="1">2</option>
+                                        <option value="1">3</option>
+                                        <option value="1">4</option>
+                                        <option value="2">5</option>
+                                    </select>
+                                </div>
+                                    <p class="ps-product__price">NPR {{ number_format($starting_price['selling_price']) }}</p>
+                                </div>
+                                <div class="ps-product__content hover"><a class="ps-product__title" href="{{ route('single-product', $product_list->slug) }}">{{ $product_list->name }}</a>
+                                    <p class="ps-product__price">NPR {{ number_format($starting_price['selling_price']) }}</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>  
+                        @endforeach
+                    @endif          
                     </div>
                   </div>
-                              <div class="ps-pagination">
-                                <ul class="pagination">
-                                  <li class="active"><a href="#">1</a></li>
-                                  <li><a href="#">2</a></li>
-                                  <li><a href="#">3</a></li>
-                                  <li><a href="#">Next Page<i class="icon-chevron-right"></i></a></li>
-                                </ul>
-                              </div>
+                             
+                           
+                <div class="ps-pagination">
+                {{ $all_products->links() }}
                 </div>
-                <div class="ps-tab" id="tab-2">
-                  <div class="ps-shopping-product">
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/1.jpg" alt=""></a>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Apple iPhone Retina 6s Plus 64GB</a>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">ROBERT’S STORE</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price">$1310.00</p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/1.jpg" alt=""></a>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Apple iPhone Retina 6s Plus 64GB</a>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Young Shop</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price">$1150.00</p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/2.jpg" alt=""></a>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Marshall Kilburn Portable Wireless Speaker</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>01</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Go Pro</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price">$42.99 - $60.00</p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/3.jpg" alt=""></a>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Herschel Leather Duffle Bag In Brown Color</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>01</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Go Pro</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price">$125.30</p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/4.jpg" alt=""></a>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Xbox One Wireless Controller Black Color</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>01</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Global Office</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price">$55.99</p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/5.jpg" alt=""></a>
-                                    <div class="ps-product__badge">-37%</div>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Grand Slam Indoor Of Show Jumping Novel</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>01</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Robert's Store</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price sale">$32.99 <del>$41.00 </del></p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/6.jpg" alt=""></a>
-                                    <div class="ps-product__badge">-5%</div>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Sound Intone I65 Earphone White Version</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>01</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Youngshop</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price sale">$100.99 <del>$106.00 </del></p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/7.jpg" alt=""></a>
-                                    <div class="ps-product__badge">-16%</div>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Korea Long Sofa Fabric In Blue Navy Color</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>01</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Youngshop</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price sale">$567.89 <del>$670.20 </del></p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/8.jpg" alt=""></a>
-                                    <div class="ps-product__badge">-16%</div>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Unero Military Classical Backpack</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>02</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Young shop</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price sale">$35.89 <del>$42.20 </del></p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/9.jpg" alt=""></a>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Rayban Rounded Sunglass Brown Color</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>02</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Young shop</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price">$35.89</p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/10.jpg" alt=""></a>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Sleeve Linen Blend Caro Pane Shirt</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>01</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Go Pro</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price">$29.39 - $39.99</p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="ps-product ps-product--wide">
-                                  <div class="ps-product__thumbnail"><a href="product-default.html"><img src="img/products/shop/11.jpg" alt=""></a>
-                                  </div>
-                                  <div class="ps-product__container">
-                                    <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Men’s Sports Runnning Swim Board Shorts</a>
-                                      <div class="ps-product__rating">
-                                                    <select class="ps-rating" data-read-only="true">
-                                                      <option value="1">1</option>
-                                                      <option value="1">2</option>
-                                                      <option value="1">3</option>
-                                                      <option value="1">4</option>
-                                                      <option value="2">5</option>
-                                                    </select><span>01</span>
-                                      </div>
-                                      <p class="ps-product__vendor">Sold by:<a href="#">Robert's Store</a></p>
-                                      <ul class="ps-product__desc">
-                                        <li> Unrestrained and portable active stereo speaker</li>
-                                        <li> Free from the confines of wires and chords</li>
-                                        <li> 20 hours of portable capabilities</li>
-                                        <li> Double-ended Coil Cord with 3.5mm Stereo Plugs Included</li>
-                                        <li> 3/4″ Dome Tweeters: 2X and 4″ Woofer: 1X</li>
-                                      </ul>
-                                    </div>
-                                    <div class="ps-product__shopping">
-                                      <p class="ps-product__price">$13.43</p><a class="ps-btn" href="#">Add to cart</a>
-                                      <ul class="ps-product__actions">
-                                        <li><a href="#"><i class="icon-heart"></i> Wishlist</a></li>
-                                        <li><a href="#"><i class="icon-chart-bars"></i> Compare</a></li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                  </div>
-                              <div class="ps-pagination">
-                                <ul class="pagination">
-                                  <li class="active"><a href="#">1</a></li>
-                                  <li><a href="#">2</a></li>
-                                  <li><a href="#">3</a></li>
-                                  <li><a href="#">Next Page<i class="icon-chevron-right"></i></a></li>
+                </div>
+
+                <div class="ps-tab" id="tab-2">  
+                            
+                @if(!empty($all_products))
+                  <div class="ps-shopping-product" id="list-product-data">
+                  @foreach($all_products as $key => $product_list)
+                        @php
+                        $starting_price = App\Models\ProductSize::where('product_id', $product_list->id)->first();
+                        $product_image = (count($product_list->images)>0)?product_img($product_list->images[0]['images'][0]['image']):'';
+                        @endphp
+                        <div class="ps-product ps-product--wide">
+                            <div class="ps-product__thumbnail"><a href="{{ route('single-product', $product_list->slug) }}"><img src="{{ $product_image ? $product_image : asset('/images/noimage.png')}}" alt="{{$product_list->slug}}"></a>
+                            </div>
+                            <div class="ps-product__container">
+                             <?php 
+                               $rout = App\Models\SecondaryCategory::find($product_list->productCategory->secondary_category_id)->select('slug')->get();
+                            //    print_r(isset($rout[$key]) ? $rout[$key]->slug : '');
+
+                              ?>
+
+                            <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $product_list->slug) }}">{{ $product_list->name }}</a>
+                                <div class="ps-product__vendor"><strong>Sold by: </strong><a href="#">Vendor STORE</a></div>
+                                <div class="ps-product__vendor"><strong>Category: </strong><a href="{{ route('categories.sec',[isset($rout[$key]) ? $rout[$key]->slug : '',$product_list->productCategory->slug]) }}">{{ $product_list->productCategory->name }}</a></div>
+                                <ul class="ps-product__desc">
+                                {!! shortContent($product_list->specification, 10) !!} <?php if($product_list->specification) echo"..." ?>
                                 </ul>
-                              </div>
+                            </div>
+                            <div class="ps-product__shopping">
+                                <p class="ps-product__price"> NPR {{ number_format($starting_price['selling_price']) }}</p><a class="ps-btn" href="#">Add to cart</a>
+                                <ul class="ps-product__actions">
+                                <li><a href="#"><i class="icon-heart"></i>Wishlist</a></li>
+                                <li><a class="btn-quick-view" value="{{ $product_list->id }}" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i>View</a></li>
+
+                                </ul>
+                            </div>
+                            </div>
+                        </div>
+                  @endforeach
+                  </div>
+                @endif
+
+                    <div class="ps-pagination">
+                        {{ $all_products->links() }}
+                    </div>
                 </div>
               </div>
             </div>
@@ -911,28 +270,28 @@
 <script>
     var current_url='{{url()->current()}}'
     // var favorite = [];
-    // var brands = '';
+    var brands = '';
     var sort = '{{$requested["sort"]}}';
     var minPrice = '';
     var maxPrice = '';
     // var sizes = [];
 
-    // function selectBrands(){
-    //    setBrands();
-    //     window.location.replace(getUrl());
-    // }
+    function selectBrands(){
+       setBrands();
+        window.location.replace(getUrl());
+    }
 
     // function bySize(){
     //     setSizes();
     //     window.location.replace(getUrl());
     // }
 
-    // function setBrands(){
-    //     brands=[];
-    //     $.each($("input[name='brands']:checked"), function(){
-    //         brands.push($(this).val());
-    //     });
-    // }
+    function setBrands(){
+        brands=[];
+        $.each($("input[name='brands']:checked"), function(){
+            brands.push($(this).val());
+        });
+    }
     // function setSizes(){
     //     sizes=[];
     //     $.each($("input[name='sizes']:checked"), function(){
@@ -957,7 +316,7 @@
   
     function getUrl(){
         var new_url=current_url
-        // var brand_url='';
+        var brand_url='';
         var price_url='';
         // var size_url='';
         var sort_url='';
@@ -966,13 +325,13 @@
         maxPrice = $('#maxPrice').val();
 
         // setSizes();
-        // setBrands();
+        setBrands();
 
-        // if(brands.length>0){
-        //     $.each(brands,function(index,value){
-        //        brand_url+='brands['+index+']='+value+'&';
-        //     })
-        // }
+        if(brands.length>0){
+            $.each(brands,function(index,value){
+               brand_url+='brands['+index+']='+value+'&';
+            })
+        }
 
         // if(sizes.length>0){
         //     $.each(sizes,function(index,value){

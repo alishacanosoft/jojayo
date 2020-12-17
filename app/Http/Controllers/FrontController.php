@@ -170,14 +170,15 @@ class FrontController extends Controller
             ->sortSize($request['selected_sizes'])
             ->sortPrice($request['min_price'], $request['max_price'])
             ->sortProd($request['sort'])
-            ->paginate(12);
+            ->paginate(20);
 
         $lastpage = $all_products->lastPage();
         if ($request->ajax()) {
             return response()->json($all_products);
         }
         $brands = $this->brand->get();
-        return view('frontend.pages.shop', compact('all_products', 'lastpage', 'requested','brands'));
+        $allcount = $this->products->count();
+        return view('frontend.pages.shop', compact('all_products','allcount', 'lastpage', 'requested','brands'));
     }
 
     public function flash(Request $request)
@@ -302,6 +303,9 @@ class FrontController extends Controller
         //   $category_product = $this->products->with('images')->where('category_id', $category_slug)->paginate(12);//dd($category_product);
         //   return view('frontend.pages.categories', compact('category_product'));
     }
+
+    
+  
 
     public function page($slug)
     {

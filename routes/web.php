@@ -43,7 +43,7 @@ Route::patch('/password', 'UserController@password')->name('users.password');
 
 Route::post('/orders/update-status', 'OrderController@');
 
-Route::get('products/{slug}', 'FrontController@singleProduct')->name('single-product');
+Route::get('/shop/{slug}', 'FrontController@singleProduct')->name('single-product');
 
 Route::get('/index', function () {
     return view('frontend.pages.index1');
@@ -58,7 +58,9 @@ Route::get('/blogs', function () {
 Route::get('/shop', 'FrontController@shop');
 
 Route::get('/flash-sales', 'FrontController@flash');
-
+Route::get('/categories', function () {
+    return redirect('/shop');
+});
 Route::get('/categories/{name}', 'FrontController@categories')->name('categories');
 Route::get('/categories/{prime_cat}/{name}', 'FrontController@categories')->name('categories.sec');
 Route::get('/shopping-cart', function () {

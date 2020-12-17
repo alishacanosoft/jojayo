@@ -48,7 +48,9 @@
 </head>
 
 <body>
-<header class="header header--1" data-sticky="true" id="jojayo-header">
+
+@if(Route::is('single-product') )
+<header class="header header--1" data-sticky="false" id="jojayo-header">
       <div class="header__top">
         <div class="ps-container">
           <div class="header__left">
@@ -259,59 +261,274 @@
           </div>
         </div>
       </nav>
-    </header>
-    <header class="header header--mobile" data-sticky="true">
+</header>
+@else
+<header class="header header--1" data-sticky="true" id="jojayo-header">
       <div class="header__top">
-        <div class="header__left">
-          <p>Welcome to JoJayo Online Shopping Store !</p>
-        </div>
-        <div class="header__right">
-          <ul class="navigation__extra">
-            <li><a href="#">Sell on JoJayo</a></li>
-           
-          </ul>
-        </div>
-      </div>
-      <div class="navigation--mobile">
-            <div class="navigation__left"><a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt=""></a></div>
-            <div class="navigation__right">
-                <div class="header__actions">
-                    <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i>0</i></span></a>
-                        <div class="ps-cart__content">
-                            <div class="ps-cart__items">
-                            @if(!empty(Cart::content()))
-                                @foreach(Cart::content() as $row)
-                                <div class="ps-product--cart-mobile">
-                                    <div class="ps-product__thumbnail"><a href="{{ route('single-product', $row->options->slug) }}"><img src="{{ url('/uploads/products/'.$row->options->image) }}" alt=""></a></div>
-                                    <div class="ps-product__content"><a class="ps-product__remove" value="{{ $row->rowId }}" href="#"><i class="icon-cross"></i></a><a href="{{ route('single-product', $row->options->slug) }}">{{ $row->name }}</a>
-                                        <small>{{ $row->qty }} x NPR {{ number_format($row->price) }}</small>
-                                    </div>
-                                </div>
-                                @endforeach
+        <div class="ps-container">
+          <div class="header__left">
+            <div class="menu--product-categories">
+            <ul id="nav">  
+                <li class="yahoo">      
+                <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
+                    <ul style="z-index:1000;min-width:260px">
+                        @if(!empty($primary_categories))
+                        @foreach($primary_categories as $prime)
+                            @if($prime->secondaryCategories->count() > 0)
+                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>            
+                                <ul>
+                                    @foreach($prime->secondaryCategories as $secondary)
+                                        @if($secondary->FinalCategory->count() > 0)
+                                        <?php
+                                        $secondary->name = str_replace("Women's", "", $secondary->name);
+                                        $secondary->name = str_replace("Men's", "", $secondary->name);
+                                        ?>
+                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }} »</a>
+                                        <ul>
+                                            @foreach($secondary->FinalCategory as $final_cat)
+                                            <?php
+                                            $final_cat->name = str_replace("Women's", "", $final_cat->name);
+                                            $final_cat->name = str_replace("Men's", "", $final_cat->name);
+                                            ?>
+                                            <li><a href="{{ route('categories.sec', [$secondary->slug,$final_cat->slug]) }}">{{ $final_cat->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                        </li>
+                                        @else
+                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }}</a></li>
+                                        @endif
+                                    @endforeach                                                                                        
+                                </ul>
+                            </li>
+                            @else
+                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }}</a></li>
                             @endif
+                        @endforeach
+                        @endif
+                    </ul>
+                </li>
+              </ul> 
+            </div>
+            <a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt="jojayo-logo"></a>
+          </div>
+          <div class="header__center">
+            <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="get">
+              <div class="form-group--icon"><i class="icon-chevron-down"></i>
+               
+                <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
+                                <option value="all" {{($selected_category = 'all') ? 'selected':''}}>All</option>
+                                @foreach($primary_categories as $prime)
+                                    @if($prime->secondaryCategories->count() > 0)
+                                        @foreach($prime->secondaryCategories as $secondary)
+                                            @if($secondary->FinalCategory->count() > 0)
+
+                                                <?php
+                                                    $secondary->name = str_replace("Women's", "", $secondary->name);
+                                                    $secondary->name = str_replace("Men's", "", $secondary->name);
+                                                ?>
+
+                                                <option disabled class="level-0" value="{{$secondary->slug}}">{{trim($secondary->name)}}</option>
+
+                                                @foreach($secondary->FinalCategory as $final_cat)
+                                                    <?php
+                                                        $final_cat->name = str_replace("Women's", "", $final_cat->name);
+                                                        $final_cat->name = str_replace("Men's", "", $final_cat->name);
+                                                    ?>
+                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>&nbsp;&nbsp;&nbsp;{{trim($final_cat->name)}}</option>
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                </select>
+              </div>
+
+             <input class="form-control" required name="q" id="productSearch" value="{{@$query}}"  type="text" placeholder="I'm shopping for...">
+                        <div id="productList" class="productList">
+
+                        </div>
+                        <button>Search</button>
+            </form>
+          </div>
+          <div class="header__right">
+            <div class="header__actions">
+            
+            <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
+              <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::content()->count() }}</i></span></a>
+                    <div class="ps-cart__content">
+                        <div class="ps-cart__items">
+                        @if(!empty(Cart::content()))
+                        @foreach(Cart::content() as $row)
+                            <div class="ps-product--cart-mobile">
+                                <div class="ps-product__thumbnail"><a href="#"><img src="{{ url('/uploads/products/'.$row->options->image) }}" alt=""></a></div>
+                                <div class="ps-product__content"><a class="ps-product__remove" value="{{ $row->rowId }}"><i class="icon-cross"></i></a><a href="{{ route('single-product', $row->options->slug) }}">{{ $row->name }}</a>
+                                    <!-- <p><strong>Sold by:</strong> YOUNG SHOP</p> --> <br>
+                                    <small>{{ $row->qty }} x NPR {{ number_format($row->price) }}</small>
+                                </div>
                             </div>
-                            <div class="ps-cart__footer">
-                                <h3>Sub Total:<strong>{{ Cart::total() }}</strong></h3>
-                                <figure><a class="ps-btn" href="{{ route('cart.index') }}">View Cart</a><a class="ps-btn" href="{{ route('review') }}">Checkout</a></figure>
-                            </div>
+                        @endforeach
+                        @endif
+                        </div>
+                        <div class="ps-cart__footer">
+                            <h3>Sub Total:<strong class="cart-total-price">NPR {{ Cart::total() }}</strong></h3>
+                            <figure>
+                                <a class="ps-btn ps-btn--fullwidth" href="{{ route('cart.index') }}" style="margin-right:2px">View Cart</a>
+                                @if(\Auth::user() == null || \Auth::user()->roles !== 'customers')
+                                <a class="ps-btn ps-btn--fullwidth" href="#" data-toggle="modal" data-target="#loginModal" style="margin-left:2px">Checkout</a>
+                                @else
+                                <a class="ps-btn ps-btn--fullwidth" href="{{ route('review') }}" style="margin-left:2px">Checkout</a>
+                                @endif
+                                </figure>
                         </div>
                     </div>
-                    <div class="ps-block--user-header">
-                        <div class="ps-block__left"><a href="{{ route('signinform') }}"><i class="icon-user"></i></a></div>
-                        <div class="ps-block__right"><a href="{{ route('signinform') }}">Login</a></div>
+              </div>
+              <div class="ps-block--user-header">
+                <div class="ps-block__left"><i class="icon-user"></i></div>
+                <div class="ps-block__right">
+                          
+
+                @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
+                <div class="ps-block--user-header">
+                    <div class="dropdown">
+                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="ps-block__left text-dark font-13 font-weight-normal">
+                            <i class="icon-user text-dark"></i>&nbsp;My Account
+                            &nbsp;<i class="fa fa-angle-down text-dark"></i></div>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ url('/dashboard') }}">My Dashboard</a>
+                            <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
+                        </div>
                     </div>
+                </div> 
+                @else
+                <a href="{{ route('signinform') }}">Login & Register</a>
+                    
+                @endif
+                
+                
                 </div>
+              </div>
             </div>
-        </div>
-      <!-- <div class="ps-search--mobile">
-        <form class="ps-form--search-mobile" action="" method="get">
-          <div class="form-group--nest">
-            <input class="form-control" type="text" placeholder="Search something...">
-            <button><i class="icon-magnifier"></i></button>
           </div>
-        </form>
-      </div> -->
-    </header>
+        </div>
+      </div>
+      <nav class="navigation">
+        <div class="ps-container">
+          <div class="navigation__left">
+            <div class="menu--product-categories">            
+              <ul id="nav">  
+                <li class="yahoo">      
+                <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
+                    <ul style="z-index:1000;min-width:260px">
+                        @if(!empty($primary_categories))
+                        @foreach($primary_categories as $prime)
+                            @if($prime->secondaryCategories->count() > 0)
+                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>            
+                                <ul>
+                                    @foreach($prime->secondaryCategories as $secondary)
+                                        @if($secondary->FinalCategory->count() > 0)
+                                        <?php
+                                        $secondary->name = str_replace("Women's", "", $secondary->name);
+                                        $secondary->name = str_replace("Men's", "", $secondary->name);
+                                        ?>
+                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }} »</a>
+                                        <ul>
+                                            @foreach($secondary->FinalCategory as $final_cat)
+                                            <?php
+                                            $final_cat->name = str_replace("Women's", "", $final_cat->name);
+                                            $final_cat->name = str_replace("Men's", "", $final_cat->name);
+                                            ?>
+                                            <li><a href="{{ route('categories.sec', [$secondary->slug,$final_cat->slug]) }}">{{ $final_cat->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                        </li>
+                                        @else
+                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }}</a></li>
+                                        @endif
+                                    @endforeach                                                                                        
+                                </ul>
+                            </li>
+                            @else
+                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }}</a></li>
+                            @endif
+                        @endforeach
+                        @endif
+                    </ul>
+                </li>
+              </ul>  
+            </div>
+          </div>
+          <div class="navigation__right">
+                        <ul class="menu">
+                            <li><a href="{{ url('/') }}">Home</a>
+                            </li>
+                            <li><a href="{{ url('/shop') }}">Shop</a></li>
+                            <li><a href="{{ url('/about-us') }}">About</a></li>
+                            <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
+                        </ul>
+            <ul class="navigation__extra">
+              <li><a href="#">Sell on JoJayo</a></li>
+             
+            </ul>
+          </div>
+        </div>
+      </nav>
+</header>
+
+<header class="header header--mobile" data-sticky="true">
+    <div class="header__top">
+      <div class="header__left">
+        <p>Welcome to JoJayo Online Shopping Store !</p>
+      </div>
+      <div class="header__right">
+        <ul class="navigation__extra">
+          <li><a href="#">Sell on JoJayo</a></li>
+          
+        </ul>
+      </div>
+    </div>
+    <div class="navigation--mobile">
+          <div class="navigation__left"><a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt=""></a></div>
+          <div class="navigation__right">
+              <div class="header__actions">
+                  <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i>0</i></span></a>
+                      <div class="ps-cart__content">
+                          <div class="ps-cart__items">
+                          @if(!empty(Cart::content()))
+                              @foreach(Cart::content() as $row)
+                              <div class="ps-product--cart-mobile">
+                                  <div class="ps-product__thumbnail"><a href="{{ route('single-product', $row->options->slug) }}"><img src="{{ url('/uploads/products/'.$row->options->image) }}" alt=""></a></div>
+                                  <div class="ps-product__content"><a class="ps-product__remove" value="{{ $row->rowId }}" href="#"><i class="icon-cross"></i></a><a href="{{ route('single-product', $row->options->slug) }}">{{ $row->name }}</a>
+                                      <small>{{ $row->qty }} x NPR {{ number_format($row->price) }}</small>
+                                  </div>
+                              </div>
+                              @endforeach
+                          @endif
+                          </div>
+                          <div class="ps-cart__footer">
+                              <h3>Sub Total:<strong>{{ Cart::total() }}</strong></h3>
+                              <figure><a class="ps-btn" href="{{ route('cart.index') }}">View Cart</a><a class="ps-btn" href="{{ route('review') }}">Checkout</a></figure>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="ps-block--user-header">
+                      <div class="ps-block__left"><a href="{{ route('signinform') }}"><i class="icon-user"></i></a></div>
+                      <div class="ps-block__right"><a href="{{ route('signinform') }}">Login</a></div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    <!-- <div class="ps-search--mobile">
+      <form class="ps-form--search-mobile" action="" method="get">
+        <div class="form-group--nest">
+          <input class="form-control" type="text" placeholder="Search something...">
+          <button><i class="icon-magnifier"></i></button>
+        </div>
+      </form>
+    </div> -->
+  </header>
+
     <div class="ps-panel--sidebar" id="cart-mobile">
       <div class="ps-panel__header">
         <h3>Shopping Cart</h3>
@@ -421,4 +638,8 @@
                     </ul>
       </div>
     </div>
+  
+@endif
+
+
   

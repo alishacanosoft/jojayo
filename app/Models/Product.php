@@ -61,6 +61,8 @@ class Product extends Model
         return $this->belongsTo('App\Models\SecondaryCategory', 'category_id');
     }
 
+   
+
     public function productCategory(){
         return $this->belongsTo('App\Models\ProductCategory', 'category_id', 'id');
     }
