@@ -224,14 +224,14 @@
                                 <div class="ps-product__vendor"><strong>Sold by: </strong><a href="#">Vendor STORE</a></div>
                                 <div class="ps-product__vendor"><strong>Category: </strong><a href="{{ route('categories.sec',[isset($rout[$key]) ? $rout[$key]->slug : '',$product_list->productCategory->slug]) }}">{{ $product_list->productCategory->name }}</a></div>
                                 <ul class="ps-product__desc">
-                                {!! shortContent($product_list->specification, 80) !!}
+                                {!! shortContent($product_list->specification, 10) !!} <?php if($product_list->specification) echo"..." ?>
                                 </ul>
                             </div>
                             <div class="ps-product__shopping">
                                 <p class="ps-product__price"> NPR {{ number_format($starting_price['selling_price']) }}</p><a class="ps-btn" href="#">Add to cart</a>
                                 <ul class="ps-product__actions">
-                                <li><a href="#"><i class="icon-heart"> </i>Wishlist</a></li>
-                                <li><a class="btn-quick-view" value="{{ $product_list->id }}" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"> View</i></a></li>
+                                <li><a href="#"><i class="icon-heart"></i>Wishlist</a></li>
+                                <li><a class="btn-quick-view" value="{{ $product_list->id }}" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i>View</a></li>
 
                                 </ul>
                             </div>
