@@ -9742,6 +9742,11 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
     width: 100%;
     margin-right: 0;
   }
+
+  .ps-product__shopping > * {
+    margin-bottom: inherit;
+  }
+
 }
 
 @media (max-width: 375px) {
@@ -17591,6 +17596,7 @@ del.discount-product {
   margin-top: 20px;
 }
 
-.ps-product__sharing a.instagram {
-  color: #833AB4;
+
+.ps-product--detail .ps-product__sharing a.instagram {
+  background-color: #833AB4;
 }
