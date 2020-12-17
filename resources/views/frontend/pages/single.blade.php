@@ -98,7 +98,7 @@
                               @foreach ($pro_imgs as $pro_img)
                                  <div class="item">
                                     <a href="{{ product_img($pro_img) }}">
-                                    <img src="{{ product_img($pro_img) }}" alt="{{$data->slug}}">
+                                    <img src="{{ product_img($pro_img) }}">
                                     </a>
                                  </div>
                               @endforeach
@@ -141,66 +141,62 @@
                         {!! $data->specification !!}
                     </ul>
                   </div>
+              
+                  <div class="ps-product__variations">
 
-                  <div class="row">
-                        <div class="col-lg-5 col-md-5 col-sm-12">
-                           <div class="ps-product__variations">
+                  <!-- <figure>
+                     <figcaption>Color</figcaption>
+                        @php
+                        $unique_product_colors = $data->colors->unique('color_id');
+                        @endphp
+                        @if (!empty($unique_product_colors))
+                        @foreach ($unique_product_colors as $key => $color_data)
+                              <div class="ps-variant ps-variant--color @if($key==0) active @endif" value="{{ $color_data->colorInfo->id }}" style="background:{{ @$color_data->colorInfo->code }}">
+                              <span class="ps-variant__tooltip">{{ $color_data->colorInfo->name }}</span></div>
+                        @endforeach
+                        @endif
+                  </figure> -->
 
-                           <figure>
-                              <figcaption>Color</figcaption>
-                                 @php
-                                 $unique_product_colors = $data->colors->unique('color_id');
-                                 @endphp
-                                 @if (!empty($unique_product_colors))
-                                 @foreach ($unique_product_colors as $key => $color_data)
-                                       <div class="ps-variant ps-variant--color @if($key==0) active @endif" value="{{ $color_data->colorInfo->id }}" style="background:{{ @$color_data->colorInfo->code }}">
-                                       <span class="ps-variant__tooltip">{{ $color_data->colorInfo->name }}</span></div>
-                                 @endforeach
-                                 @endif
-                           </figure>
-                           </div>
-                        </div>
-                        <div class="col-lg-7 col-md-7 col-sm-12">
-                           <div class="ps-product__variations">
-                              <figure>
-                                 <figcaption>Size</figcaption>
-                                 <div class="row">
-                                    <ul class="size_data size-data-ul"></ul>
-                                 </div>
-                              </figure>
-                           </div>
-                        </div>
-                      
-                         
+                     <figure>
+                     <figcaption>Color: <strong> Choose an option</strong></figcaption>
+                     <div class="ps-variant ps-variant--image"><span class="ps-variant__tooltip">Blue</span><img src="../img/products/detail/variants/small-1.jpg" alt=""></div>
+                     <div class="ps-variant ps-variant--image"><span class="ps-variant__tooltip"> Dark</span><img src="../img/products/detail/variants/small-2.jpg" alt=""></div>
+                     <div class="ps-variant ps-variant--image"><span class="ps-variant__tooltip"> Pink</span><img src="../img/products/detail/variants/small-3.jpg" alt=""></div>
+                     </figure>
+
+
+                     <figure>
+                     <figcaption>Size <strong> Choose an option</strong></figcaption>
+                     <div class="ps-variant ps-variant--size"><span class="ps-variant__tooltip">S</span><span class="ps-variant__size">S</span></div>
+                     <div class="ps-variant ps-variant--size"><span class="ps-variant__tooltip"> M</span><span class="ps-variant__size">M</span></div>
+                     <div class="ps-variant ps-variant--size"><span class="ps-variant__tooltip"> L</span><span class="ps-variant__size">L</span></div>
+                     </figure>
 
                   </div>
+                   
 
                   <div class="ps-product__shopping">
-                              <figure>
-                                 <figcaption>Quantity</figcaption>
-                                 <div class="form-group--number">
-                                    <button class="up"><i class="fa fa-plus"></i></button>
-                                    <button class="down"><i class="fa fa-minus"></i></button>
-                                    <span value="{{ @$ids[0] }}"></span>
-                                    <input class="form-control vertical-quantity" type="text" min="1"
-                                       value="1" data-max="">
-                                 </div>
-                              </figure>
-                              <button class="ps-btn ps-btn--black btn-add-cart" value="{{ $data->id }}" data-class="btn-add-cart">Add to
-                              cart</button>
-                              <button class="ps-btn btn-buy-now ps-btn--black" value="{{ $data->id }}" data-class="btn-buy-now">Buy Now</button>
-                         
-                           <div class="available-items">
-                              <p style="color:#c5c5c5;position:relative;top:-9">
-                              <span class="unavailable text-danger bold"></span><span class="available">Only <span id="stock_available">0</span> item(s) available</span>
-                           </p>  
-                        </div>
+                        <figure>
+                           <figcaption>Quantity</figcaption>
+                           <div class="form-group--number">
+                              <button class="up"><i class="fa fa-plus"></i></button>
+                              <button class="down"><i class="fa fa-minus"></i></button>
+                              <span value="{{ @$ids[0] }}"></span>
+                              <input class="form-control vertical-quantity" type="text" min="1"
+                                 value="1" data-max="">
+                           </div>
+                        </figure>
+                        <button class="ps-btn ps-btn--black btn-add-cart" value="{{ $data->id }}" data-class="btn-add-cart">Add to
+                        cart</button>
+                        <button class="ps-btn btn-buy-now ps-btn--black" value="{{ $data->id }}" data-class="btn-buy-now">Buy Now</button>
+                     
+                     <div class="available-items">
+                        <p style="color:#c5c5c5;position:relative;top:-9">
+                        <span class="unavailable text-danger bold"></span><span class="available">Only <span id="stock_available">0</span> item(s) available</span>
+                     </p>  
+                     </div>
                   </div>
-                 
-                       
-        
-
-                
+                                
                   <div class="ps-product__specification">
                     <a class="report" href="#">Report Abuse</a>
                     <p><strong>SKU:</strong> {{ @$data->sku }}</p>
@@ -314,9 +310,7 @@
               <p><i class="icon-receipt"></i> Supplier give bills for this product.</p>
               <p><i class="icon-credit-card"></i> Pay online or when receiving goods</p>
             </aside>
-            <aside class="widget widget_sell-on-site">
-              <p><i class="icon-store"></i> Sell on JoJayo?<a href="#"> Register Now !</a></p>
-            </aside>
+            
             <aside class="widget widget_same-brand">
               <h3>Same Brand</h3>
               <div class="widget__content">
