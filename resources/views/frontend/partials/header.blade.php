@@ -138,8 +138,8 @@
           <div class="header__right">
             <div class="header__actions">
             
-            <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
-              <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::content()->count() }}</i></span></a>
+            <a class="header__extra" href="#"><i class="icon-heart"></i><span><i class="wish-count">{{ Cart::instance('wishlist')->content()->count() }}</i></span></a>
+              <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::instance('cart')->content()->count() }}</i></span></a>
                     <div class="ps-cart__content">
                         <div class="ps-cart__items">
                         @if(!empty(Cart::content()))

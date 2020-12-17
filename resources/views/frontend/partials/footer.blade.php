@@ -335,6 +335,7 @@
     }
     addcart();
 
+    //addWish();
     $(function () {
         var currentVal = '';
         $(".up, .down").on('click', function(){

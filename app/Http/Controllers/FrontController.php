@@ -63,7 +63,7 @@ class FrontController extends Controller
     }
 
     public function index()
-    {
+    { Cart::instance('wishlist')->destroy();
         $latest_products = $this->products->with('colors', 'images')->orderBy('created_at', 'desc')->whereHas('colors', function ($q) {
             $q->whereNull('deleted_at')->where('status',1);
         })->take(12)->get();

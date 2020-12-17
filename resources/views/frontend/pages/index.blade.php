@@ -10,13 +10,13 @@
                  data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000"
                   data-owl-mousedrag="on">
                   @if (!empty($all_slider))
-                            @foreach ($all_slider as $slider_list)
-                            <a href="#">
-                                <div class="ps-banner" data-background="{{ url('/uploads/slider/' . $slider_list->image) }}">
-                                </div>
-                            </a>
-                            @endforeach
-                        @endif
+                    @foreach ($all_slider as $slider_list)
+                      <a href="#">
+                          <div class="ps-banner" data-background="{{ url('/uploads/slider/' . $slider_list->image) }}">
+                          </div>
+                      </a>
+                    @endforeach
+                  @endif
                 </div>
             </div>
             <div class="ps-section__right"><a class="ps-collection" href="#">
@@ -127,9 +127,9 @@
                             -{{ $recent_products->selling_price - $recent_products->flash_price }} NPR </div>
                     @endif
                     <ul class="ps-product__actions">
-                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
+                      <li><a href="{{ route('single-product', $recent_products->product->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                       <li><a href="#" data-placement="top" class="btn-quick-view" value="{{ $recent_products->id }}" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
+                      <li><a href="{{ route('single-product', $recent_products->product->slug) }}" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
                     </ul>
                   </div>
 
@@ -215,7 +215,7 @@
                           <ul class="ps-product__actions">
                             <li><a href="{{ route('single-product', $women_products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                             <li><a href="#" data-placement="top" class="btn-quick-view" value="{{ $women_products->id }}"title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                            <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
+                            <li><a href="{{ route('single-product', $women_products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
                           </ul>
                         </div>
                         <div class="ps-product__container">
@@ -292,7 +292,7 @@
                                           <li><a href="#" data-placement="top" class="btn-quick-view"
                                                   value="{{ $men_products->id }}" title="Quick View" data-toggle="modal"
                                                   data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                          <li><a href="#" data-toggle="tooltip" data-placement="top"
+                                          <li><a href="{{ route('single-product', $men_products->slug) }}" data-toggle="tooltip" data-placement="top"
                                                   title="Add to Whishlist"><i class="icon-heart"></i></a></li>
                                       </ul>
                                   </div>
@@ -364,11 +364,12 @@
                                           <div class="ps-product__badge">-{{ $discount }} NPR </div>
                                       @endif
                                       <ul class="ps-product__actions">
+                                      
                                          <li><a href="{{ route('single-product', $kid_products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                                           <li><a href="#" data-placement="top" class="btn-quick-view"
                                                   value="{{ $kid_products->id }}" title="Quick View" data-toggle="modal"
                                                   data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                          <li><a href="#" data-toggle="tooltip" data-placement="top"
+                                          <li><a href="{{ route('single-product', $kid_products->slug) }}" data-toggle="tooltip" data-placement="top"
                                                   title="Add to Whishlist"><i class="icon-heart"></i></a></li>
                                       </ul>
                                   </div>

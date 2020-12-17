@@ -3,7 +3,7 @@
 <footer>
 <div class="pull-right hidden-xs">
     <b>Version</b> 1.0.0       </div>
-<strong>&copy; <a href="" target="_blank"> E-coomerce website</a>.</strong>
+<strong>&copy; <a href="" target="_blank"> E-commerce website</a>.</strong>
 All rights reserved.
 </footer>
 </div>
@@ -39,7 +39,6 @@ All rights reserved.
 <!-- SELECT2-->
 <script src="/admin/js/select2.min.js"></script>
 <!-- Data Table -->
-
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 <script src="/admin/js/dataTables.buttons.min.js"></script>
 <script src="/admin/js/buttons.print.min.js"></script>

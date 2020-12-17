@@ -761,6 +761,7 @@ class ComposerStaticInit40a3b02a0fe8637a2f0ed73132eefeb7
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Vendor' => __DIR__ . '/../..' . '/app/Models/Vendor.php',
         'App\\Models\\VendorCommission' => __DIR__ . '/../..' . '/app/Models/VendorCommission.php',
+        'App\\Models\\Wishlist' => __DIR__ . '/../..' . '/app/Models/Wishlist.php',
         'App\\Models\\productSession' => __DIR__ . '/../..' . '/app/Models/productSession.php',
         'App\\Officecategory' => __DIR__ . '/../..' . '/app/Officecategory.php',
         'App\\Officevoucher' => __DIR__ . '/../..' . '/app/Officevoucher.php',

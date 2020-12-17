@@ -207,6 +207,8 @@
                               cart</button>
                               <button class="ps-btn btn-buy-now ps-btn--black" value="{{ $data->id }}" data-class="btn-buy-now">Buy Now</button>
                               <div class="ps-product__actions">
+                              <button class="ps-btn ps-btn--black" onclick="addWish({{$data->id}})">Wish</button>
+                              <div class="ps-product__actions">
                               </div>
                            </div>
                         </div>
@@ -521,5 +523,57 @@
        $(this).find('span').html('<i class="fa fa-check" aria-hidden="true"></i>');
    });
    
+
+   // wishlist
+
+   function wishlistCount(){
+        $.ajax({
+            method: "GET",
+            url: "{{ route('wish.count') }}",
+            dataType: 'json',
+            success(response){
+                $('.wish-count').html(response.count);
+            }
+        });
+    }
+    $('.wish-count').html("{{ Cart::instance('wishlist')->content()->count() }}");
+   function addWish(id) {        
+      // let my_var = $(this).attr('data-class');
+      let url = '{{ route("wish.store") }}';
+      var image_src = $(this).closest('figure').find('img').attr('src');
+      let color_id = $('#color_data').attr('value');
+      if(color_id == undefined){
+         toastr.warning('Please select color!');
+         return;
+      }
+      let size_id = $('#size_data').attr('value');
+      if(size_id == undefined){
+         toastr.warning('Please select size!');
+         return;
+      }
+      $.ajax({
+         method: "POST",
+         url: url,
+         dataType: 'json',
+         data: { _token:"{{ csrf_token() }}", id: id, size_id: size_id, color_id:color_id},
+         success(response){
+               $('.ps-product__info').closest('div').find('span').attr('value', response.rowId)
+               $('#productImage').attr('src', image_src);
+               wishlistCount();
+               // updateCart();
+               toastr.success(response.message);
+               // if(my_var == 'btn-buy-now'){
+               // if("\Auth::user() == null || \Auth::user()->roles !== 'customers'"){
+               //    $("#loginModal").modal('show');
+               // } else {
+               //    setTimeout(function() { window.location.replace('/review'); }, 1000);
+               // }                  
+               // }
+         },
+         error: function(response){
+               toastr.error('Something went wrong!');
+         }
+      });        
+   }
 </script>
 @endsection

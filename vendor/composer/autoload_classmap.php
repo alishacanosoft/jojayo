@@ -110,6 +110,7 @@ return array(
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Models\\Vendor' => $baseDir . '/app/Models/Vendor.php',
     'App\\Models\\VendorCommission' => $baseDir . '/app/Models/VendorCommission.php',
+    'App\\Models\\Wishlist' => $baseDir . '/app/Models/Wishlist.php',
     'App\\Models\\productSession' => $baseDir . '/app/Models/productSession.php',
     'App\\Officecategory' => $baseDir . '/app/Officecategory.php',
     'App\\Officevoucher' => $baseDir . '/app/Officevoucher.php',

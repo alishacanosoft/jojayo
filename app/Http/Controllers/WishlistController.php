@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Image;
+use App\Models\Wishlist;
 use App\Models\ProductImages;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
-class CartController extends Controller
+class WishlistController extends Controller
 {
 
-    protected $products = null;
-
-    public function __construct(Product $products, ProductImages $product_images, Image $image){
-      $this->products = $products;
-      $this->product_images = $product_images;
-      $this->image = $image;
+    public function __construct(Product $products, ProductImages $product_images, Image $image, Wishlist $wish){
+        $this->products = $products;
+        $this->product_images = $product_images;
+        $this->image = $image;
+        $this->wish = $wish;
     }
 
     /**
@@ -26,8 +27,7 @@ class CartController extends Controller
      */
     public function index()
     {
-        $my_cart = Cart::content()->groupBy('id');
-        return view('frontend.pages.cart', compact('my_cart'));
+        //
     }
 
     /**
@@ -55,8 +55,18 @@ class CartController extends Controller
         $selected_size = $request->size_id;
         $productimg = $this->product_images->where('product_id', $request->id)->first();
         $prodimage = $this->image->where('imageable_id', $productimg->id)->where('imageable_type','App\Models\ProductImages')->pluck('image')->first();
-        $cart_data = Cart::instance('cart')->add($product_data->id, $product_data->name, 1, $price, ['discount' => $discount, 'image' => $prodimage, 'slug' => $product_data->slug, 'color_id' => $selected_color, 'size_id' => $selected_size])->associate('App\Models\Product');
-        return response()->json(['rowId' => $cart_data->rowId, 'message'=>'Product added to cart!']);
+        $cart_data = Cart::instance('wishlist')->add($product_data->id, $product_data->name, 1, $price, ['discount' => $discount, 'image' => $prodimage, 'slug' => $product_data->slug, 'color_id' => $selected_color, 'size_id' => $selected_size])->associate('App\Models\Product');
+        if(auth()->user() !== null && auth()->user()->roles == 'customers'){
+            $data = array(
+                'product_id' => $request->id,
+                'color_id'   => $selected_color,
+                'size_id'    => $selected_size,
+                'user_id'    => auth()->user()->id
+            );
+            $this->wish->fill($data);
+            $this->wish->save();
+        }
+        return response()->json(['rowId' => $cart_data->rowId, 'message'=>'Product added to wishlist!']);
     }
 
     /**
@@ -88,44 +98,23 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function cartCount(){
-        $cart_count = Cart::instance('cart')->content()->count();
-        $total = Cart::instance('cart')->total();
+    public function wishlistCount(){
+        $cart_count = Cart::instance('wishlist')->content()->count();
+        $total = Cart::instance('wishlist')->total();
         return response()->json(['count' => $cart_count, 'total' => $total]);
     }
 
-    public function updateCart($id, Request $request){
-        
-        $status = Cart::instance('cart')->update($id, $request->quantity);
-        if($status){
-            return response()->json(['status'=>true,'data'=>'Cart updated successfully.']);
-        } else {
-            return response()->json(['status'=>false,'data'=>null]);
-        }
-    }
 
     public function destroy($id)
     {
-        $find = Cart::instance('cart')->get($id);
+        $find = Cart::instance('wishlist')->get($id);
         if($find){
-            $status = Cart::instance('cart')->remove($id);
+            $status = Cart::instance('wishlist')->remove($id);
         }
         if($status == null){
-            return response()->json(['status'=>true,'data'=>'Product removed successfully.']);
+            return response()->json(['status'=>true,'data'=>'Product removed from wishlist.']);
         } else {
             return response()->json(['status'=>false,'data'=>'Something went wrong!']);
         }
     }
-
-    public function destroyCart()
-    {
-        Cart::instance('cart')->destroy();
-        return redirect()->back();
-    }
-
 }

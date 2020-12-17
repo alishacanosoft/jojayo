@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Http\Resources\Json\Resource;
+
 Route::get('logout', 'Auth\LoginController@logout', function () {
     return abort(404);
 });
@@ -166,7 +168,11 @@ Route::get('/get_cart_content/', 'FrontController@cartContent')->name('cart.cont
 
 Route::get('/get_cart_count/', 'CartController@cartCount')->name('cart.count');
 
+Route::get('/wish/get_wishlist_count/', 'WishlistController@wishlistCount')->name('wish.count');
+
 Route::resource('users', 'UserController');
+
+Route::resource('wish', 'wishListController');
 
 Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
 
@@ -313,7 +319,7 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     Route::get('get/transaction/detail', 'FrontController@transaction')->name('transaction');
     Route::post('get/transaction/detail', 'FrontController@updateTransaction')->name('updateTransaction');
 
-    Route::get('/vendor-product/{id}', 'FrontController@getVendorProduct')->name('getVendorProduct');
+    Route::get('/vendor-product/{id}', 'FrontController@getVendorProduct')->name('getVendorProduct');    
 });
 
 Route::group(['middleware' => ['auth', 'customers']], function () {
