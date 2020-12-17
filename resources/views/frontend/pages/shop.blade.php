@@ -161,9 +161,9 @@
                                     <div class="ps-product__thumbnail">
                                     <a href="{{ route('single-product', $product_list->slug) }}"><img src="{{ $product_image ? $product_image : asset('/images/noimage.png')}}" alt="{{$product_list->slug}}"></a>
                                         <ul class="ps-product__actions">
-                                            <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
+                                            <li><a href="{{ route('single-product', $product_list->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                                             <li><a data-placement="top" class="btn-quick-view" value="{{ $product_list->id }}" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                            <li><a data-toggle="tooltip" data-placement="bottom" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
+                                            <li><a href="{{ route('single-product', $product_list->slug) }}" data-toggle="tooltip" data-placement="bottom" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
                                         </ul>
                                     </div>
                                     <?php 
@@ -228,9 +228,9 @@
                                 </ul>
                             </div>
                             <div class="ps-product__shopping">
-                                <p class="ps-product__price"> NPR {{ number_format($starting_price['selling_price']) }}</p><a class="ps-btn" href="#">Add to cart</a>
+                                <p class="ps-product__price"> NPR {{ number_format($starting_price['selling_price']) }}</p><a class="ps-btn" href="{{ route('single-product', $product_list->slug) }}">Add to cart</a>
                                 <ul class="ps-product__actions">
-                                <li><a href="#"><i class="icon-heart"></i>Wishlist</a></li>
+                                <li><a href="{{ route('single-product', $product_list->slug) }}"><i class="icon-heart"></i>Wishlist</a></li>
                                 <li><a class="btn-quick-view" value="{{ $product_list->id }}" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i>View</a></li>
 
                                 </ul>

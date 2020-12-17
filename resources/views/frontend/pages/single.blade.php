@@ -149,92 +149,6 @@
                         @php
                         $unique_product_colors = $data->colors->unique('color_id');
                         @endphp
-<<<<<<< HEAD
-                        &nbsp;
-                        <h4 class="ps-product__price">
-                           NPR 
-                           <price id="selling_price">
-                              {{ number_format($new_price) }}
-                           </price>
-                           <del id="old_price">{{ number_format($old_price) }}</del>
-                        </h4>
-                     </div>
-                     <div class="ps-product__desc single_page">
-                         <!--<p>Sold By:<a href="shop-default.html"><strong> Go Pro</strong></a></p> -->
-                        <div class="accordion" id="accordionExample">
-                           <div id="headingOne">
-                              <h5 class="mb-0">
-                                 <span class="btn btn-block font-13 p-0 transparent" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                 Click to see/hide product description
-                                 </span>
-                              </h5>
-                           </div>
-                           <div id="collapseOne" class="collapse hide fade" aria-labelledby="headingOne" data-parent="#accordionExample">
-                              <div class="card-body">
-                                 {!! $data->specification !!}
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="ps-product__specification">
-                        <a class="report" href="#">Report Abuse</a>
-                        <p><strong>SKU:</strong> {{ @$data->sku }}</p>
-                        <p class="categories"><strong> Categories:</strong>
-                           <a
-                              href="{{route('categories.sec',[$secondary->Secondarycategory->slug, $data->category->name])}}">{{ @$data->category->name }}</a>
-                        </p>
-                        <p></p>
-                        <small class="text-danger bold">May sure you select the correct size and color before adding it to a cart.</small>
-                     </div>
-                     <div class="row">
-                        <div class="col-lg-5 col-md-5 col-sm-12">
-                           <div class="ps-product__variations">
-                              <figure>
-                                 <figcaption>Color</figcaption>
-                                 @php
-                                 $unique_product_colors = $data->colors->unique('color_id');
-                                 @endphp
-                                 @if (!empty($unique_product_colors))
-                                 @foreach ($unique_product_colors as $key => $color_data)
-                                 <div class="ps-variant ps-variant--color @if($key==0) active @endif" value="{{ $color_data->colorInfo->id }}" style="background:{{ @$color_data->colorInfo->code }}"><span
-                                    class="ps-variant__tooltip">{{ $color_data->colorInfo->name }}</span>
-                                 </div>
-                                 @endforeach
-                                 @endif
-                              </figure>
-                           </div>
-                        </div>
-                        <div class="col-lg-7 col-md-7 col-sm-12">
-                           <div class="ps-product__variations">
-                              <figure>
-                                 <figcaption>Size</figcaption>
-                                 <div class="row">
-                                    <ul class="size_data size-data-ul"></ul>
-                                 </div>
-                              </figure>
-                           </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12">
-                           <div class="ps-product__shopping">
-                              <figure>
-                                 <figcaption>Quantity</figcaption>
-                                 <div class="form-group--number">
-                                    <button class="up"><i class="fa fa-plus"></i></button>
-                                    <button class="down"><i class="fa fa-minus"></i></button>
-                                    <span value="{{ @$ids[0] }}"></span>
-                                    <input class="form-control vertical-quantity" type="text" min="1"
-                                       value="1" data-max="">
-                                 </div>
-                              </figure>
-                              <span style="color:#c5c5c5;position:relative;top:-9"><span class="unavailable text-danger bold"></span><span class="available">Only <span id="stock_available">0</span> item(s) available</span></span>
-                              <button class="ps-btn ps-btn--black btn-add-cart" value="{{ $data->id }}" data-class="btn-add-cart">Add to
-                              cart</button>
-                              <button class="ps-btn btn-buy-now ps-btn--black" value="{{ $data->id }}" data-class="btn-buy-now">Buy Now</button>
-                              <div class="ps-product__actions">
-                              <button class="ps-btn ps-btn--black" onclick="addWish({{$data->id}})">Wish</button>
-                              <div class="ps-product__actions">
-                              </div>
-=======
                         @if (!empty($unique_product_colors))
                         @foreach ($unique_product_colors as $key => $color_data)
                               <div class="ps-variant ps-variant--color @if($key==0) active @endif" value="{{ $color_data->colorInfo->id }}" style="background:{{ @$color_data->colorInfo->code }}">
@@ -270,7 +184,6 @@
                               <span value="{{ @$ids[0] }}"></span>
                               <input class="form-control vertical-quantity" type="text" min="1"
                                  value="1" data-max="">
->>>>>>> design
                            </div>
                         </figure>
                         <button class="ps-btn ps-btn--black btn-add-cart" value="{{ $data->id }}" data-class="btn-add-cart">Add to
