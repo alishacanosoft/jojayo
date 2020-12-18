@@ -17620,3 +17620,17 @@ del.discount-product {
 a.btn-quick-view {
   cursor: pointer;
 }
+
+.search-top {
+  width: 100%;
+    display: flex;
+    position: relative;
+}
+
+div#productList ul.no-result {
+  height: 40px;
+}
+
+div#productList ul.result {
+  height: 200px;
+}

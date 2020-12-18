@@ -65,24 +65,23 @@
         }
         .productList{
             position: absolute!important;
-            left: 120.5;
-            top: 41.5;
-            margin-top: 45px;
-            margin-left: 80px;
-            width: 60%;
+            top: 100%;
+            transform: scaleX(1);
+            padding: 0 20px;
             background: #fff!important;
             z-index: 9999!important;
-            height: 200px;
-            overflow: auto;
+            border: 1px solid #ccc;
+            border-top: none;
+            overflow-y: auto;
             display: none;
+            width: 100%;
         }
         .productList li{
             cursor: pointer;
-            padding: 5px;
+            padding: 10px;
             transition: 0.5s;
-            transition-property: background;
-
-        }
+          }
+          
         .productList li:hover{
             background: #000000;
             color: #fff;
@@ -202,11 +201,12 @@
                 </select>
               </div>
 
+            <div class="search-top">
              <input class="form-control" required name="q" id="productSearch" value="{{@$query}}"  type="text" placeholder="I'm shopping for...">
-                        <div id="productList" class="productList">
-
-                        </div>
-                        <button>Search</button>
+                <div id="productList" class="productList">
+                </div>         
+            </div>
+            <button type="submit">Search</button>
             </form>
           </div>
           <div class="header__right">
@@ -414,12 +414,12 @@
                                 @endforeach
                 </select>
               </div>
-
+            <div class="search-top">
              <input class="form-control" required name="q" id="productSearch" value="{{@$query}}"  type="text" placeholder="I'm shopping for...">
                         <div id="productList" class="productList">
-
                         </div>
-                        <button>Search</button>
+            </div>
+                <button type="submit">Search</button>
             </form>
           </div>
           <div class="header__right">
@@ -682,7 +682,7 @@
             <div class="form-group--nest">
                     <input type="hidden" name="category" value="all">
                     <input class="form-control" name="q" id="productSearchMob" value="{{@$query}}" type="text" placeholder="Search something...">
-                    <button><i class="icon-magnifier"></i></button>
+                    <button type="submit"><i class="icon-magnifier"></i></button>
                 </div>
 
               

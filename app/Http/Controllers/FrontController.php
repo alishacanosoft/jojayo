@@ -400,6 +400,8 @@ class FrontController extends Controller
             ->has('sizes')
             ->limit(20)
             ->get();
+       
+
         return view('frontend.pages.search.search', compact('products'));
     }
 
