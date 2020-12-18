@@ -66,6 +66,7 @@
     <link rel="stylesheet" href="{{ asset('/admin/css/style.css') }}" media="screen">
     @yield('styles')
     <script src="/admin/js/bootstrap-toggle.min.js"></script>
+
 </head>
 <script type="text/javascript">
     function startTime() {
