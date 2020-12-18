@@ -17602,3 +17602,14 @@ del.discount-product {
 .ps-product--detail .ps-product__sharing a.instagram {
   background-color: #833AB4;
 }
+
+.ps-product__thumbnail img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.ps-product--detail .ps-product__thumbnail img{
+  width: 100%;
+  height: 100%;
+}
