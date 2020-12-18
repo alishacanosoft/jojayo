@@ -81,7 +81,7 @@
             padding: 10px;
             transition: 0.5s;
           }
-          
+
         .productList li:hover{
             background: #000000;
             color: #fff;
@@ -170,7 +170,8 @@
             <a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt="jojayo-logo"></a>
           </div>
           <div class="header__center">
-            <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="get">
+            <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="post">
+            @csrf
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
                
                 <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
@@ -384,7 +385,8 @@
             <a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt="jojayo-logo"></a>
           </div>
           <div class="header__center">
-            <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="get">
+            <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="post">
+            @csrf
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
                
                 <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
@@ -677,7 +679,8 @@
     <div class="ps-panel--sidebar" id="search-sidebar">
 
         <div class="ps-panel__header">
-            <form class="ps-form--search-mobile" action="{{ route('searchProduct') }}" method="get" autocomplete="off">
+            <form class="ps-form--search-mobile" action="{{ route('searchProduct') }}" method="post" autocomplete="off">
+            @csrf
                
             <div class="form-group--nest">
                     <input type="hidden" name="category" value="all">
