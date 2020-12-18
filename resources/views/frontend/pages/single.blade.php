@@ -460,3 +460,111 @@
     <div class="related-products"></div>
 
 @endsection
+
+@section('scripts')
+<script>
+   let product_id = $('#product_id').attr('value'); 
+   
+   $( document ).ready(function() {
+       $('.ps-variant--color.active')[0].click();
+       setTimeout(function(){
+           $('.size_data li.active')[0].click();
+       }, 1500);
+   });
+   $('.ps-variant--color').on('click', function() {
+       let color_id = $(this).attr('value');
+       $('#color_data').attr('value', color_id);
+       $.ajax({
+           method: "POST",
+           url: "/product-available-size/" + product_id,
+           data: {
+               _token: "{{ csrf_token() }}",
+               _method: "POST",
+               color_id: color_id
+           },
+           success: function(response) {
+               $('.size_data').html('');
+               $.each(response, function(key, value) {
+                   var li_class = '';
+                   if(key == 0){
+                       li_class = "active";
+                   }
+                   $('.size_data').append('<li class="'+li_class+'"><span></span><input type="radio" class="size_id" value="'+response[key]['id']+'" data-colorid="' + response[key]['color_id'] +'"><label for="normal-charge">'+response[key]['name']+'</label> </li>');
+               });
+               
+               $('.size_id').on('click', function() {
+                   let size_id = $(this).attr('value');
+                   let color_id = $(this).data('colorid');
+                   $('#size_data').attr('value', size_id);
+                   $.ajax({
+                       method: "POST",
+                       url: "{{ route('getstock') }}",
+                       data: {
+                           _token: "{{ csrf_token() }}",
+                           _method: "POST",
+                           size_id: size_id,
+                           product_id: product_id,
+                           color_id: color_id
+                       },
+                       success: function(response) {
+                           if (response[0]['stock'] > 0) {
+                               $('#stock_available').html(response[0][
+                                   'stock'
+                               ]);
+                               $('.vertical-quantity').attr('data-max', response[0]['stock']);
+                               $('#selling_price').html(number_format(response[
+                                   0]['selling_price']));
+                               if (response[0]['discount'] != null) {
+                                   discount = response[0]['selling_price'] -
+                                       response[0]['discount'];
+                                   $('#old_price').html(number_format(
+                                       discount));
+                               } else {
+                                   $('#old_price').html('');
+                               }
+                               $('.available').removeClass('hidden');
+                               $('.unavailable').addClass('hidden');
+                               $('.btn-add-cart').prop("disabled",false); 
+                               $('.btn-buy-now').prop("disabled",false);
+                               $('.up').prop("disabled",false); 
+                               $('.down').prop("disabled",false);
+                           } else {    
+                               $('.btn-add-cart').prop("disabled",true); 
+                               $('.btn-buy-now').prop("disabled",true);
+                               $('.up').prop("disabled",true); 
+                               $('.down').prop("disabled",true); 
+                               $('.available').addClass('hidden');
+                               $('.unavailable').removeClass('hidden');
+                               $('.unavailable').text('Out of stock!');
+                               $('#stock').addClass('text-danger');
+                               $('#reload').fadeIn();
+                               $('#product-unavailable').hide(1000);
+                           }
+                       }
+                   });
+               })
+           }
+       });
+   });
+   
+   var btns = $('.ps-product__variations .ps-variant--color');
+   for (var i = 0; i < btns.length; i++) {
+     btns[i].addEventListener("click", function() {
+     var current = document.getElementsByClassName("active");
+     current[0].className = current[0].className.replace(" active", "");
+     this.className += " active";
+     });
+   }
+   
+   $(document).on('click','.size-data-ul li',function(){
+       $('.size-data-ul li').removeClass("active");
+       $('.size-data-ul li span').removeClass("active");
+       $(this).addClass("active");
+       $(this).find('span').addClass("active");
+       //$(this).find('.size_id').attr('checked', 'checked');
+       $(this).find('.size_id')[0].click();
+       $(this).find('span').html('<i class="fa fa-check" aria-hidden="true"></i>');
+   });
+   
+</script>
+@endsection

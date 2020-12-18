@@ -654,6 +654,8 @@
         }
     }
 
+    
+
     function accordion() {
         var accordion = $('.ps-accordion');
         accordion.find('.ps-accordion__content').hide();

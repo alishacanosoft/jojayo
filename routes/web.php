@@ -57,6 +57,9 @@ Route::get('/flash-sales', 'FrontController@flash');
 Route::get('/categories', function () {
     return redirect('/shop');
 });
+
+Route::get('/become-vendor', 'FrontController@becomeVendor');
+
 Route::get('/categories/{name}', 'FrontController@categories')->name('categories');
 Route::get('/categories/{prime_cat}/{name}', 'FrontController@categories')->name('categories.sec');
 Route::get('/shopping-cart', function () {

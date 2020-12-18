@@ -58,7 +58,7 @@
             <ul id="nav">  
                 <li class="yahoo">      
                 <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
-                    <ul style="z-index:1000;min-width:260px">
+                    <ul style="z-index:1000;min-width:260px;margin-top:10px">
                         @if(!empty($primary_categories))
                         @foreach($primary_categories as $prime)
                             @if($prime->secondaryCategories->count() > 0)
@@ -207,7 +207,7 @@
               <ul id="nav">  
                 <li class="yahoo">      
                 <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
-                    <ul style="z-index:1000;min-width:260px">
+                    <ul style="z-index:1000;min-width:260px;margin-top:10px">
                         @if(!empty($primary_categories))
                         @foreach($primary_categories as $prime)
                             @if($prime->secondaryCategories->count() > 0)
@@ -219,19 +219,19 @@
                                         $secondary->name = str_replace("Women's", "", $secondary->name);
                                         $secondary->name = str_replace("Men's", "", $secondary->name);
                                         ?>
-                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }} »</a>
+                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ ucwords($secondary->name) }} »</a>
                                         <ul>
                                             @foreach($secondary->FinalCategory as $final_cat)
                                             <?php
                                             $final_cat->name = str_replace("Women's", "", $final_cat->name);
                                             $final_cat->name = str_replace("Men's", "", $final_cat->name);
                                             ?>
-                                            <li><a href="{{ route('categories.sec', [$secondary->slug,$final_cat->slug]) }}">{{ $final_cat->name }}</a></li>
+                                            <li><a href="{{ route('categories.sec', [$secondary->slug,$final_cat->slug]) }}">{{ ucwords($final_cat->name) }}</a></li>
                                             @endforeach
                                         </ul>
                                         </li>
                                         @else
-                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }}</a></li>
+                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ ucwords($secondary->name) }}</a></li>
                                         @endif
                                     @endforeach                                                                                        
                                 </ul>
@@ -255,7 +255,7 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="#">Sell on JoJayo</a></li>
+              <li><a href="{{url('/become-vendor')}}">Sell on JoJayo</a></li>
              
             </ul>
           </div>
@@ -271,7 +271,7 @@
             <ul id="nav">  
                 <li class="yahoo">      
                 <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
-                    <ul style="z-index:1000;min-width:260px">
+                    <ul style="z-index:1000;min-width:260px;margin-top:10px">
                         @if(!empty($primary_categories))
                         @foreach($primary_categories as $prime)
                             @if($prime->secondaryCategories->count() > 0)
@@ -383,10 +383,9 @@
                     </div>
               </div>
               <div class="ps-block--user-header">
-                <div class="ps-block__left"><i class="icon-user"></i></div>
+               
                 <div class="ps-block__right">
                           
-
                 @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
                 <div class="ps-block--user-header">
                     <div class="dropdown">
@@ -402,8 +401,7 @@
                     </div>
                 </div> 
                 @else
-                <a href="{{ route('signinform') }}">Login & Register</a>
-                    
+                <div class="ps-block__left"><i class="icon-user"></i> <a href="{{ route('signinform') }}">Login & Register</a></div> 
                 @endif
                 
                 
@@ -420,7 +418,7 @@
               <ul id="nav">  
                 <li class="yahoo">      
                 <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
-                    <ul style="z-index:1000;min-width:260px">
+                    <ul style="z-index:1000;min-width:260px;margin-top: 10px;">
                         @if(!empty($primary_categories))
                         @foreach($primary_categories as $prime)
                             @if($prime->secondaryCategories->count() > 0)
@@ -432,19 +430,19 @@
                                         $secondary->name = str_replace("Women's", "", $secondary->name);
                                         $secondary->name = str_replace("Men's", "", $secondary->name);
                                         ?>
-                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }} »</a>
+                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ ucwords($secondary->name) }} »</a>
                                         <ul>
                                             @foreach($secondary->FinalCategory as $final_cat)
                                             <?php
                                             $final_cat->name = str_replace("Women's", "", $final_cat->name);
                                             $final_cat->name = str_replace("Men's", "", $final_cat->name);
                                             ?>
-                                            <li><a href="{{ route('categories.sec', [$secondary->slug,$final_cat->slug]) }}">{{ $final_cat->name }}</a></li>
+                                            <li><a href="{{ route('categories.sec', [$secondary->slug,$final_cat->slug]) }}">{{ ucwords($final_cat->name) }}</a></li>
                                             @endforeach
                                         </ul>
                                         </li>
                                         @else
-                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }}</a></li>
+                                        <li><a href="{{route('categories', $secondary->slug)}}">{{ ucwords($secondary->name) }}</a></li>
                                         @endif
                                     @endforeach                                                                                        
                                 </ul>
@@ -468,7 +466,7 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="#">Sell on JoJayo</a></li>
+              <li><a href="{{url('/become-vendor')}}">Sell on JoJayo</a></li>
              
             </ul>
           </div>
@@ -483,7 +481,7 @@
       </div>
       <div class="header__right">
         <ul class="navigation__extra">
-          <li><a href="#">Sell on JoJayo</a></li>
+          <li><a href="{{url('/become-vendor')}}">Sell on JoJayo</a></li>
           
         </ul>
       </div>
@@ -573,7 +571,7 @@
                                             $secondary->name = str_replace("Men's", "", $secondary->name);
                                         @endphp
                                         <div class="mega-menu__column">
-                                            <h4><a href="{{route('categories', $secondary->slug)}}">{{$secondary->name}}</a><span class="sub-toggle"></span></h4>
+                                            <h4><a href="{{route('categories', $secondary->slug)}}">{{ucwords($secondary->name)}}</a><span class="sub-toggle"></span></h4>
                                             <ul class="mega-menu__list">
                                                 @foreach($secondary->FinalCategory as $final_cat)
                                                     @php
@@ -581,13 +579,13 @@
                                                         $final_cat->name = str_replace("Men's", "", $final_cat->name);
                                                     @endphp
                                                     <li class="current-menu-item ">
-                                                        <a href="{{ route('categories.sec', [$secondary->slug,$final_cat->slug]) }}">{{$final_cat->name}}</a>
+                                                        <a href="{{ route('categories.sec', [$secondary->slug,$final_cat->slug]) }}">{{ucwords($final_cat->name)}}</a>
                                                     </li>
                                                 @endforeach
                                             </ul>
                                         </div>
                                     @else
-                                        <h4><a href="{{route('categories', $secondary->slug)}}">{{$secondary->name}}</a></h4>
+                                        <h4><a href="{{route('categories', $secondary->slug)}}">{{ucwords($secondary->name)}}</a></h4>
                                     @endif
                                 @endforeach
                             </div>

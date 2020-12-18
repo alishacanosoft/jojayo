@@ -28,7 +28,7 @@
         </div>
       
         <div class="ps-layout--shop">
-          <div class="ps-layout__left">
+          <div class="ps-layout__left" >
             <aside class="widget widget_shop">
               <h4 class="widget-title">Categories</h4>
                 <ul class="ps-list--categories">
@@ -63,8 +63,7 @@
             </aside>
             <aside class="widget widget_shop">
             @include('frontend.pages.filters.brands')
-            
-              
+                          
             <figure>
                 <h4 class="widget-title">By Price</h4>
                 <div class="form-row" style="height: 35px;">
@@ -105,7 +104,6 @@
                   <label for="review-5"><span><i class="fa fa-star rate"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><small>(1)</small></label>
                 </div>
               </figure>
-
             
               <figure class="sizes">
                 <h4 class="widget-title">BY SIZE</h4>

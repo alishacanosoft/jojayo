@@ -297,14 +297,19 @@ class FrontController extends Controller
 
         $brands = $this->brand->whereIn('id', $brand_ids)->get();
         $sizes = Size::whereIn('product_category_id', $size_ids)->groupBy('slug')->get();
+        $allcount = $category_product->count();
 
-        return view('frontend.pages.categories', compact('category_product', 'category_slug', 'categories', 'brands', 'sizes', 'requested', 'lastpage'));
+        return view('frontend.pages.categories', compact('category_product','allcount', 'category_slug', 'categories', 'brands', 'sizes', 'requested', 'lastpage'));
         //   $category_slug = $this->product_categories->where('slug', $slug)->pluck('id')->first();
         //   $category_product = $this->products->with('images')->where('category_id', $category_slug)->paginate(12);//dd($category_product);
         //   return view('frontend.pages.categories', compact('category_product'));
     }
 
     
+    public function becomeVendor(){
+        return view('frontend.pages.vendor');
+        
+    }
   
 
     public function page($slug)
@@ -611,6 +616,8 @@ die;
         return view('admin.pages.statement', compact('all_vendor'));
     }
     
+   
+        
     public function getVendorData($id){
         $data = Statement::where('vendor_id', $id)->groupBy('order_created')->get(); //dd($data);
         return view('admin.pages.ajax.date', compact('data'));

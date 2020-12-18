@@ -1208,9 +1208,9 @@ body {
 }
 
 @media (min-width: 1200px) {
-  .container {
+  /* .container {
     min-width: 1230px;
-  }
+  } */
 }
 
 .ps-list--social {
@@ -7068,7 +7068,7 @@ textarea.form-control {
 .widget_shop .ps-checkbox.ps-checkbox--color > label {
   margin: 0;
   padding: 0;
-  width: 30px;
+  width: 40px;
   height: 30px;
   line-height: 30px;
   vertical-align: top;
@@ -11830,10 +11830,13 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-form--account {
-  max-width: 430px;
-  margin: 0 auto;
-  padding-top: 130px;
+  max-width: 394px;
+  margin: 40px auto;
+  padding: 20px 0px;
+  box-shadow: 0px 3px 11px #ECECEC;
 }
+
+
 
 .ps-form--account .ps-tab-list {
   text-align: center;
@@ -13732,7 +13735,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .ps-my-account {
   min-height: 100vh;
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
 }
 
 .ps-order-tracking {
@@ -17350,7 +17353,7 @@ html .bg--parallax {
 	list-style: none;
 	display: block;
 	float: left;
-	height: 40px;
+	height: 50px;
 }
 
 #nav li a{
@@ -17599,4 +17602,21 @@ del.discount-product {
 
 .ps-product--detail .ps-product__sharing a.instagram {
   background-color: #833AB4;
+}
+
+.ps-section__content .ps-product .ps-product__thumbnail a img {
+  height: 138px;
+}
+
+#tab-1 .ps-shopping-product .ps-product .ps-product__thumbnail a img {
+  height: 138px;
+}
+
+.size-product {
+  border: 1px solid #ccc; 
+  background-color: #ffffff;
+}
+
+a.btn-quick-view {
+  cursor: pointer;
 }
