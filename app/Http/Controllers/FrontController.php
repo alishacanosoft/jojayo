@@ -410,6 +410,7 @@ class FrontController extends Controller
         $requested = $this->seperateRequest();
         $query = $request->q;
         $category = $request->category;
+        $catg=$request->q;
         if ($category != 'all')
             $category = $this->getCategoryFromSlug($category);
         $all_products = $this->products->with('images', 'sizes')
@@ -421,10 +422,12 @@ class FrontController extends Controller
             ->sortBrand($request['selected_brands'])
             ->sortSize($request['selected_sizes'])
             ->sortPrice($request['min_price'], $request['max_price'])
-            ->sortProd($request['sort'])
-            ->paginate(12);
+            ->sortProd($request['sort'])->get();
+            // ->paginate(2);
+            
+           
         $selected_category = $category == 'all' ? 'all' : $category->slug;
-        return view('frontend.pages.search.index', compact('all_products', 'requested', 'selected_category', 'query'));
+        return view('frontend.pages.search.index', compact('all_products','requested', 'catg','selected_category', 'query'));
     }
 
     public function sendSms()

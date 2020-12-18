@@ -67,7 +67,7 @@
                 <div class="ps-layout__right">
                     <div class="ps-shopping ps-tab-root">
                         <div class="ps-shopping__header">
-                            <p>{{$allcount}} Products Under: <strong> {{ ucfirst(str_replace('-', '', Request::segment(2))) }}</strong></p>
+                            <p><strong>{{$allcount}}</strong> Products Under: <strong> {{ ucfirst(str_replace('-', '', Request::segment(2))) }}</strong></p>
                             <div class="ps-shopping__actions">
                                 <select class="ps-select" id="onSort">
                                    <option selected disabled>Choose one for filter</option>
@@ -138,11 +138,11 @@
                                 $starting_price = App\Models\ProductSize::where('product_id', $all_products->id)->first();
                                 $product_image = (count($all_products->images)>0)?product_img($all_products->images[0]['images'][0]['image']):'';
                                 @endphp
-                                <div class="ps-product ps-product--wide">
+                                    <div class="ps-product ps-product--wide">
                                         <div class="ps-product__thumbnail"><a href="{{ route('single-product', $all_products->slug) }}"><img src="{{ $product_image }}" alt=""></a>
                                         </div>
                                         <div class="ps-product__container">
-                                            <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $all_products->slug) }}">Men’s Sports Runnning Swim Board Shorts</a>
+                                            <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $all_products->slug) }}">{{ ucwords($all_products->name) }}</a>
                                                 <div class="ps-product__rating">
                                                     <select class="ps-rating" data-read-only="true">
                                                         <option value="1">1</option>
@@ -184,7 +184,8 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <div class="list-group"><a class="list-group-item list-group-item-action" href="#">Sort by</a><a class="list-group-item list-group-item-action" href="#">Sort by average rating</a><a class="list-group-item list-group-item-action" href="#">Sort by latest</a><a class="list-group-item list-group-item-action" href="#">Sort by price: low to high</a><a class="list-group-item list-group-item-action" href="#">Sort by price: high to low</a><a class="list-group-item list-group-item-action text-center" href="#" data-dismiss="modal"><strong>Close</strong></a></div>
+                            <div class="list-group">
+                                <a class="list-group-item list-group-item-action" href="#">Sort by</a><a class="list-group-item list-group-item-action" href="#">Sort by average rating</a><a class="list-group-item list-group-item-action" href="#">Sort by latest</a><a class="list-group-item list-group-item-action" href="#">Sort by price: low to high</a><a class="list-group-item list-group-item-action" href="#">Sort by price: high to low</a><a class="list-group-item list-group-item-action text-center" href="#" data-dismiss="modal"><strong>Close</strong></a></div>
                         </div>
                     </div>
                 </div>
