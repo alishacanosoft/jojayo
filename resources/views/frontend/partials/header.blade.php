@@ -43,8 +43,80 @@
     <link rel="stylesheet" href="{{asset('frontend1/plugins/select2/dist/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('/admin/css/toastr.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend1/css/style.css')}}">
-    
+    <style>
+        /* width */
+        .productList::-webkit-scrollbar {
+        width: 10px;
+        }
+
+        /* Track */
+        .productList::-webkit-scrollbar-track {
+        background: #000!important
+        }
+
+        /* Handle */
+        .productList::-webkit-scrollbar-thumb {
+        background: #888;
+        }
+
+        /* Handle on hover */
+        .productList::-webkit-scrollbar-thumb:hover {
+        background: #555;
+        }
+        .productList{
+            position: absolute!important;
+            left: 120.5;
+            top: 41.5;
+            margin-top: 45px;
+            margin-left: 80px;
+            width: 60%;
+            background: #fff!important;
+            z-index: 9999!important;
+            height: 200px;
+            overflow: auto;
+            display: none;
+        }
+        .productList li{
+            cursor: pointer;
+            padding: 5px;
+            transition: 0.5s;
+            transition-property: background;
+
+        }
+        .productList li:hover{
+            background: #000000;
+            color: #fff;
+        }
+        
+        .productListMob li{
+            padding: 5px 15px;
+            border-bottom: 1px solid #000;
+        }
+        @media (min-width: 576px){
+            #loginModal .modal-dialog {
+                max-width: 394;
+            }
+        }
+        #loginModal .ps-form--account{
+            box-shadow:none;
+        }
+        .top-bar{
+            background: #f1f1f1;
+        }
+        .menu.text-right > li > a{
+            padding: 5px 10px;
+            font-size:13px;
+            color:#000;
+        }
+      .font-13{
+          font-size: 13px;
+      } 
+      .font-weight-normal{
+          font-weight: normal;
+      }
+    </style>
     @yield('styles')
+
 </head>
 
 <body>
