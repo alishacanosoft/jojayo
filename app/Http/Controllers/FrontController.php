@@ -96,6 +96,9 @@ class FrontController extends Controller
     public function singleProduct($slug)
     {
         $data = $this->products->with('colors')->where('slug', $slug)->first();
+        $brand_products = Product::where('brand_id', '=', $data->brand_id)->where('status','verified')->with('images')
+        ->where('id', '!=', $data->id)
+        ->take(2)->get();
         $secondary = $this->product_categories->with('Secondarycategory')->where('id', $data->category_id)->first();
         $pro_imgs = array();
         foreach ($data->images as $image) {
@@ -115,7 +118,7 @@ class FrontController extends Controller
             ->where('id', '!=', $productId)
             ->take(10)->get();
         $image_id = $this->product_image->where('product_id', $data->id)->groupBy('color_id')->distinct()->get();
-        return view('frontend.pages.single', compact('data', 'related', 'ids', 'image_id', 'pro_imgs','secondary'));
+        return view('frontend.pages.single', compact('data', 'related', 'ids', 'image_id', 'pro_imgs','secondary','brand_products'));
     }
 
     public function warranty(Request $request)

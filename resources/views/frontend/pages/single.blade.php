@@ -25,9 +25,9 @@
 
               <div class="ps-product__shopping">
                  <span class="ps-product__price"><span>NPR {{ number_format($new_price) }}</span>
-                  <del>NPR {{ number_format($old_price) }}</del></span>
-                  
-                  <a class="ps-btn btn-add-cart" value="{{ $data->id }}" data-class="btn-add-cart"> Add to Cart</a></div>
+                  <del>NPR {{ number_format($old_price) }}</del></span>                  
+                  <a class="ps-btn btn-add-cart" value="{{ $data->id }}" data-class="btn-add-cart"> Add to Cart</a>
+              </div>
             </div>
           </article>
         </div>
@@ -116,27 +116,27 @@
                         @endif
                   </div>
                 </div>
-                <div class="ps-product__info">
+                <div class="ps-product__info" id="product_id" value="{{ $data->id }}">
                   <h1>{{ ucwords($data->name) }}</h1>
                   <div class="ps-product__meta">
                      @if (!empty($data->brand_id) && $data->brand->name !== 'No Brand')
                         <p>Brand: <a href="#">{{ @$data->brand->name }}</a></p>
                         @endif
                     <div class="ps-product__rating">
-                                  <select class="ps-rating" data-read-only="true">
-                                    <option value="1">1</option>
-                                    <option value="1">2</option>
-                                    <option value="1">3</option>
-                                    <option value="1">4</option>
-                                    <option value="2">5</option>
-                                  </select><span>(1 review)</span>
+                        <select class="ps-rating" data-read-only="true">
+                          <option value="1">1</option>
+                          <option value="1">2</option>
+                          <option value="1">3</option>
+                          <option value="1">4</option>
+                          <option value="2">5</option>
+                        </select><span>(1 review)</span>
                     </div>
                   </div>
                   <h4 class="ps-product__price"><span><strong>NPR</strong> {{ number_format($new_price) }}</span>
                   <del>NPR {{ number_format($old_price) }}</del></h4>
 
                   <div class="ps-product__desc">
-                    <p>Sold By:<a href="#"><strong> Vendor name</strong></a></p>
+                    <p>Sold By:<a href="#"><strong> {{ $data->VendorName->company }}</strong></a></p>
                     <ul class="ps-list--dot">
                         {!! $data->specification !!}
                     </ul>
@@ -157,21 +157,26 @@
                         @endif
                   </figure> -->
 
-                     <figure>
+                     <figure id="color_data">
                      <figcaption>Color: <strong> Choose an option</strong></figcaption>
-                     <div class="ps-variant ps-variant--image"><span class="ps-variant__tooltip">Blue</span><img src="../img/products/detail/variants/small-1.jpg" alt=""></div>
-                     <div class="ps-variant ps-variant--image"><span class="ps-variant__tooltip"> Dark</span><img src="../img/products/detail/variants/small-2.jpg" alt=""></div>
-                     <div class="ps-variant ps-variant--image"><span class="ps-variant__tooltip"> Pink</span><img src="../img/products/detail/variants/small-3.jpg" alt=""></div>
+                     @php
+                      $unique_product_colors = $data->colors->unique('color_id');
+                      @endphp
+                      @if (!empty($unique_product_colors))
+                      @foreach ($unique_product_colors as $key => $color_data)
+                      @php 
+                      $image = App\Models\ProductImages::with('images')->where('product_id', $data->id)->where('color_id', $color_data->color_id)->first();
+                      @endphp
+                     <div class="ps-variant ps-variant--image @if($key == 0)first @endif" value="{{ $color_data->color_id }}"><span class="ps-variant__tooltip">{{ $color_data->colorInfo->name }}</span><img src="{{ product_img($image->images[0]['image']) }}" alt=""></div>
+                     @endforeach
+                      @endif
                      </figure>
 
 
-                     <figure>
+                     <figure id="size_data">
                      <figcaption>Size <strong> Choose an option</strong></figcaption>
-                     <div class="ps-variant ps-variant--size"><span class="ps-variant__tooltip">S</span><span class="ps-variant__size">S</span></div>
-                     <div class="ps-variant ps-variant--size"><span class="ps-variant__tooltip"> M</span><span class="ps-variant__size">M</span></div>
-                     <div class="ps-variant ps-variant--size"><span class="ps-variant__tooltip"> L</span><span class="ps-variant__size">L</span></div>
+                     <ul class="size_data size-data-ul"></ul>                     
                      </figure>
-
                   </div>
                    
 
@@ -206,10 +211,10 @@
                     <p><small class="text-danger bold">May sure you select the correct size and color before adding it to a cart.</small><p>
                   </div>
                   <div class="ps-product__sharing">
-                     <a class="facebook" href="#"><i class="fa fa-facebook"></i></a>
-                     <a class="twitter" href="#"><i class="fa fa-twitter"></i></a>
-                     <a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-                     <a class="instagram" href="#"><i class="fa fa-instagram"></i></a>
+                    <a class="facebook" value="{{ $data->id }}" onclick='fbShare("{{ URL('/')}}/{{$data->slug }}")'><i class="fa fa-facebook"></i></a>
+                    <a class="twitter" value="{{ $data->id }}" onclick='twitShare("{{ URL('/')}}/{{$data->slug }}","{{ $data->name }}")'><i class="fa fa-twitter"></i></a>
+                    <a class="whatsapp" value="{{ $data->id }}" onclick='whatsappShare("{{ URL('/')}}/{{$data->slug }}","{{ $data->name }}")'><i class="fa fa-whatsapp"></i></a>
+                    <a class="google" value="{{ $data->id }}" href="mailto:?subject={{ $data->name }}...&amp;body={!! shortContent($data->description, 20) !!}...{{ URL('/')."/".$data->slug }}"><i class="fa fa-envelope"></i></a>
                   </div>
                 </div>
               </div>
@@ -312,62 +317,44 @@
             </aside>
             
             <aside class="widget widget_same-brand">
-              <h3>Same Brand</h3>
+              <h3>Same brand products</h3>
               <div class="widget__content">
-                            <div class="ps-product">
-                              <div class="ps-product__thumbnail"><a href="#"><img src="../img/products/shop/5.jpg" alt=""></a>
-                                <div class="ps-product__badge">-37%</div>
-                                <ul class="ps-product__actions">
-                                  <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                  <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                  <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                </ul>
-                              </div>
-                              <div class="ps-product__container"><a class="ps-product__vendor" href="#">Robert's Store</a>
-                                <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Grand Slam Indoor Of Show Jumping Novel</a>
-                                  <div class="ps-product__rating">
-                                                <select class="ps-rating" data-read-only="true">
-                                                  <option value="1">1</option>
-                                                  <option value="1">2</option>
-                                                  <option value="1">3</option>
-                                                  <option value="1">4</option>
-                                                  <option value="2">5</option>
-                                                </select><span>01</span>
-                                  </div>
-                                  <p class="ps-product__price sale">$32.99 <del>$41.00 </del></p>
-                                </div>
-                                <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Grand Slam Indoor Of Show Jumping Novel</a>
-                                  <p class="ps-product__price sale">$32.99 <del>$41.00 </del></p>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="ps-product">
-                              <div class="ps-product__thumbnail"><a href="#"><img src="../img/products/shop/6.jpg" alt=""></a>
-                                <div class="ps-product__badge">-5%</div>
-                                <ul class="ps-product__actions">
-                                  <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                                  <li><a href="#" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
-                                  <li><a href="#" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
-                                </ul>
-                              </div>
-                              <div class="ps-product__container"><a class="ps-product__vendor" href="#">Youngshop</a>
-                                <div class="ps-product__content"><a class="ps-product__title" href="product-default.html">Sound Intone I65 Earphone White Version</a>
-                                  <div class="ps-product__rating">
-                                                <select class="ps-rating" data-read-only="true">
-                                                  <option value="1">1</option>
-                                                  <option value="1">2</option>
-                                                  <option value="1">3</option>
-                                                  <option value="1">4</option>
-                                                  <option value="2">5</option>
-                                                </select><span>01</span>
-                                  </div>
-                                  <p class="ps-product__price sale">$100.99 <del>$106.00 </del></p>
-                                </div>
-                                <div class="ps-product__content hover"><a class="ps-product__title" href="product-default.html">Sound Intone I65 Earphone White Version</a>
-                                  <p class="ps-product__price sale">$100.99 <del>$106.00 </del></p>
-                                </div>
-                              </div>
-                            </div>
+                @if(!empty($brand_products))
+                @foreach($brand_products as $b_pro)
+                @php                  
+                $starting_price = App\Models\ProductSize::where('product_id', $b_pro->id)->first();
+                $discount = $starting_price['discount'];
+                $total_price = $starting_price['selling_price'] - $discount;                  
+                @endphp 
+                <div class="ps-product">
+                  <div class="ps-product__thumbnail"><a href="{{ route('single-product', $b_pro->slug) }}"><img src="{{ product_img($b_pro->images[0]->images[0]['image']) }}" alt=""></a>
+                    @if($discount > 0)<div class="ps-product__badge">NPR {{ $discount }} </div>@endif
+                    <ul class="ps-product__actions">
+                      <li><a href="{{ route('single-product', $b_pro->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
+                      <li><a href="#" class="btn-quick-view" value="{{ $b_pro->id }}" data-placement="top" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
+                      <li><a href="{{ route('single-product', $b_pro->slug) }}" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
+                    </ul>
+                  </div>
+                  <div class="ps-product__container"><a class="ps-product__vendor" href="">{{ $b_pro->VendorName->company }}</a>
+                    <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $b_pro->slug) }}">{{ $b_pro->name }}</a>
+                      <div class="ps-product__rating">
+                        <select class="ps-rating" data-read-only="true">
+                          <option value="1">1</option>
+                          <option value="1">2</option>
+                          <option value="1">3</option>
+                          <option value="1">4</option>
+                          <option value="2">5</option>
+                        </select><span>01</span>
+                      </div>
+                      <p class="ps-product__price sale">NPR {{ $total_price }} @if($discount > 0)<del>NPR {{ $starting_price->selling_price }} @endif</del></p>
+                    </div>
+                    <div class="ps-product__content hover"><a class="ps-product__title" href="{{ route('single-product', $b_pro->slug) }}">{{ $b_pro->name }}</a>
+                      <p class="ps-product__price sale">NPR {{ $total_price }} @if($discount > 0)<del>NPR {{ $starting_price->selling_price }} @endif</p>
+                    </div>
+                  </div>
+                </div>
+                @endforeach
+                @endif
               </div>
             </aside>
           </div>
@@ -453,4 +440,128 @@
 
     <div class="related-products"></div>
 
+@endsection
+@section('scripts')
+<script>
+
+   let product_id = $('#product_id').attr('value'); 
+   
+   $( document ).ready(function() {
+       $('.ps-variant--image.first')[0].click();
+       setTimeout(function(){
+           $('.size_data li.active')[0].click();
+       }, 1500);
+   });
+   $('.ps-variant--image').on('click', function() {
+       let color_id = $(this).attr('value');
+       $('#color_data').attr('value', color_id);
+       $.ajax({
+           method: "POST",
+           url: "/product-available-size/" + product_id,
+           data: {
+               _token: "{{ csrf_token() }}",
+               _method: "POST",
+               color_id: color_id
+           },
+           success: function(response) { console.log(response)
+               $('.size_data').html('');
+               $.each(response, function(key, value) {
+                   var li_class = '';
+                   if(key == 0){
+                       li_class = "active";
+                   }
+                   
+                   //$('.size_data').append('<li class="'+li_class+'"><span></span><input type="radio" class="size_id" value="'+response[key]['id']+'" data-colorid="' + response[key]['color_id'] +'"><label for="normal-charge">'+response[key]['name']+'</label> </li>');
+                   $('.size_data').append('<li class="'+li_class+' size_id" value="'+response[key]['id']+'" data-colorid="' + response[key]['color_id'] +'"><span class="data-tag"><div class="ps-variant ps-variant--size"><span class="ps-variant__tooltip">S</span><span class="ps-variant__size">'+response[key]['name']+'</span></div></span></li>');
+               });
+               
+               $('.size_id').on('click', function() {
+                   let size_id = $(this).attr('value');
+                   let color_id = $(this).data('colorid');
+                   $('#size_data').attr('value', size_id);
+                   $.ajax({
+                       method: "POST",
+                       url: "{{ route('getstock') }}",
+                       data: {
+                           _token: "{{ csrf_token() }}",
+                           _method: "POST",
+                           size_id: size_id,
+                           product_id: product_id,
+                           color_id: color_id
+                       },
+                       success: function(response) {
+                           if (response[0]['stock'] > 0) {
+                               $('#stock_available').html(response[0][
+                                   'stock'
+                               ]);
+                               $('.vertical-quantity').attr('data-max', response[0]['stock']);
+                               $('#selling_price').html(number_format(response[
+                                   0]['selling_price']));
+                               if (response[0]['discount'] != null) {
+                                   discount = response[0]['selling_price'] -
+                                       response[0]['discount'];
+                                   $('#old_price').html(number_format(
+                                       discount));
+                               } else {
+                                   $('#old_price').html('');
+                               }
+                               $('.available').removeClass('hidden');
+                               $('.unavailable').addClass('hidden');
+                               $('.btn-add-cart').prop("disabled",false); 
+                               $('.btn-buy-now').prop("disabled",false);
+                               $('.up').prop("disabled",false); 
+                               $('.down').prop("disabled",false);
+                           } else {    
+                               $('.btn-add-cart').prop("disabled",true); 
+                               $('.btn-buy-now').prop("disabled",true);
+                               $('.up').prop("disabled",true); 
+                               $('.down').prop("disabled",true); 
+                               $('.available').addClass('hidden');
+                               $('.unavailable').removeClass('hidden');
+                               $('.unavailable').text('Out of stock!');
+                               $('#stock').addClass('text-danger');
+                               $('#reload').fadeIn();
+                               $('#product-unavailable').hide(1000);
+                           }
+                       }
+                   });
+               })
+           }
+       });
+   });
+   
+   var btns = $('.ps-variant--image');
+   for (var i = 0; i < btns.length; i++) {
+     btns[i].addEventListener("click", function() {
+     var current = document.getElementsByClassName("active");
+     current[0].className = current[0].className.replace("active", "");
+     this.className += "active";
+     });
+   }
+   
+   $(document).on('click','.size-data-ul li',function(){
+       $('.size-data-ul li').removeClass("active");
+       $('.size-data-ul li span').removeClass("active");
+       $(this).addClass("active");
+       $(this).find('span').addClass("active");
+       //$(this).find('.size_id').attr('checked', 'checked');
+       $(this).find('.size_id')[0].click();
+       $(this).find('span').html('<i class="fa fa-check" aria-hidden="true"></i>');
+   });
+   
+  function fbShare(url) {
+    window.open("https://www.facebook.com/sharer/sharer.php?u=" + url, "_blank", "toolbar=no, scrollbars=yes, resizable=yes, top=200, left=500, width=600, height=400");
+  }
+  function twitShare(url, title) {
+      window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(title) + "+" + url + " via @jojayo", "_blank", "toolbar=no, scrollbars=yes, resizable=yes, top=200, left=500, width=600, height=400");
+  }
+  function whatsappShare(url, title) {
+      message = title + " " + url;
+      window.open("https://api.whatsapp.com/send?text=" + message);
+  }
+  function googleplusShare(url) {
+      window.open("https://plus.google.com/share?url=" + url, "_blank", "toolbar=no, scrollbars=yes, resizable=yes, top=200, left=500, width=600, height=400");
+  }
+  
+</script>
 @endsection

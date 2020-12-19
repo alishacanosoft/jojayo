@@ -108,15 +108,14 @@
                
               @if (!empty($flash))
                 @foreach ($flash as $recent_products)
-                    @php
-                    $starting_price = App\Models\ProductSize::where('product_id',
-                    $recent_products->product_id)->first();
-                    $total_price = $recent_products->selling_price;
-                    $product_image = App\Models\ProductImages::where('product_id',
-                    $recent_products->product_id)->where('color_id', $recent_products->color_id)->first();
-                    $image = App\Models\Image::where('imageable_id', $product_image->id)->first();
-                    @endphp
-
+                @php
+                $starting_price = App\Models\ProductSize::where('product_id',
+                $recent_products->product_id)->first();
+                $total_price = $recent_products->selling_price;
+                $product_image = App\Models\ProductImages::where('product_id',
+                $recent_products->product_id)->where('color_id', $recent_products->color_id)->first();
+                $image = App\Models\Image::where('imageable_id', $product_image->id)->first();
+                @endphp
                 <div class="ps-product ps-product--inner">
                   <div class="ps-product__thumbnail">
                     <a href="{{ route('single-product', $recent_products->product->slug) }}">
@@ -165,21 +164,6 @@
         </div>
       @endif
 
-  
-    <!-- <div class="ps-home-ads">
-                    <div class="ps-container">
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 "><a class="ps-collection" href="#"><img src="/frontend/images/collection/home-1/1.jpg" alt=""></a>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 "><a class="ps-collection" href="#"><img src="/frontend/images/collection/home-1/2.jpg" alt=""></a>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 "><a class="ps-collection" href="#"><img src="/frontend/images/collection/home-1/3.jpg" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-      
-
         <!-- Women's Fashion -->
                 
       <div class="ps-product-list ps-clothings">
@@ -214,7 +198,7 @@
 
                           <ul class="ps-product__actions">
                             <li><a href="{{ route('single-product', $women_products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
-                            <li><a href="#" data-placement="top" class="btn-quick-view" value="{{ $women_products->id }}"title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
+                            <li><a href="#" data-placement="top" class="btn-quick-view" value="{{ $women_products->id }}" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
                             <li><a href="{{ route('single-product', $women_products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
                           </ul>
                         </div>

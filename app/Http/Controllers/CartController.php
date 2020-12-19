@@ -101,7 +101,7 @@ class CartController extends Controller
 
     public function updateCart($id, Request $request){
         
-        $status = Cart::instance('cart')->update($id, $request->quantity);
+        $status = Cart::instance('cart')->update($id, $request->quantity); dd($status);
         if($status){
             return response()->json(['status'=>true,'data'=>'Cart updated successfully.']);
         } else {

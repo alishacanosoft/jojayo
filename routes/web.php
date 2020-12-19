@@ -166,9 +166,9 @@ Route::post('get-stock/', 'ProductSizeController@getstock')->name('getstock');
 
 Route::get('user/address/{id}', 'AddressBookController@userAddress')->name('user.address');
 
-Route::get('/get_cart_content/', 'FrontController@cartContent')->name('cart.content');
+Route::get('/auth/get_cart_content/', 'FrontController@cartContent')->name('cart.content');
 
-Route::get('/get_cart_count/', 'CartController@cartCount')->name('cart.count');
+Route::get('/auth/get_cart_count/', 'CartController@cartCount')->name('cart.count');
 
 Route::get('/wish/get_wishlist_count/', 'WishlistController@wishlistCount')->name('wish.count');
 
