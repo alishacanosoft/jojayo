@@ -11,6 +11,7 @@ use App\Models\City;
 use App\Models\Area;
 use App\Models\AddressBook;
 use App\Models\Page;
+use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\CategoryBrand;
 use App\Models\Size;
@@ -25,6 +26,7 @@ use GuzzleHttp\Client;
 use App\Service\ProductService;
 use App\Service\SparrowService;
 use App\Models\Vendor;
+use App\Models\Category;
 use App\Models\Statement;
 
 class FrontController extends Controller
@@ -43,9 +45,14 @@ class FrontController extends Controller
     protected $product_image = null;
     protected $slider = null;
     protected $vendor = null;
+    protected $blog = null;
+    protected $bcategory = null;
 
-    public function __construct(ProductSize $product_sizes, Slider $slider, ProductImages $product_image, ProductCategory $product_categories, Product $products, Region $regions, City $city, Area $area, AddressBook $address_book, Brand $brand, SecondaryCategory $secondary_categories, Page $page, CategoryBrand $category_brand, Vendor $vendor)
+
+    public function __construct(Category $bcategory,Blog $blog,ProductSize $product_sizes, Slider $slider, ProductImages $product_image, ProductCategory $product_categories, Product $products, Region $regions, City $city, Area $area, AddressBook $address_book, Brand $brand, SecondaryCategory $secondary_categories, Page $page, CategoryBrand $category_brand, Vendor $vendor)
     {
+        $this->bcategory = $bcategory;
+        $this->blog = $blog;
         $this->product_categories = $product_categories;
         $this->secondary_categories = $secondary_categories;
         $this->products = $products;
@@ -118,6 +125,34 @@ class FrontController extends Controller
         return view('frontend.pages.single', compact('data', 'related', 'ids', 'image_id', 'pro_imgs','secondary'));
     }
 
+    public function blogs(){
+        $bcategories = $this->bcategory->get();
+        $allPosts = $this->blog->orderBy('title', 'asc')->paginate(5);
+        $latestPosts = $this->blog->orderBy('created_at', 'DESC')->take(5)->get();
+        return view('frontend.pages.blogs',compact('allPosts','latestPosts','bcategories'));
+    }
+
+    public function blogSingle($slug){
+       
+        
+        $singleBlog = $this->blog->where('slug', $slug)->first();
+        if(empty($singleBlog->category_id)){
+        return redirect('/blogs');
+        }
+        $catid = $singleBlog->category_id;
+        $relatedBlogs = Blog::where('category_id', '=', $catid)->take(3)->get();
+        return view('frontend.pages.blog-single',compact('singleBlog','relatedBlogs'));
+    }
+
+    public function blogCategories($slug){
+        $bcategory = $this->bcategory->where('slug', $slug)->first();
+        $catid = $bcategory->id;
+        $cat_name = $bcategory->name;
+        $allPosts = $this->blog->where('category_id', $catid)->orderBy('title', 'asc')->paginate(5);
+        $bcategories = $this->bcategory->get();
+        $latestPosts = $this->blog->orderBy('created_at', 'DESC')->take(5)->get();
+        return view('frontend.pages.blog-categories',compact('allPosts','cat_name','latestPosts','bcategories'));
+    }
     public function warranty(Request $request)
     {
         $data = $this->product_categories->where('id', $request->mycat)->first();

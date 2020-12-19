@@ -258,7 +258,10 @@
           </div>
         </div>
       </div>
-    </div>
+</div>
+
+<div class="related-products"></div>
+
 
 
 
