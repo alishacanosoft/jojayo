@@ -200,6 +200,12 @@
                         <span class="unavailable text-danger bold"></span><span class="available">Only <span id="stock_available">0</span> item(s) available</span>
                      </p>  
                      </div>
+
+                    <div class="ps-product__actions">
+                    <a href="#"><i class="icon-heart"></i></a>
+                    <a href="#"><i class="icon-eye"></i></a>
+                    </div>
+
                   </div>
                                 
                   <div class="ps-product__specification">

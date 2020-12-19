@@ -11,6 +11,7 @@ use App\Models\City;
 use App\Models\Area;
 use App\Models\AddressBook;
 use App\Models\Page;
+use App\Models\Blog;
 use App\Models\Brand;
 use App\Models\CategoryBrand;
 use App\Models\Size;
@@ -25,6 +26,7 @@ use GuzzleHttp\Client;
 use App\Service\ProductService;
 use App\Service\SparrowService;
 use App\Models\Vendor;
+use App\Models\Category;
 use App\Models\Statement;
 
 class FrontController extends Controller
@@ -43,9 +45,14 @@ class FrontController extends Controller
     protected $product_image = null;
     protected $slider = null;
     protected $vendor = null;
+    protected $blog = null;
+    protected $bcategory = null;
 
-    public function __construct(ProductSize $product_sizes, Slider $slider, ProductImages $product_image, ProductCategory $product_categories, Product $products, Region $regions, City $city, Area $area, AddressBook $address_book, Brand $brand, SecondaryCategory $secondary_categories, Page $page, CategoryBrand $category_brand, Vendor $vendor)
+
+    public function __construct(Category $bcategory,Blog $blog,ProductSize $product_sizes, Slider $slider, ProductImages $product_image, ProductCategory $product_categories, Product $products, Region $regions, City $city, Area $area, AddressBook $address_book, Brand $brand, SecondaryCategory $secondary_categories, Page $page, CategoryBrand $category_brand, Vendor $vendor)
     {
+        $this->bcategory = $bcategory;
+        $this->blog = $blog;
         $this->product_categories = $product_categories;
         $this->secondary_categories = $secondary_categories;
         $this->products = $products;
@@ -121,6 +128,34 @@ class FrontController extends Controller
         return view('frontend.pages.single', compact('data', 'related', 'ids', 'image_id', 'pro_imgs','secondary','brand_products'));
     }
 
+    public function blogs(){
+        $bcategories = $this->bcategory->get();
+        $allPosts = $this->blog->orderBy('title', 'asc')->paginate(5);
+        $latestPosts = $this->blog->orderBy('created_at', 'DESC')->take(5)->get();
+        return view('frontend.pages.blogs',compact('allPosts','latestPosts','bcategories'));
+    }
+
+    public function blogSingle($slug){
+       
+        
+        $singleBlog = $this->blog->where('slug', $slug)->first();
+        if(empty($singleBlog->category_id)){
+        return redirect('/blogs');
+        }
+        $catid = $singleBlog->category_id;
+        $relatedBlogs = Blog::where('category_id', '=', $catid)->take(3)->get();
+        return view('frontend.pages.blog-single',compact('singleBlog','relatedBlogs'));
+    }
+
+    public function blogCategories($slug){
+        $bcategory = $this->bcategory->where('slug', $slug)->first();
+        $catid = $bcategory->id;
+        $cat_name = $bcategory->name;
+        $allPosts = $this->blog->where('category_id', $catid)->orderBy('title', 'asc')->paginate(5);
+        $bcategories = $this->bcategory->get();
+        $latestPosts = $this->blog->orderBy('created_at', 'DESC')->take(5)->get();
+        return view('frontend.pages.blog-categories',compact('allPosts','cat_name','latestPosts','bcategories'));
+    }
     public function warranty(Request $request)
     {
         $data = $this->product_categories->where('id', $request->mycat)->first();
@@ -300,14 +335,19 @@ class FrontController extends Controller
 
         $brands = $this->brand->whereIn('id', $brand_ids)->get();
         $sizes = Size::whereIn('product_category_id', $size_ids)->groupBy('slug')->get();
+        $allcount = $category_product->count();
 
-        return view('frontend.pages.categories', compact('category_product', 'category_slug', 'categories', 'brands', 'sizes', 'requested', 'lastpage'));
+        return view('frontend.pages.categories', compact('category_product','allcount', 'category_slug', 'categories', 'brands', 'sizes', 'requested', 'lastpage'));
         //   $category_slug = $this->product_categories->where('slug', $slug)->pluck('id')->first();
         //   $category_product = $this->products->with('images')->where('category_id', $category_slug)->paginate(12);//dd($category_product);
         //   return view('frontend.pages.categories', compact('category_product'));
     }
 
     
+    public function becomeVendor(){
+        return view('frontend.pages.vendor');
+        
+    }
   
 
     public function page($slug)
@@ -398,14 +438,19 @@ class FrontController extends Controller
             ->has('sizes')
             ->limit(20)
             ->get();
+       
+
         return view('frontend.pages.search.search', compact('products'));
     }
 
     public function searchProduct(Request $request)
     {
+        // dd("hello");
+        // die();
         $requested = $this->seperateRequest();
         $query = $request->q;
         $category = $request->category;
+        $catg=$request->q;
         if ($category != 'all')
             $category = $this->getCategoryFromSlug($category);
         $all_products = $this->products->with('images', 'sizes')
@@ -413,14 +458,16 @@ class FrontController extends Controller
             ->when($category != 'all', function ($q) use ($category) {
                 $q->where('category_id', $category->id);
             })
-            ->where('sizes')
+            ->has('sizes')
             ->sortBrand($request['selected_brands'])
             ->sortSize($request['selected_sizes'])
             ->sortPrice($request['min_price'], $request['max_price'])
             ->sortProd($request['sort'])
-            ->paginate(12);
+            ->paginate(2);
+            
+           
         $selected_category = $category == 'all' ? 'all' : $category->slug;
-        return view('frontend.pages.search.index', compact('all_products', 'requested', 'selected_category', 'query'));
+        return view('frontend.pages.search.index', compact('all_products','requested', 'catg','selected_category', 'query'));
     }
 
     public function sendSms()
@@ -614,6 +661,8 @@ die;
         return view('admin.pages.statement', compact('all_vendor'));
     }
     
+   
+        
     public function getVendorData($id){
         $data = Statement::where('vendor_id', $id)->groupBy('order_created')->get();
         return view('admin.pages.ajax.date', compact('data'));

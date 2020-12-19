@@ -9,23 +9,25 @@
    </div>
 </div>
 <div class="ps-page--shop">
-   <div class="ps-container">
-      <div class="ps-shop-banner">
-         <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
-            <a href="#"><img src="img/slider/shop-default/1.jpg" alt=""></a>
-            <a href="#"><img src="img/slider/shop-default/2.jpg" alt=""></a>
-         </div>
-      </div>
-      <div class="ps-shop-brand">
-         <div class="ps-carousel--nav owl-slider owl-slider-brand" data-owl-auto="false" data-owl-loop="false" data-owl-speed="10000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="true" data-owl-item="7" data-owl-item-xs="2" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-item-xl="6" data-owl-duration="1000" data-owl-mousedrag="on">
-            @foreach($brands as $brand)
-            <a href="#"><img src="{{asset('/uploads/brands/'.$brand->logo)}}" alt="{{$brand->slug}}">
-            </a>
-            @endforeach  
-         </div>
-      </div>
-      <div class="ps-layout--shop">
-         <div class="ps-layout__left">
+      <div class="ps-container">
+        <div class="ps-shop-banner">
+          <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
+          <a href="#"><img src="img/slider/shop-default/1.jpg" alt=""></a>
+          <a href="#"><img src="img/slider/shop-default/2.jpg" alt=""></a>
+          </div>
+        </div>
+        
+        <div class="ps-shop-brand">
+            <div class="ps-carousel--nav owl-slider owl-slider-brand" data-owl-auto="false" data-owl-loop="false" data-owl-speed="10000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="true" data-owl-item="7" data-owl-item-xs="2" data-owl-item-sm="3" data-owl-item-md="4" data-owl-item-lg="5" data-owl-item-xl="6" data-owl-duration="1000" data-owl-mousedrag="on">
+                @foreach($brands as $brand)
+                    <a href="#"><img src="{{asset('/uploads/brands/'.$brand->logo)}}" alt="{{$brand->slug}}">
+                    </a>
+                @endforeach  
+            </div>
+        </div>
+      
+        <div class="ps-layout--shop">
+          <div class="ps-layout__left" >
             <aside class="widget widget_shop">
                <h4 class="widget-title">Categories</h4>
                <ul class="ps-list--categories">
@@ -59,11 +61,12 @@
                </ul>
             </aside>
             <aside class="widget widget_shop">
-               @include('frontend.pages.filters.brands')
-               <figure>
-                  <h4 class="widget-title">By Price</h4>
-                  <div class="form-row" style="height: 35px;">
-                     <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
+            @include('frontend.pages.filters.brands')
+                          
+            <figure>
+                <h4 class="widget-title">By Price</h4>
+                <div class="form-row" style="height: 35px;">
+                    <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
                         <input type="number" value="{{$requested['min_price']>0?$requested['min_price']:''}}" min="100" class="form-control" placeholder="150" id="minPrice" style="height: 32px;padding:2px 8px;">
                      </div>
                      <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
@@ -73,39 +76,41 @@
                         <button class="btn btn-primary" style="padding: 5px 10px;" id="byPrice">
                         <i class="fa fa-caret-right" style="font-size: 20px"></i>
                         </button>
-                     </div>
-                  </div>
-               </figure>
-               <figure>
-                  <h4 class="widget-title">By Rating</h4>
-                  <div class="ps-checkbox">
-                     <input class="form-control" type="checkbox" id="review-1" name="review">
-                     <label for="review-1"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i></span><small>(13)</small></label>
-                  </div>
-                  <div class="ps-checkbox">
-                     <input class="form-control" type="checkbox" id="review-2" name="review">
-                     <label for="review-2"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star"></i></span><small>(13)</small></label>
-                  </div>
-                  <div class="ps-checkbox">
-                     <input class="form-control" type="checkbox" id="review-3" name="review">
-                     <label for="review-3"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><small>(5)</small></label>
-                  </div>
-                  <div class="ps-checkbox">
-                     <input class="form-control" type="checkbox" id="review-4" name="review">
-                     <label for="review-4"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><small>(5)</small></label>
-                  </div>
-                  <div class="ps-checkbox">
-                     <input class="form-control" type="checkbox" id="review-5" name="review">
-                     <label for="review-5"><span><i class="fa fa-star rate"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><small>(1)</small></label>
-                  </div>
-               </figure>
-               <figure class="sizes">
-                  <h4 class="widget-title">BY SIZE</h4>
-                  <a href="#">L</a>
-                  <a href="#">M</a>
-                  <a href="#">S</a>
-                  <a href="#">XL</a>
-               </figure>
+                    </div>
+                </div>
+            </figure>
+
+              <figure>
+                <h4 class="widget-title">By Rating</h4>
+                <div class="ps-checkbox">
+                  <input class="form-control" type="checkbox" id="review-1" name="review">
+                  <label for="review-1"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i></span><small>(13)</small></label>
+                </div>
+                <div class="ps-checkbox">
+                  <input class="form-control" type="checkbox" id="review-2" name="review">
+                  <label for="review-2"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star"></i></span><small>(13)</small></label>
+                </div>
+                <div class="ps-checkbox">
+                  <input class="form-control" type="checkbox" id="review-3" name="review">
+                  <label for="review-3"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><small>(5)</small></label>
+                </div>
+                <div class="ps-checkbox">
+                  <input class="form-control" type="checkbox" id="review-4" name="review">
+                  <label for="review-4"><span><i class="fa fa-star rate"></i><i class="fa fa-star rate"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><small>(5)</small></label>
+                </div>
+                <div class="ps-checkbox">
+                  <input class="form-control" type="checkbox" id="review-5" name="review">
+                  <label for="review-5"><span><i class="fa fa-star rate"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span><small>(1)</small></label>
+                </div>
+              </figure>
+            
+              <figure class="sizes">
+                <h4 class="widget-title">BY SIZE</h4>
+                <a href="#">L</a>
+                <a href="#">M</a>
+                <a href="#">S</a>
+                <a href="#">XL</a>
+              </figure>
             </aside>
          </div>
          <div class="ps-layout__right">
@@ -240,8 +245,18 @@
             </div>
          </div>
       </div>
+<<<<<<< HEAD
    </div>
 </div>
+=======
+</div>
+
+<div class="related-products"></div>
+
+
+
+
+>>>>>>> 897c482084de4dfae3767a4ef38f35ee8a9962dd
 @endsection
 @section('scripts')
 @include('frontend.layouts.load-more')

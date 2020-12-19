@@ -21,14 +21,14 @@
             <h4 class="widget-title">Quick links</h4>
             <ul class="ps-list--link">
               <li><a href="{{ url('/privacy-policy') }}">Policy</a></li>
-              <li><a href="#">FAQs</a></li>
+              <li><a href="{{url('/blogs')}}">Blogs</a></li>
             </ul>
           </aside>
           <aside class="widget widget_footer">
             <h4 class="widget-title">Company</h4>
             <ul class="ps-list--link">
               <li><a href="{{ url('/about-us') }}">About Us</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="{{url('/contact')}}">Contact</a></li>
             </ul>
           </aside>
           <aside class="widget widget_footer">
@@ -95,14 +95,14 @@
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
     </div>
-    <div class="ps-search" id="site-search"><a class="ps-btn--close" href="#"></a>
+    <!-- <div class="ps-search" id="site-search"><a class="ps-btn--close" href="#"></a>
         <div class="ps-search__content">
             <form class="ps-form--primary-search" action="" method="post">
                 <input class="form-control" type="text" placeholder="Search for...">
                 <button><i class="aroma-magnifying-glass"></i></button>
             </form>
         </div>
-    </div>
+    </div> -->
     <div class="modal fade" id="product-quickview" tabindex="-1" role="dialog" aria-labelledby="product-quickview" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content"><span class="modal-close" data-dismiss="modal"><i class="icon-cross2"></i></span>

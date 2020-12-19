@@ -49,18 +49,22 @@ Route::get('/index', function () {
     return view('frontend.pages.index1');
 });
 //Route::get('/quick/{slug}', 'ProductController@quickView')->name('quickview');
-Route::get('/blog', function () {
-    return view('frontend.pages.blog');
-});
-Route::get('/blogs', function () {
-    return view('frontend.pages.blogs');
-});
+Route::get('blogs/{slug}','FrontController@blogSingle');
+  
+
+Route::get('/blogs/categories/{slug}', 'FrontController@blogCategories');
+Route::get('/blogs', 'FrontController@blogs');
 Route::get('/shop', 'FrontController@shop');
 
 Route::get('/flash-sales', 'FrontController@flash');
 Route::get('/categories', function () {
     return redirect('/shop');
 });
+
+Route::get('/become-vendor', 'FrontController@becomeVendor');
+Route::get('/contact', 'ContactController@contact');
+
+
 Route::get('/categories/{name}', 'FrontController@categories')->name('categories');
 Route::get('/categories/{prime_cat}/{name}', 'FrontController@categories')->name('categories.sec');
 Route::get('/shopping-cart', function () {
@@ -360,6 +364,8 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 });
 
 Route::get('search', 'FrontController@searchProduct')->name('searchProduct');
+
+
 Route::post('getproductsList', "FrontController@getProduct")->name('searchProductAjax');
 
 Route::get('sendsms', 'FrontController@sendSms');
