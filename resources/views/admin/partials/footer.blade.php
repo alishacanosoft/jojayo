@@ -55,6 +55,15 @@ All rights reserved.
 <script src="/admin/js/market.js"></script>
 <!-- =============== Date and time picker ===============-->
 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+
+{{--google pie chart - 3d exploded effect--}}
+{{--<script src="https://www.google.com/jsapi"></script>--}}
+{{--<script src="/js/pie-3d.js" type="text/javascript"></script>--}}
+
+
+{{-- echarts - basic pie charts--}}
+<script src="/js/echarts.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 $(document).on("click", "#lfm", function() {
    $(this).filemanager('file');
@@ -1581,7 +1590,7 @@ $('.datatable_action').dataTable({
         //         }
         //     }
         // }
-        
+
     ],
     "lengthMenu": [[100, 150, 200, -1], [100, 150, 200, "All"]],
 });
@@ -1599,8 +1608,8 @@ $(".clock_in_button").click(function () {
     ubtn.addClass('disabled');
 });
 
-$('[data-ui-slider]').slider({
-            });
+// $('[data-ui-slider]').slider({
+//             });
 /*
  * Multiple drop down select
  */

@@ -184,9 +184,7 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
 
     Route::get('/expenses', 'ProductExpenseController@index')->name('record-list');
 
-    Route::get('/dashboard', function () {
-        return view('admin.pages.index');
-    });
+    Route::get('/dashboard','AdminController@index');
 
     Route::get('/media', function () {
         return view('admin.pages.fileupload');
@@ -316,7 +314,7 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     Route::get('/ajaxRequest/{id}/pdfExport', 'AjaxController@getPdf')->name('ajaxRequest.getPdf');
     Route::get('ajaxRequest/orderDetail', 'AjaxController@ajaxOrderDetail')->name('ajaxRequest.orderDetail');
     Route::post('/ajaxRequest/monthlyExport', 'AjaxController@getmonthPdf')->name('ajaxRequest.getmonthPdf');
-    
+
     //Finanace
     Route::get('/finance/account-statement', 'FrontController@statement');
     Route::get('/get_vendor_data/{id}', 'FrontController@getVendorData');
