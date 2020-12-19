@@ -107,7 +107,9 @@
                                     </div>
                                 </div>
 
-                                
+                                <div class="ps-pagination">
+                                {{$all_products->appends($_GET)->links()}}
+                                </div>
                             </div>
                             <div class="ps-tab ps-category-shop" id="tab-2">
                                 @if(!empty($all_products))
@@ -156,7 +158,10 @@
                                 @endforeach
                                 </div>
                                 @endif
-                                
+                                <div class="ps-pagination">
+                                {{$all_products->appends($_GET)->links()}}
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -173,6 +178,7 @@
             </div>
         </div>
     </div>
+
     <div class="related-products"></div>
 
 @endsection

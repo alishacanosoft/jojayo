@@ -405,8 +405,10 @@ class FrontController extends Controller
         return view('frontend.pages.search.search', compact('products'));
     }
 
-    public function searchAllProduct(Request $request)
+    public function searchProduct(Request $request)
     {
+        // dd("hello");
+        // die();
         $requested = $this->seperateRequest();
         $query = $request->q;
         $category = $request->category;
@@ -422,8 +424,8 @@ class FrontController extends Controller
             ->sortBrand($request['selected_brands'])
             ->sortSize($request['selected_sizes'])
             ->sortPrice($request['min_price'], $request['max_price'])
-            ->sortProd($request['sort'])->get();
-            // ->paginate(2);
+            ->sortProd($request['sort'])
+            ->paginate(2);
             
            
         $selected_category = $category == 'all' ? 'all' : $category->slug;

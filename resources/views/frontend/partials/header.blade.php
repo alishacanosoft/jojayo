@@ -170,8 +170,8 @@
             <a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt="jojayo-logo"></a>
           </div>
           <div class="header__center">
-            <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="post">
-            @csrf
+            <form class="ps-form--quick-search" action="{{ route('searchProduct')}}" method="GET">
+            <!-- @csrf -->
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
                
                 <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
@@ -207,7 +207,7 @@
                 <div id="productList" class="productList">
                 </div>         
             </div>
-            <button type="submit">Search</button>
+            <button >Search</button>
             </form>
           </div>
           <div class="header__right">
@@ -385,8 +385,8 @@
             <a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt="jojayo-logo"></a>
           </div>
           <div class="header__center">
-            <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="post">
-            @csrf
+            <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="GET">
+            <!-- @csrf -->
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
                
                 <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
@@ -421,7 +421,7 @@
                         <div id="productList" class="productList">
                         </div>
             </div>
-                <button type="submit">Search</button>
+                <button>Search</button>
             </form>
           </div>
           <div class="header__right">
@@ -679,13 +679,13 @@
     <div class="ps-panel--sidebar" id="search-sidebar">
 
         <div class="ps-panel__header">
-            <form class="ps-form--search-mobile" action="{{ route('searchProduct') }}" method="post" autocomplete="off">
-            @csrf
+            <form class="ps-form--search-mobile" action="{{ route('searchProduct') }}" method="GET" autocomplete="off">
+            <!-- @csrf -->
                
             <div class="form-group--nest">
                     <input type="hidden" name="category" value="all">
                     <input class="form-control" name="q" id="productSearchMob" value="{{@$query}}" type="text" placeholder="Search something...">
-                    <button type="submit"><i class="icon-magnifier"></i></button>
+                    <button><i class="icon-magnifier"></i></button>
                 </div>
 
               

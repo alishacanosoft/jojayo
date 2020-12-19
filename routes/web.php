@@ -352,7 +352,9 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
 
-Route::post('/search', 'FrontController@searchAllProduct')->name('searchProduct');
+Route::get('search', 'FrontController@searchProduct')->name('searchProduct');
+
+
 Route::post('getproductsList', "FrontController@getProduct")->name('searchProductAjax');
 
 Route::get('sendsms', 'FrontController@sendSms');
