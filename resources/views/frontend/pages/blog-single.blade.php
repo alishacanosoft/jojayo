@@ -10,7 +10,7 @@
 </div>
 <div class="ps-page--blog">
          <div class="ps-post--detail ps-post--parallax">
-        <div class="ps-post__header bg--parallax" data-background="{{$singleBlog->image}}">
+        <div class="ps-post__header bg--parallax" data-background="{{ url('/uploads/blogs/'.$singleBlog->image) }}">
           <div class="container">
             <h4>{{ucwords($singleBlog->category->name)}}</h4>
             <h1>{{ucwords($singleBlog->title)}}</h1>
