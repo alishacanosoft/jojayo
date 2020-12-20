@@ -11,7 +11,7 @@
       </div>
       <div class="ps-vendor-banner bg--cover" data-background="../img/bg/vendor.jpg">
         <div class="container">
-          <h2>Millions Of Shoppers Can’t Wait To See What You Have In Store</h2><a class="ps-btn ps-btn--lg" href="{{url('/auth/login')}}">Start Selling</a>
+          <h2>Millions Of Shoppers Can’t Wait To See What You Have In Store</h2><a class="ps-btn ps-btn--lg" href="{{url('/vendor/login')}}">Start Selling</a>
         </div>
       </div>
       <div class="ps-section--vendor ps-vendor-about">
@@ -228,7 +228,7 @@
       </div>
       <div class="ps-vendor-banner bg--cover" data-background="../../img/bg/vendor.jpg">
         <div class="container">
-          <h2>It's time to start making money.</h2><a class="ps-btn ps-btn--lg" href="{{url('/auth/login')}}">Start Selling</a>
+          <h2>It's time to start making money.</h2><a class="ps-btn ps-btn--lg" href="{{url('/vendor/login')}}">Start Selling</a>
         </div>
       </div>
     </div>
