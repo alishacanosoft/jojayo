@@ -164,6 +164,12 @@ class FrontController extends Controller
         return view('frontend.pages.blog-search',compact('allPosts','query','latestPosts','bcategories'));
     }
 
+    public function vendorProduct($vendor){
+
+        return view('frontend.pages.vendor-products');
+        
+    }
+
 
     public function warranty(Request $request)
     {

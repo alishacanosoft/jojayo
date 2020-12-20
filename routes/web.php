@@ -60,7 +60,9 @@ Route::get('/categories', function () {
     return redirect('/shop');
 });
 
-Route::get('/become-vendor', 'FrontController@becomeVendor');
+Route::get('/vendor', 'FrontController@becomeVendor');
+Route::get('/vendor/{vendor}', 'FrontController@vendorProduct');
+
 Route::get('/contact', 'ContactController@contact');
 
 

@@ -136,7 +136,8 @@
                   <del>NPR {{ number_format($old_price) }}</del></h4>
 
                   <div class="ps-product__desc">
-                    <p>Sold By:<a href="#"><strong> Vendor name</strong></a></p>
+                  
+                    <p>Sold By:<a href="{{url('/vendor/'.$data->VendorName->company)}}"><strong> {{$data->VendorName->company}}</strong></a></p>
                     <ul class="ps-list--dot">
                         {!! $data->specification !!}
                     </ul>

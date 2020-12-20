@@ -328,7 +328,7 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/become-vendor')}}">Sell on JoJayo</a></li>
+              <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
              
             </ul>
           </div>
@@ -540,7 +540,7 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/become-vendor')}}">Sell on JoJayo</a></li>
+              <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
              
             </ul>
           </div>
@@ -555,7 +555,7 @@
       </div>
       <div class="header__right">
         <ul class="navigation__extra">
-          <li><a href="{{url('/become-vendor')}}">Sell on JoJayo</a></li>
+          <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
           
         </ul>
       </div>
