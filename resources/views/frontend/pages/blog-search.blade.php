@@ -3,11 +3,12 @@
 <div class="ps-page--blog">
       <div class="container">
         <div class="ps-page__header">
-          <h1>Our Blogs</h1>
+        <h1>Search Result For : <strong>{{$query}}</strong></h1>
           <div class="ps-breadcrumb--2">
             <ul class="breadcrumb">
               <li><a href="{{url('/')}}">Home</a></li>
-              <li>Our Blogs</li>
+              <li><a href="{{url('/blogs')}}">Blogs</a></li>
+              <li>Search Results</li>
             </ul>
           </div>
         </div>

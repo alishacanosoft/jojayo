@@ -245,21 +245,20 @@
             </div>
          </div>
       </div>
-<<<<<<< HEAD
+
    </div>
 </div>
-=======
 </div>
-
 <div class="related-products"></div>
-
-
-
-
->>>>>>> 897c482084de4dfae3767a4ef38f35ee8a9962dd
 @endsection
 @section('scripts')
 @include('frontend.layouts.load-more')
+=======
+@endsection
+@section('scripts')
+@include('frontend.layouts.load-more')
+
+
 <script>
    var current_url='{{url()->current()}}';
    // var favorite = [];
