@@ -1208,9 +1208,9 @@ body {
 }
 
 @media (min-width: 1200px) {
-  /* .container {
+  .container {
     min-width: 1230px;
-  } */
+  }
 }
 
 .ps-list--social {
