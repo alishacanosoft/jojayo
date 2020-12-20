@@ -45,6 +45,9 @@ Route::get('/index', function () {
     return view('frontend.pages.index1');
 });
 //Route::get('/quick/{slug}', 'ProductController@quickView')->name('quickview');
+
+Route::get('blogs/search/', 'FrontController@searchBlog')->name('searchBlog');
+
 Route::get('blogs/{slug}','FrontController@blogSingle');
   
 
@@ -351,6 +354,7 @@ Route::group(['prefix' => 'employee', 'middleware' => ['auth', 'employee']], fun
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
 
 Route::get('search', 'FrontController@searchProduct')->name('searchProduct');
 Route::post('getproductsList', "FrontController@getProduct")->name('searchProductAjax');

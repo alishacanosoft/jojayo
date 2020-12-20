@@ -203,7 +203,7 @@
               </div>
 
             <div class="search-top">
-             <input class="form-control" required name="q" id="productSearch" value="{{@$query}}"  type="text" placeholder="I'm shopping for...">
+             <input class="form-control" required name="q" id="productSearch"   type="text" placeholder="I'm shopping for...">
                 <div id="productList" class="productList">
                 </div>         
             </div>
@@ -417,7 +417,7 @@
                 </select>
               </div>
             <div class="search-top">
-             <input class="form-control" required name="q" id="productSearch" value="{{@$query}}"  type="text" placeholder="I'm shopping for...">
+             <input class="form-control" required name="q" id="productSearch"   type="text" placeholder="I'm shopping for...">
                         <div id="productList" class="productList">
                         </div>
             </div>

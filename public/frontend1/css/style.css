@@ -1207,11 +1207,11 @@ body {
   }
 }
 
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
   .container {
     min-width: 1230px;
   }
-}
+} */
 
 .ps-list--social {
   margin: 0;

@@ -134,7 +134,6 @@ class FrontController extends Controller
 
     public function blogSingle($slug){
        
-        
         $singleBlog = $this->blog->where('slug', $slug)->first();
         if(empty($singleBlog->category_id)){
         return redirect('/blogs');
@@ -153,6 +152,19 @@ class FrontController extends Controller
         $latestPosts = $this->blog->orderBy('created_at', 'DESC')->take(5)->get();
         return view('frontend.pages.blog-categories',compact('allPosts','cat_name','latestPosts','bcategories'));
     }
+
+    public function searchBlog(Request $request)
+    {
+        // $requested = $this->seperateRequest();
+        $query = $request->s;
+        $allPosts = $this->blog->where('title', 'LIKE', '%' . $query . '%')->orderBy('title', 'asc')->paginate(5);
+        $bcategories = $this->bcategory->get();
+        $latestPosts = $this->blog->orderBy('created_at', 'DESC')->take(5)->get();
+
+        return view('frontend.pages.blog-search',compact('allPosts','query','latestPosts','bcategories'));
+    }
+
+
     public function warranty(Request $request)
     {
         $data = $this->product_categories->where('id', $request->mycat)->first();

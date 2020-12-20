@@ -263,11 +263,10 @@
 <div class="related-products"></div>
 
 
-
-
 @endsection
 @section('scripts')
-@include('frontend.layouts.load-more');
+@include('frontend.layouts.load-more')
+
 <script>
     var current_url='{{url()->current()}}'
     // var favorite = [];
