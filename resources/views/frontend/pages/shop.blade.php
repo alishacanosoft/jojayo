@@ -63,7 +63,6 @@
             </aside>
             <aside class="widget widget_shop">
             @include('frontend.pages.filters.brands')
-                          
             <figure>
                 <h4 class="widget-title">By Price</h4>
                 <div class="form-row" style="height: 35px;">
@@ -114,8 +113,6 @@
               </figure>
             </aside>
           </div>
-
-
                 
           <div class="ps-layout__right">    
             <div class="ps-shopping ps-tab-root">
@@ -260,12 +257,13 @@
       </div>
 </div>
 
-<div class="related-products"></div>
-
 
 @endsection
+
+
 @section('scripts')
 @include('frontend.layouts.load-more')
+
 
 <script>
     var current_url='{{url()->current()}}'

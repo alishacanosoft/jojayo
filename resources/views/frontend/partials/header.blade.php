@@ -174,7 +174,7 @@
             <!-- @csrf -->
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
                
-                <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
+                <select class="form-control" id="searchCategory" style="text-indent: 0" name="category">
                                 <option value="all" {{($selected_category = 'all') ? 'selected':''}}>All</option>
                                 @foreach($primary_categories as $prime)
                                     @if($prime->secondaryCategories->count() > 0)
@@ -186,19 +186,24 @@
                                                     $secondary->name = str_replace("Men's", "", $secondary->name);
                                                 ?>
 
-                                                <option disabled class="level-0" value="{{$secondary->slug}}">{{trim($secondary->name)}}</option>
+                                                <optgroup label="{{trim($secondary->name)}}">
 
                                                 @foreach($secondary->FinalCategory as $final_cat)
                                                     <?php
                                                         $final_cat->name = str_replace("Women's", "", $final_cat->name);
                                                         $final_cat->name = str_replace("Men's", "", $final_cat->name);
                                                     ?>
-                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>&nbsp;&nbsp;&nbsp;{{trim($final_cat->name)}}</option>
+                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>{{trim($final_cat->name)}}</option>
                                                 @endforeach
+                                                </optgroup>
                                             @endif
                                         @endforeach
                                     @endif
                                 @endforeach
+                </select>
+
+                <select id="compute_select">
+                    <option id="compute_option"></option>
                 </select>
               </div>
 
@@ -389,7 +394,7 @@
             <!-- @csrf -->
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
                
-                <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
+                <select class="form-control" id="searchCategory" style="text-indent: 0" name="category">
                                 <option value="all" {{($selected_category = 'all') ? 'selected':''}}>All</option>
                                 @foreach($primary_categories as $prime)
                                     @if($prime->secondaryCategories->count() > 0)
@@ -399,22 +404,27 @@
                                                 <?php
                                                     $secondary->name = str_replace("Women's", "", $secondary->name);
                                                     $secondary->name = str_replace("Men's", "", $secondary->name);
-                                                ?>
-
-                                                <option disabled class="level-0" value="{{$secondary->slug}}">{{trim($secondary->name)}}</option>
-
+                                                ?>  
+                                            <optgroup label="{{trim($secondary->name)}}">
                                                 @foreach($secondary->FinalCategory as $final_cat)
                                                     <?php
                                                         $final_cat->name = str_replace("Women's", "", $final_cat->name);
                                                         $final_cat->name = str_replace("Men's", "", $final_cat->name);
                                                     ?>
-                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>&nbsp;&nbsp;&nbsp;{{trim($final_cat->name)}}</option>
+                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>{{trim($final_cat->name)}}</option>
                                                 @endforeach
+                                            </optgroup>
                                             @endif
                                         @endforeach
                                     @endif
                                 @endforeach
                 </select>
+
+                
+                <select id="compute_select">
+                    <option id="compute_option"></option>
+                </select>
+                
               </div>
             <div class="search-top">
              <input class="form-control" required name="q" id="productSearch"   type="text" placeholder="I'm shopping for...">

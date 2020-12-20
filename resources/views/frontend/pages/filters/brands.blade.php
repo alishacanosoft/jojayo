@@ -17,7 +17,7 @@
               
     </figure>
 
-    @section('scripts')
+    @push('scripts')
     <script>  
     $('#chkfilter').on('keyup', function() {
     var query = this.value;
@@ -132,6 +132,6 @@
         return new_url+='?' + price_url + sort_url
     }
 </script>
-    @endsection
+    @endpush
 
    

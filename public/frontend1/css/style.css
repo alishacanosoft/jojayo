@@ -17693,7 +17693,6 @@ div#productList ul.result {
     text-align: justify;
 }
 
-
-
-
-
+#compute_select {
+  display: none;
+}
