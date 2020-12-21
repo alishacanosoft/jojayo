@@ -17,11 +17,12 @@ class Blog extends Model
             'feature' => 'required|boolean',
             'status' => 'required|in:draft,publish',
             'category_id' => 'nullable|numeric|exists:categories,id',
-            'image' => 'required|string'
+            'logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
         if ($act !== 'add'){
             $rules['title'] = 'required|string';
             $rules['slug'] = 'required|string';
+            $rules['image'] = 'required';
         }
         return $rules;
     }

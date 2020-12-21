@@ -65,7 +65,7 @@ Route::get('/categories', function () {
 });
 
 Route::get('/vendor', 'FrontController@becomeVendor');
-Route::get('/vendor/{vendor}', 'FrontController@vendorProduct');
+Route::get('/vendor/{vendor}', 'FrontController@vendorProduct')->name('vendor.store');
 
 Route::get('/contact', 'ContactController@contact');
 

@@ -1239,11 +1239,11 @@ body {
   color: #3b5998;
 }
 
-.ps-product--detail .ps-product__sharing a.whatsapp {
+a.whatsapp {
   background-color: #25D366;
 }
 
-.ps-product--detail .ps-product__sharing a.whatsapp:hover {
+a.whatsapp:hover {
   background-color: #27e26c;
 }
 
@@ -9084,6 +9084,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 
 .ps-product--detail .ps-product__shopping .ps-product__actions a:last-child {
   margin-right: 0;
+  cursor: pointer;
 }
 
 .ps-product--detail .ps-product__shopping.extend {
@@ -14542,7 +14543,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 #homepage-1 .ps-site-features {
-  padding-bottom: 90px;
+  padding-bottom: 30px;
 }
 
 #homepage-1 .ps-deal-of-day {

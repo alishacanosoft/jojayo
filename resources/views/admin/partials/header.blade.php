@@ -60,6 +60,9 @@
 
     <!-- JQUERY-->
     <script src="/admin/js/jquery.min.js"></script>
+    <!-- =============== Toastr ===============-->
+    <script src="/admin/js/toastr.min.js"></script>
+    <!-- =============== Toastr ===============-->
 
     <link href="/admin/css/bootstrap-toggle.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/vendor/fancybox/jquery.fancybox.css') }}" media="screen">

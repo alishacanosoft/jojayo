@@ -108,6 +108,7 @@
                
               @if (!empty($flash))
                 @foreach ($flash as $recent_products)
+                @if($recent_products->product !== null)
                 @php
                 $starting_price = App\Models\ProductSize::where('product_id',
                 $recent_products->product_id)->first();
@@ -133,7 +134,7 @@
                   </div>
 
                   <div class="ps-product__container">
-                  <a  href="#">Jojayo Store</a>
+                  <a  href="{{ route('vendor.store', $recent_products->product->VendorName->vendor_slug) }}">{{ ucfirst($recent_products->product->VendorName->company) }}</a>
                     <p class="ps-product__price sale">NPR {{ $recent_products->flash_price }}
                     @if ($recent_products->flash_price > 0)
                     <del>NPR {{ $recent_products->selling_price }}</del>
@@ -156,6 +157,7 @@
                     </div>
                   </div>
                 </div>
+                @endif
                 @endforeach
               @endif
               </div>
@@ -203,7 +205,7 @@
                           </ul>
                         </div>
                         <div class="ps-product__container">
-                        <a class="ps-product__vendor" href="#">Jojayo Store</a>
+                        <a class="ps-product__vendor" href="{{ route('vendor.store', $women_products->VendorName->vendor_slug) }}">{{ $women_products->VendorName->company }}</a>
 
                           <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $women_products->slug) }}">{{ $women_products->name }}</a>
                             <div class="ps-product__rating">
@@ -281,7 +283,7 @@
                                       </ul>
                                   </div>
                                   <div class="ps-product__container">
-                                      <a class="ps-product__vendor" href="#">Jojayo Store</a>
+                                      <a class="ps-product__vendor" href="{{ route('vendor.store', $men_products->VendorName->vendor_slug) }}">{{ $men_products->VendorName->company }}</a>
                                       <div class="ps-product__content"><a class="ps-product__title"
                                               href="{{ route('single-product', $men_products->slug) }}">{{ $men_products->name }}</a>
                                           <div class="ps-product__rating">
@@ -358,7 +360,7 @@
                                       </ul>
                                   </div>
                                   <div class="ps-product__container">
-                                      <a class="ps-product__vendor" href="#">Jojayo Store</a>
+                                      <a class="ps-product__vendor" href="{{ route('vendor.store', $kid_products->VendorName->vendor_slug) }}">{{ $kid_products->VendorName->company }}</a>
                                       <div class="ps-product__content"><a class="ps-product__title"
                                               href="{{ route('single-product', $kid_products->slug) }}">{{ $kid_products->name }}</a>
                                           <div class="ps-product__rating">

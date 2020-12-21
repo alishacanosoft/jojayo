@@ -239,11 +239,7 @@
                             <li class=''>
                                 <a title='Supplier' href="{{ route('payments.index') }}">
                                     <em class='icon-briefcase'></em><span>Payment Methods</span></a>
-                            </li>
-                            <li class=''>
-                                <a title='Supplier' href="{{ route('accounts.index') }}">
-                                    <em class='icon-briefcase'></em><span>All Accounts</span></a>
-                            </li>
+                            </li>                            
                         </ul>
                     </li>
                     <li class='sub-menu '>
@@ -276,10 +272,23 @@
                             <em class='fa fa-trash'></em><span>Recycle</span></a>
                     </li>
                 @endif
-                <li class=''>
-                    <a title='Items' href="/auth/finance/account-statement">
-                        <em class='fa fa-money'></em><span>Finance</span></a>
-                </li>
+                
+                <li class='sub-menu '>
+                <a data-toggle='collapse' href='#finance'> <em class='fa fa-map'></em><span>Finance<span></a>
+                <ul id=finance class='nav s-menu sidebar-subnav collapse'>
+                    <li class="sidebar-subnav-header">Finance
+                    </li>
+                    <li class=''>
+                        <a title='Items' href="/auth/finance/account-statement">
+                            <em class='fa fa-money'></em><span>Account Statement</span></a>
+                    </li>
+                    @if (Auth::user()->admin())
+                    <li class=''>
+                        <a title='Supplier' href="{{ route('transaction') }}"><em class='icon-briefcase'></em><span>Transaction</span></a>
+                    </li>
+                    @endif
+                </ul>
+            </li>
             </ul>
             </ul>
             <!-- Iterates over all sidebar items-->

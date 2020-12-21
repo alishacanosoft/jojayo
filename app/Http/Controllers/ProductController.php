@@ -128,45 +128,9 @@ class ProductController extends Controller
         $this->product->fill($data);
         $status = $this->product->save();
         $product_id = $this->product->id;
-        if ($status) {
-            // if (!empty($request->image)) {
-            //     for ($i = 0; $i < count($request->image);) {
-            //         $images = $request->image[$i];
-            //         $images = str_replace('"', '', $images);
-            //         $images = str_replace(array('[', ']'), '', $images);
-            //         $images = explode(',', $images);
-            //         for ($j = 0; $j < count($images);) {
-            //             $validator = Validator::make($request->only(['product_id', 'image', 'imageColor']), [
-            //                 'imageColor' => 'required|exists:colors,id',
-            //                 'image' => 'required',
-            //             ]);
-            //             if ($validator->fails()) {
-            //                 $delete_products = $this->product->find($product_id);
-            //                 $success = $this->product->delete();
-            //                 return redirect()->back()->withErrors($validator)->withInput();
-            //             }
-            //             $product_image = new productImages();
-            //             $image_data['product_id'] = $product_id;
-            //             $image_data['color_id'] = $request->imageColor[$i];
-            //             $image_data['image'] = $images[$j];
-            //             $product_image->fill($image_data);
-            //             $product_image->save();
-            //             $j++;
-            //         }
-            //         $i++;
-            //     }
-            // } else {
-            //     $notification = array(
-            //         'message' => 'Please upload images for this product.',
-            //         'alert-type' => 'error'
-            //     );
-            //     $delete_news = $this->product->find($product_id);
-            //     $success = $this->product->delete();
-            //     return redirect()->back()->with($notification);
-            // }
+        if ($status) {           
             $filtered = array_filter($request->image);
             if (!empty($filtered) && isset($filtered)) {
-                // if (!empty($request->image)) {
                 for ($i = 0; $i < count($request->image);) {
                     $images = $request->image[$i];
                     $images = str_replace('"', '', $images);
@@ -196,12 +160,6 @@ class ProductController extends Controller
                         $pro_save = $product_image->save();
                         if ($pro_save) {
                             $product_image->images()->create(['image' => $name]);
-                            // $product_image = new Image();
-                            // $image_data['imageable_id'] = $product_image->id;
-                            // $image_data['imageable_type'] = 'App\Models\ProductImages';
-                            // $image_data['image'] = $name;
-                            // $product_image->fill($image_data);
-                            // $product_image->save();
                         }
                         $j++;
                     }
@@ -218,12 +176,6 @@ class ProductController extends Controller
                         $pro_save = $product_image->save();
                         if ($pro_save) {
                             $product_image->images()->create(['image' => $pro_image]);
-                            // $product_image = new Image();
-                            // $image_data['imageable_id'] = $product_image->id;
-                            // $image_data['imageable_type'] = 'App\Models\ProductImages';
-                            // $image_data['image'] = $pro_image;
-                            // $product_image->fill($image_data);
-                            // $product_image->save();
                         }
                         $j++;
                     }
@@ -256,47 +208,7 @@ class ProductController extends Controller
                     ];
                     // echo 'color=>' . $color . ', size=>' . $request->size[$key] . ', stock=>' . $request->stock[$key] . ', price=>' . $request->price[$key] . ', purchase=>' . $request->purchase[$key] . ', discount=>' . $request->discount[$key] . '<br>';
                 }
-                $product_seze = ProductSize::insert($data);
-                // for ($i = 0; $i < count($request->size); $i++) {
-                //     $validator = Validator::make($request->only(['size', 'price', 'purchase', 'discount', 'stock', 'color']), [
-                //         'size' => 'required|array',
-                //         'size.*' => 'required|exists:sizes,id',
-                //         'price' => 'required|array',
-                //         'price.*' => 'required|string',
-                //         'purchase' => 'required|array',
-                //         'purchase.*' => 'required|string',
-                //         'discount' => 'required|array',
-                //         'discount.*' => 'nullable|string',
-                //         'stock' => 'required|array',
-                //         'stock.*' => 'required|string',
-                //         'color' => 'required|array',
-                //         'color' => 'required|exists:colors,id',
-                //     ]);
-                //     if ($validator->fails()) {
-                //         $delete_products = $this->product->find($product_id);
-                //         $success = $this->product->delete();
-                //         return redirect()->back()->withErrors($validator)->withInput();
-                //     }
-                //     $product_size = new ProductSize();
-                //     $size_data['product_id'] = $product_id;
-                //     $size_data['size_id'] = $request->size[$i];
-                //     $size_data['selling_price'] = $request->price[$i];
-                //     $size_data['purchase_price'] = $request->purchase[$i];
-                //     $size_data['total_price'] = $request->purchase[$i] * $request->stock[$i];
-                //     $size_data['discount'] = $request->discount[$i];
-                //     $size_data['stock'] = $request->stock[$i];
-                //     $size_data['quantity'] = $request->stock[$i];
-                //     $size_data['color_id'] = $request->color[$i];
-                //     $product_size->fill($size_data);
-                //     $data_size = $product_size->save();
-                //     if ($data_size) {
-                //         $amount = $this->product_size->where('product_id', $product_id)->sum('total_price');;
-                //         $productdata_expense['product_id'] = $product_id;
-                //         $productdata_expense['total_amount'] = $amount;
-                //         $this->product_expense->fill($productdata_expense);
-                //         $this->product_expense->save();
-                //     }
-                // }
+                $product_seze = ProductSize::insert($data);                
             } else {
                 $notification = array(
                     'message' => 'Please select sizes for this product.',

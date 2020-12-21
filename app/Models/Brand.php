@@ -8,15 +8,16 @@ class Brand extends Model
 {
     protected $fillable = ['name','slug', 'logo'];
 
-    public function getRules(){
+    public function getRules($act = 'add'){
         $rules = [
             'name' => 'bail|required|string|unique:brands,name',
             'slug' => 'bail|required|string|unique:brands,slug',
-            'logo' => 'required'
+            'logo' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
-        if($rules != 'add'){
+        if($act != 'add'){
             $rules['name'] = "required|string";
             $rules['slug'] = "required|string";
+            $rules['image'] = 'required';
         }
         return $rules;
     }

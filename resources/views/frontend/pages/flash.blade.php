@@ -17,6 +17,7 @@ ul.ps-countdown{
             <div class="ps-section__header">
                 <div class="ps-block--countdown-deal">                    
                     <div class="ps-block__right">
+                    @if(!empty($flash) && count($flash) > 0)
                         <figure>
                             <figcaption>Current sale Ends in:</figcaption>
                             <ul class="ps-countdown" data-time="{{ date('F d, Y') }} {{$end_time}}">
@@ -30,11 +31,14 @@ ul.ps-countdown{
                             <a href="#tomorrow00" class="text-dark tomorrow00">&nbsp; Tomorrow 00:00 &nbsp; |</a>
                             <a href="#tomorrow11" class="text-dark tomorrow11">&nbsp; Tomorrow 11:00 &nbsp; |</a>
                             <a href="#tomorrow15" class="text-dark tomorrow15">&nbsp; Tomorrow 15:00 &nbsp;</a>
-                        </figure>                        
+                        </figure> 
+                    @else
+                    <br><br><h2>Sorry there is not product on sale!<h2>
+                    @endif
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
 </div>
 <div class="ps-layout--shop">

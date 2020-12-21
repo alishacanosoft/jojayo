@@ -25,7 +25,7 @@
                             <td>{{ $postsLists->title }}</td>
                             <td>{{ $postsLists->category['name'] }}</td>
                             <td>{{ $postsLists->status }}</td>
-                            <td><a href="{{ $postsLists->image }}" target="_blank">View image</a></td>
+                            <td><a href="{{ asset('/uploads/blogs/Thumb-'.$postsLists->image) }}" target="_blank">View image</a></td>
                             <td>
                                 <a href="{{ route('blogs.edit', $postsLists->id) }}" class="btn btn-primary btn-xs" style="margin-right: 5px">
                                     <i class="fa fa-pencil-square-o"></i>

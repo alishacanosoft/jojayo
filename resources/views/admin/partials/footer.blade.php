@@ -11,6 +11,7 @@ All rights reserved.
 <!-- ===============  SCRIPTS ===============-->
 <div id="dialog" title="Basic dialog"></div>
 <!-- sticky Js-->
+
 <script src="/admin/js/jquery.sticky.min.js"></script>
 <script src="/admin/js/theia-sticky-sidebar.min.js"></script>
 <script>
@@ -1475,9 +1476,7 @@ $(function () {
 <script src="/admin/js/bootstrap-editable.min.js"></script>
 <!-- jquery-classyloader -->
 <script src="/admin/js/jquery.classyloader.min.js"></script>
-<!-- =============== Toastr ===============-->
-<script src="/admin/js/toastr.min.js"></script>
-<!-- =============== Toastr ===============-->
+
 <script src="/admin/js/jasny-bootstrap.min.js"></script>
 <!-- EASY PIE CHART-->
 <script src="/admin/js/jquery.easypiechart.min.js"></script>

@@ -16,7 +16,7 @@
           @if(!empty($allPosts))
           @foreach($allPosts as $post)
             <div class="ps-post ps-post--small-thumbnail">
-              <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="{{url('/blogs/'.$post->slug)}}"></a><img src="{{$post->image}}" alt="{{$post->slug}}">
+              <div class="ps-post__thumbnail"><a class="ps-post__overlay" href="{{url('/blogs/'.$post->slug)}}"></a><img src="{{ url('/uploads/blogs/'.$post->image) }}" alt="{{$post->slug}}">
                 @if($post->feature==1)
                 <div class="ps-post__badge"><i class="icon-star"></i></div>
                 @endif

@@ -22,7 +22,6 @@
                $old_price = @$starting_price->selling_price;
                $new_price = @$starting_price->selling_price - @$starting_price->discount;
                @endphp
-
               <div class="ps-product__shopping">
                  <span class="ps-product__price"><span>NPR {{ number_format($new_price) }}</span>
                   <del>NPR {{ number_format($old_price) }}</del></span>                  
@@ -137,7 +136,7 @@
 
                   <div class="ps-product__desc">
                   
-                    <p>Sold By:<a href="{{url('/vendor/'.$data->VendorName->company)}}"><strong> {{$data->VendorName->company}}</strong></a></p>
+                    <p>Sold By:<a href="{{url('/vendor/'.$data->VendorName->vendor_slug)}}"><strong> {{$data->VendorName->company}}</strong></a></p>
                     <ul class="ps-list--dot">
                         {!! $data->specification !!}
                     </ul>
@@ -203,8 +202,7 @@
                      </div>
 
                     <div class="ps-product__actions">
-                    <a href="#"><i class="icon-heart"></i></a>
-                    <a href="#"><i class="icon-eye"></i></a>
+                    <a class="wish-add" onclick="wishCart({{ $data->id }})"><i class="icon-heart"></i></a>                    
                     </div>
 
                   </div>
@@ -514,7 +512,7 @@
                                }
                                $('.available').removeClass('hidden');
                                $('.unavailable').addClass('hidden');
-                               $('.btn-add-cart').prop("disabled",false); 
+                               $('.btn-add-cart').prop("disabled",false);
                                $('.btn-buy-now').prop("disabled",false);
                                $('.up').prop("disabled",false); 
                                $('.down').prop("disabled",false);
@@ -570,5 +568,44 @@
       window.open("https://plus.google.com/share?url=" + url, "_blank", "toolbar=no, scrollbars=yes, resizable=yes, top=200, left=500, width=600, height=400");
   }
   
+  function wishCount(){
+        $.ajax({
+            method: "GET",
+            url: "{{ route('wish.count') }}",
+            dataType: 'json',
+            success(response){
+                $('.wish-count').html(response.count);
+            }
+        });
+  }
+
+  function wishCart(id) {        
+    let url = '{{ route("wish.store") }}';
+    let color_id = $('#color_data').attr('value');
+    if(color_id == undefined){
+        toastr.warning('Please select color!');
+        return;
+    }
+    let size_id = $('#size_data').attr('value');
+    if(size_id == undefined){
+        toastr.warning('Please select size!');
+        return;
+    }
+    $.ajax({
+        method: "POST",
+        url: url,
+        dataType: 'json',
+        data: { _token:"{{ csrf_token() }}", id: id, size_id: size_id, color_id:color_id},
+        success(response){
+            $('.ps-product__info').closest('div').find('span').attr('value', response.rowId)
+            cartCount();
+            toastr.success(response.message);                
+        },
+        error: function(response){
+            toastr.error('Something went wrong!');
+        }
+    });        
+    }
+
 </script>
 @endsection

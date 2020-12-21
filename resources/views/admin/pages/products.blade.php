@@ -79,7 +79,7 @@
                   </div>
                   <div class="tab-pane @if($active_tab == 'create') active @endif" id="create">
                      @if(empty($data))
-                     <form action="{{ route('products.store') }}" method="POST" class="form-horizontal">
+                     <form action="{{ route('products.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                         @csrf
                         @else
                         {{ Form::open(['url'=>route('products.update', $data->id), 'class'=>'form-horizontal', 'id'=>'product_update', 'files'=>true,'method'=>'patch']) }}
@@ -185,7 +185,7 @@
                                           <div class="form-group row">
                                              <label class="col-sm-2 control-label">Jojayo SKU</label>
                                              <div class="col-md-8 col-lg-10">
-                                                <input name="jojayo_sku" type="text" readonly class="form-control" id="jojayo_sku" required value="@if(isset($data->jojayo_sku)) $data->jojayo_sku @else {{ date('Y').'-'.str_pad(time() + 1, 4, "0", STR_PAD_LEFT) }} @endif">
+                                                <input name="jojayo_sku" type="text" readonly class="form-control" id="jojayo_sku" required value="@if(isset($data->jojayo_sku)) {{$data->jojayo_sku}} @else {{ date('Y').'-'.str_pad(time() + 1, 4, "0", STR_PAD_LEFT) }} @endif">
                                                 @if($errors->has('jojayo_sku'))
                                                 <span class='validation-errors text-danger'>{{ $errors->first('jojayo_sku') }}</span>
                                                 @endif

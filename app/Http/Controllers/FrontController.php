@@ -77,21 +77,25 @@ class FrontController extends Controller
 
         $time = '07:00:00';
         $end_time = '11:00:00';
-        if (date('H') >= '11') {
+        if (date('H') >= '11' && date('H') <= '15') {
             $end_time = '15:00:00';
             $time = '11:00:00';
-        } elseif (date('H') >= '15') {
+        } elseif (date('H') >= '15' && date('H') <= '19') { 
             $end_time = '19:00:00';
             $time = '15:00:00';
-        }
-        $flash = $this->product_sizes->with('product')->whereNotNull('flash_price')
-            ->whereDate('from_date', '<=', date('Y-m-d'))
-            ->whereTime('from_date', '<=', $time)
-            //->whereDate('from_date', '>=', date('Y-m-d '))->whereTime('from_date','>=',$time)
-            ->groupBy('product_id')->get();
-
-        
-        
+        } elseif (date('H') >= '20' && date('H') <= '24') { 
+            $end_time = '24:00:00';
+            $time = '20:00:00';
+        } 
+        $flash = $this->product_sizes->with('product')
+        ->whereHas('product', function ($query) {
+            $query->where('status', 'verified');
+        })
+        ->whereNotNull('flash_price')
+        ->whereDate('to_date', '<=', date('Y-m-d'))
+        ->whereTime('from_date', '>=', $time)           
+        ->groupBy('product_id')->get();// dd($time);
+        // dd($flash);
         $men_fashion = ProductService::getProduct("Men's Fashion", 20);
         $women_fashion = ProductService::getProduct("Women's Fashion", 20); //dd($women_fashion);
         $kid_fashion = ProductService::getProduct("Kid's Fashion", 20); //dd($women_fashion);
@@ -167,10 +171,18 @@ class FrontController extends Controller
         return view('frontend.pages.blog-search',compact('allPosts','query','latestPosts','bcategories'));
     }
 
-    public function vendorProduct($vendor){
-
-        return view('frontend.pages.vendor-products');
-        
+    public function vendorProduct(Request $request, $slug){
+        $vendor_data = $this->vendor->where('vendor_slug', $slug)->first();
+        $vendor_id = $vendor_data->id;
+        $requested = $this->seperateRequest();
+        $data = $this->products->with('images')->where('vendor_id', $vendor_id)->where('status', 'verified')->sortProd($request['sort'])->paginate(30);        
+        $count = $this->products->with('images')->where('vendor_id', $vendor_id)->where('status', 'verified')->count();
+        $best_seller = Order::with(['vendor_products' => function($query) use ($vendor_id) {
+            $query->whereHas('products', function ($query) use ($vendor_id) {
+                $query->where('vendor_id', $vendor_id);
+            });
+        }])->first();
+        return view('frontend.pages.vendor-products', compact('data','vendor_data','requested','count','best_seller'));        
     }
 
 
@@ -240,14 +252,18 @@ class FrontController extends Controller
     public function flash(Request $request)
     {
         $time = '07:00:00';
-        $end_time = '11:00:00';
-        if (date('H') >= '11') {
+        $end_time = '11:00:00';     
+
+        if (date('H') >= '11' && date('H') <= '15') {
             $end_time = '15:00:00';
             $time = '11:00:00';
-        } elseif (date('H') >= '15') {
+        } elseif (date('H') >= '15' && date('H') <= '19') { 
             $end_time = '19:00:00';
             $time = '15:00:00';
-        }
+        } elseif (date('H') >= '20' && date('H') <= '24') { 
+            $end_time = '24:00:00';
+            $time = '20:00:00';
+        } 
         $flash = ProductService::flash(date('Y-m-d'), $time);
         $three = ProductService::flash(date('Y-m-d'), '15:00:00');
         //  $three = $this->product_sizes->with('product')->whereNotNull('flash_price')
@@ -710,8 +726,8 @@ die;
     }
 
     public function transaction(Request $request){
-        $data = Statement::where('vendor_id', $request->vendor_id)->where('transaction_no', $request->transaction_no)->groupBy('order_created')->first();
-        return view('admin.pages.transaction', compact('data'));
+        $all_vendor = $this->vendor->get();        
+        return view('admin.pages.transaction', compact('all_vendor'));
     }
     
     public function updateTransaction(Request $request){

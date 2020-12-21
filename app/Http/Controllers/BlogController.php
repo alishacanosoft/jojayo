@@ -58,15 +58,24 @@ class BlogController extends Controller
         $data['feature'] = $request->feature;
         $data['status'] = $request->status;
         $data['category_id'] = $request->category_id;
-        $data['image'] = $request->image;
+        if($request->hasFile('image')){ 
+            $image = uploadImage($request->image, 'blogs', '400x400');
+        }
+        $data['image'] = $image;
         $this->blog->fill($data);
         $status = $this->blog->save();
-        if($status){
-            $request->session()->flash('success','Blog created successfully.');
+        if($status){            
+            $notification = array(
+                'message' => 'Blog created successfully.',
+                'alert-type' => 'success'
+            );
         } else {
-            $request->session()->flash('error','Problem while creating blog.');
+            $notification = array(
+                'message' => 'Problem while creating blog.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect()->route('blogs.index');
+        return redirect()->route('blogs.index')->with($notification);
 
     }
 
@@ -109,6 +118,7 @@ class BlogController extends Controller
     public function update(Request $request, $id)
     {
         $this->blog = $this->blog->find($id);
+        $old_image = $this->blog->image;
         if(!$this->blog) {
             request()->session()->flash('error','Post not found');
             return redirect()->back();
@@ -116,14 +126,29 @@ class BlogController extends Controller
         $rules = $this->blog->getRules('update');
         $request->validate($rules);
         $data = $request->all();
+        if($request->hasFile('image')){ 
+            $image = uploadImage($request->logo, 'blogs', '400x400');
+            if(file_exists(public_path().'/uploads/blogs/'.$old_image))
+            {
+                unlink(public_path().'/uploads/blogs/'.$old_image);
+                unlink(public_path().'/uploads/blogs/Thumb-'.$old_image);
+            } 
+        }
+        $data['image'] = $image;
         $this->blog->fill($data);
         $success = $this->blog->save();
         if($success){
-            $request->session()->flash('success','Post updated successfully.');
+            $notification = array(
+                'message' => 'Post updated successfully.',
+                'alert-type' => 'success'
+            );
         } else {
-            $request->session()->flash('error','Problem while updating post.');
+            $notification = array(
+                'message' => 'Problem while updating post.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect()->route('blogs.index');
+        return redirect()->route('blogs.index')->with($notification);
     }
 
     /**
@@ -142,18 +167,27 @@ class BlogController extends Controller
 
         $success = $this->blog->delete();
         if($success){
-            request()->session()->flash('success','Post deleted successfully.');
+            $notification = array(
+                'message' => 'Post deleted successfully.',
+                'alert-type' => 'success'
+            );
         } else {
-            request()->session()->flash('error','Sorry! Post could not be deleted at this moment.');
+            $notification = array(
+                'message' => 'Sorry! Post could not be deleted at this moment.',
+                'alert-type' => 'error'
+            );
         }
-        return redirect()->route('blogs.index');
+        return redirect()->route('blogs.index')->with($notification);
     }
 
     public function detail($slug){
         $data = $this->blog->where('slug',$slug)->first();
         if(!$this->blog){
-            request()->session()->flash('error','Post Not found');
-            return redirect()->back();
+            $notification = array(
+                'message' => 'Post Not found.',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
         }
         return view('frontend.pages.blog_details', compact('data'));
     }

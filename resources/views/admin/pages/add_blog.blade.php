@@ -1,10 +1,17 @@
 @extends('admin.layouts.master')
+@section('styles')
+<style>
+    img.imageThumb {
+        max-width: 100%;
+    }
+</style>
+@endsection
 @section('content')
 <div class="row">
 @if(!empty($data))
 {{ Form::open(['url'=>route('blogs.update', $data->id), 'class'=>'form', 'id'=>'post_add', 'files'=>true,'method'=>'patch']) }}
 @else
-<form action="{{ route('blogs.store') }}" method="POST">
+<form action="{{ route('blogs.store') }}" method="POST" enctype="multipart/form-data">
     @endif
     @csrf
    <div class="col-sm-9 wrap-fpanel">
@@ -79,36 +86,17 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <div class="fileinput fileinput-new" data-provides="fileinput">
-                        <div class="fileinput-new thumbnail" style="width: 210px;">
-                        @php
-                        $image = "http://placehold.it/350x260";
-                        if(!empty($data->image)){
-                            $image = $data->image;
-                        }
-                        @endphp
-                            <input type="hidden" id="thumbnail">
-                            <img src="{{ $image }}" id="thumbnailholder" alt="Please Connect Your Internet">
-                        </div>
-                        <div class="fileinput-preview fileinput-exists thumbnail" style="width: 210px;"></div>
-                        <div>
-                        <span class="btn btn-default btn-file">
-                            <span class="fileinput-new">
-                                <a href="{{ url('/vendor/filemanager/dialog.php?type=4&field_id=thumbnail&descending=1&sort_by=date&lang=undefined&akey=061e0de5b8d667cbb7548b551420eb821075e7a6') }}" class="btn iframe-btn btn-primary" type="button">
-                                    <i class="fa fa-picture-o"></i> Choose
-                                </a>
-                                <!-- <input type="file" name="image" value="upload" data-buttontext="Choose File" id="myImg" data-parsley-id="26"> -->
-                                <input type="hidden" name="image" id="thumbnailthumbnail" value="{{ @$data->image }}">
-                                <span class="fileinput-exists">Change</span>
-                            </span>
-                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                        </span>
-                        </div>
-                        <div id="valid_msg" style="color: #e11221"></div>
+                <div class="form-group small-image">
+                    <div class="file-upload no-dash">
+                        <input type="file" class="files" id="files" name="image" style="opacity:1">
                     </div>
+                    @if(!empty($data->image))
+                    <span class="pip">
+                        <img class="imageThumb" src="{{ asset('/uploads/blogs/Thumb-'.$data->image) }}">                      
+                    </span>
+                    @endif
                     @if ($errors->has('image'))
-                    <div class="col-lg-3">
+                    <div class="col-lg-12">
                         <span class="validation-errors text-danger">{{ $errors->first('image') }}</span>
                     </div>
                     @endif

@@ -10,9 +10,8 @@
     .same-row label{
         margin-right: 5px;
         padding-top: 5px;
-    }   
-    
-     table {
+    }    
+    table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;

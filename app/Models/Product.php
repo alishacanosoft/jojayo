@@ -114,4 +114,9 @@ class Product extends Model
           return $q->whereIn('brand_id', $selected_brands);
         });
     }
+    //for flash sales
+    public function product(){
+        return $this->hasMany(\App\Models\Product::class, 'id');
+    }
+    
 }
