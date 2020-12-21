@@ -218,7 +218,7 @@
           <div class="header__right">
             <div class="header__actions">
             
-            <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
+                <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
               <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::content()->count() }}</i></span></a>
                     <div class="ps-cart__content">
                         <div class="ps-cart__items">
@@ -247,33 +247,32 @@
                         </div>
                     </div>
               </div>
-              <div class="ps-block--user-header">
-                <div class="ps-block__left"><i class="icon-user"></i></div>
-                <div class="ps-block__right">
-                          
 
-                @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
-                <div class="ps-block--user-header">
-                    <div class="dropdown">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="ps-block__left text-dark font-13 font-weight-normal">
-                            <i class="icon-user text-dark"></i>&nbsp;My Account
-                            &nbsp;<i class="fa fa-angle-down text-dark"></i></div>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ url('/dashboard') }}">My Dashboard</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
-                        </div>
-                    </div>
-                </div> 
-                @else
-                <a href="{{ route('signinform') }}">Login & Register</a>
-                    
-                @endif
-                
-                
+              @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
+              <div class="ps-block--user-account">
+              <div class="ps-block--user-header">
+              <i class="icon-user text-dark"></i>&nbsp;My Account
+                            &nbsp;<i class="fa fa-angle-down text-dark"></i>
+                            </div>
+              <div class="ps-block__content">
+                  <ul class="ps-list--arrow">
+                    <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                    <li class="ps-block__footer"><a href="{{ route('logout') }}">Logout</a></li>
+                  </ul>
                 </div>
               </div>
+
+              @else
+              <div class="ps-block--user-header">
+               <div class="ps-block__right"> 
+                <div class="ps-block__left"><i class="icon-user text-dark"></i>
+                <a href="{{ route('signinform') }}" class="customer-login">Login & Register</a>
+                </div>
+                </div>
+            </div> 
+            @endif
+
+
             </div>
           </div>
         </div>
@@ -424,7 +423,6 @@
                 <select id="compute_select">
                     <option id="compute_option"></option>
                 </select>
-                
               </div>
             <div class="search-top">
              <input class="form-control" required name="q" id="productSearch"   type="text" placeholder="I'm shopping for...">
@@ -437,7 +435,7 @@
           <div class="header__right">
             <div class="header__actions">
             
-            <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
+                <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
               <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::content()->count() }}</i></span></a>
                     <div class="ps-cart__content">
                         <div class="ps-cart__items">
@@ -466,31 +464,33 @@
                         </div>
                     </div>
               </div>
+
+              @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
+              <div class="ps-block--user-account">
               <div class="ps-block--user-header">
-               
-                <div class="ps-block__right">
-                          
-                @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
-                <div class="ps-block--user-header">
-                    <div class="dropdown">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="ps-block__left text-dark font-13 font-weight-normal">
-                            <i class="icon-user text-dark"></i>&nbsp;My Account
-                            &nbsp;<i class="fa fa-angle-down text-dark"></i></div>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ url('/dashboard') }}">My Dashboard</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
-                        </div>
-                    </div>
-                </div> 
-                @else
-                <div class="ps-block__left"><i class="icon-user"></i> <a href="{{ route('signinform') }}">Login & Register</a></div> 
-                @endif
-                
-                
+              <i class="icon-user text-dark"></i>&nbsp;My Account
+                            &nbsp;<i class="fa fa-angle-down text-dark"></i>
+                            </div>
+              <div class="ps-block__content">
+                  <ul class="ps-list--arrow">
+                    <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                    <li class="ps-block__footer"><a href="{{ route('logout') }}">Logout</a></li>
+                  </ul>
                 </div>
               </div>
+
+              @else
+              <div class="ps-block--user-header">
+               <div class="ps-block__right"> 
+                <div class="ps-block__left"><i class="icon-user text-dark"></i>
+                <a href="{{ route('signinform') }}" class="customer-login">Login & Register</a>
+                </div>
+                </div>
+            </div> 
+            @endif
+
+          
+
             </div>
           </div>
         </div>
@@ -596,7 +596,7 @@
                   </div>
                   <div class="ps-block--user-header">
                       <div class="ps-block__left"><a href="{{ route('signinform') }}"><i class="icon-user"></i></a></div>
-                      <div class="ps-block__right"><a href="{{ route('signinform') }}">Login</a></div>
+                      <div class="ps-block__right"><a href="{{ route('signinform') }}" class="customer-login">Login</a></div>
                   </div>
               </div>
           </div>

@@ -3649,14 +3649,14 @@ textarea.form-control {
   padding-left: 10px;
 }
 
-.ps-block--user-header .ps-block__right a {
+.ps-block--user-header .ps-block__right a.customer-login {
   display: block;
   font-weight: 700;
   line-height: 18px;
   color: #ffffff;
 }
 
-.ps-block--user-header .ps-block__right a:hover {
+.ps-block--user-header .ps-block__right a.customer-login:hover {
   color: #000000;
 }
 
@@ -6502,7 +6502,7 @@ textarea.form-control {
 }
 
 .ps-block--user-account i {
-  font-size: 30px;
+  font-size: 20px;
   line-height: 1em;
 }
 
@@ -17695,4 +17695,36 @@ div#productList ul.result {
 
 #compute_select {
   display: none;
+}
+
+
+
+a.dropdown-item {
+  color: #000000;
+  font-size: 10px;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+ 
+  background-color: #cfd8e2;
+}
+
+btn.focus, .btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+a.editbutton.btn.btn-xs.btn-warning {
+  background-color: white;
+  border: none;
+}
+
+.action-address{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.address-delete{
+  border: none;
+    background-color: #fff;
 }

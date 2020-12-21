@@ -402,4 +402,8 @@ Route::get('/checkout/payment/{order}/failed', [
 ]);
 
 Route::get('/my-orders', 'OrderController@myOrders');
+Route::get('/my-wishlist', function () {
+    return view('frontend.pages.wishlist');
+});
+
 Route::get('/{slug}', 'FrontController@page')->name('pageDetail');

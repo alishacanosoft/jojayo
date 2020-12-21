@@ -20,6 +20,7 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -420,26 +421,54 @@ class UserController extends Controller
 
     public function UpdateUser(Request $request, $id){
       $user_data = $this->user->find($id);
-
+    
+      $user_data->name=$request->input('name');
+      $user_data->email=$request->input('email');
+      $user_data->contact=$request->input('contact');
+ 
       if(!$user_data) {
           request()->session()->flash('error','User not found');
           return redirect()->back();
       }
-      if($request->password == null){
-          $request['password'] = $this->user->password;
+      if($request->input('change_password') == null){
+          $request['password'] = $user_data->password;
+          $user_data->password = $user_data->password;
       }
-      if($request->change_password == 1){
-        if (Hash::check($request->old_password, $user_data->password)) {
-          $errors = new MessageBag(['old_password' => ['The old password you entered did not matched!']]);
-          return redirect()->back()->withErrors($errors)->withInput($request->all());
+
+      if($request->input('change_password') == "on"){
+        
+        if(Hash::check($request->old_password, $user_data->password)){
+            // $request['password'] = Hash::make($request->password);
+            $user_data->password = Hash::make($request->input('password'));
+
+        }else{
+           //   $errors = new MessageBag(['old_password' => ['The old password you entered did not matched!']]);
+           Session::flash('error',  'The old password you entered did not matched!');
+           return redirect()->back();
+
         }
-        $request['password'] = Hash::make($request->confirm);
       }
+
       $rules = $this->user->getRules('update');
-      $request->validate($rules);
-      $data = $request->all();
-      $this->user->fill($data);
-      $user_status = $this->user->save();
+    //   $user_data->validate($rules);
+      $status=$user_data->update();
+
+    //   $data = $request->all();
+    //   dd($request->validate($rules));
+
+    //   $this->user->fill($data);
+     
+    //   $user_status = $this->user->save();
+
+    if($status){
+
+        Session::flash('success','Profile updated successfully');
+    }
+    else{
+
+        Session::flash('error','Failed to update details');
+    }
+    return redirect()->back();
     }
 
     public function password(Request $request){
