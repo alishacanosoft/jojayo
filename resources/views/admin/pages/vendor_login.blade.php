@@ -176,7 +176,8 @@
         left: -30%;
         width: 130%;
         overflow-x: hidden;
-        overflow-y: scroll;
+        overflow-y: hidden;
+
     }
     .form .form-peice.switched {
         transform: translateX(-100%);
@@ -192,8 +193,9 @@
         left: 60%;
         transform: translate(-50%, -50%);
     }
+
     .form form .form-group {
-        margin-bottom: 0px;
+        margin-bottom: 4px;
         position: relative;
     }
     .form form .form-group.hasError input {
@@ -211,7 +213,7 @@
         transition: all 0.4s;
         cursor: text;
         z-index: -1;
-        color: #838a9a;
+        color: #2f2929;
         margin-left: 10px;
     }
     .form form label.active {
@@ -222,35 +224,22 @@
         font-family: "Ubuntu";
         font-weight: 600;
     }
+
+    .dotted-section h6:before, .dotted-section h6{
+        color: #2f2929;
+    }
     .dotted-section h6:before, .dotted-section h6:after {
         display: inline-block;
         margin: 0 6px 4px 6px;
         content: " ";
         text-shadow: none;
-        border: 1px dashed #dedede;
+        border: 1px dashed #afaaaa;
         width: 80px;
         }
-    /* .form form input:not([type=submit]) {
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid #ebebeb;
-        padding: 10px 20px;
-        box-sizing: border-box;
-        font-size: 14px;
-        font-weight: 500;
-        color: #584a4a;
-    }
-
-    .form form input:not([type=submit]):focus {
-        border: none;
-        border-bottom: 2px solid #9face6;
-        -webkit-box-shadow: none !important;
-        box-shadow: none !important;
-    } */
 
     .form form input:not([type=submit]) {
         width: 100%;
-        border: 1px solid #ebebeb;
+        border: 1px solid #ccc3c3;
         border-radius: 5px;
         padding: 10px 20px;
         box-sizing: border-box;
@@ -269,15 +258,13 @@
     .form form span.error {
         color: #f95959;
         font-family: "Ubuntu";
-        font-size: 12px;
+        font-size: 10px;
         position: absolute;
-        bottom: -20px;
+        bottom: -13px;
         right: 0;
         display: none;
     }
-    /*.form form input[type=password] {*/
-    /*    color: #f95959;*/
-    /*}*/
+
     .form form .CTA {
         margin-top: 25px;
         text-align: center;
@@ -286,7 +273,8 @@
         font-size: 14px;
         text-transform: uppercase;
         padding: 8px 30px;
-        background-image: linear-gradient(to left, #74ebd5, #9face6);
+        font-weight: bold;
+        background-image: linear-gradient(to left, #55ab9b, #9face6);
         color: #fff;
         border-radius: 30px;
         margin-right: 20px;
@@ -434,7 +422,6 @@
 
     div.contact100-form-checkbox .label-checkbox100 {
         font-size: 12px;
-        color: #5a606f;
         line-height: 1.4;
         display: block;
         position: relative;
@@ -462,7 +449,7 @@
         height: 18px;
         border-radius: 2px;
         background: #fff;
-        border: 1px solid #e6e6e6;
+        border: 1px solid #ccc3c3;
         left: 0;
         top: 50%;
         transform: translateY(-50%);
@@ -471,16 +458,21 @@
     .txt1 {
         font-size: 12px;
         line-height: 1.4;
-        color: #5a606f;
+        color: #2f2929;
         transform: translateY(12px);
     }
 
     .header-form{
         text-align: center;
-        padding-top: 10px;
     }
+
+    /*.signup-form{*/
+    /*    text-align: center;*/
+    /*    padding-top: 10px;*/
+    /*}*/
+
     .header-form span{
-        color: #5a606f;
+        color: #2f2929;
     }
 
     .create-account{
@@ -600,9 +592,33 @@
         padding: 0 10px;
     }
 
-    ::-webkit-scrollbar{
-        width: 1px
+    .form-row{
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
     }
+
+    .form-row .col{
+        position: relative;
+        width: 100%;
+        min-height: 1px;
+        flex: 0 0 33.333333%;
+        flex-grow: 1;
+    }
+    .form-row .col .input{
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        font-size: 14px;
+        font-weight: 500;
+        color: #5a606f;
+    }
+    .padding-lt-5{
+        padding-left: 5px;
+    }
+
+
 </style>
 <body>
 <div class="container">
@@ -683,63 +699,72 @@
                 <!-- Signup Form -->
                 <div class="signup form-peice switched">
                 <form class="signup-form" action="{{ route('users.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
-                        @csrf  
-                        <br><br><br>                      
-                        <div class="header-form">
+                        @csrf
+                        <div class="header-form signup">
                             <span>CREATE YOUR VENDOR ACCOUNT.</span>
                         </div>
-                        <div class="form-group">
+                    <div class="form-row">
+                        <div class="col">
                             <label for="name">Full Name</label>
                             <input type="text" name="name" id="name" class="name">
                             <span class="error"></span>
                         </div>
-
-                        <div class="form-group">
-                            <label for="company">Company Name</label>
-                            <input type="text" name="company" id="company" class="company">
-                            <span class="error"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="company_address">Company Address</label>
-                            <input type="text" name="company_address" id="company_address" class="company_address">
-                            <span class="error"></span>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Contact </label>
-                            <input type="text" name="contact" id="phone">
-                        </div>
-
-                        <div class="form-group">
+                        <div class="col padding-lt-5">
                             <label for="email">Email Adderss</label>
                             <input type="email" name="email" id="email" class="email">
                             <span class="error"></span>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company Name</label>
+                        <input type="text" name="company" id="company" class="company_name">
+                        <span class="error"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="company_address">Company Address</label>
+                            <input type="text" name="company_address" id="company_address" class="company_address">
+                            <span class="error"></span>
+                        </div>
+                        <div class="col padding-lt-5">
+                            <label for="phone">Contact </label>
+                            <input type="text" name="contact" class="contact" id="phone">
+                            <span class="error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="pannum">Pan/VAT Number</label>
+                            <input type="text" name="pannum" id="pannum" class="pannum">
+                            <span class="error"></span>
+                        </div>
+                        <div class="col padding-lt-5">
+                            <div class="file-upload">
+                                <div class="file-select">
+                                    <div class="file-select-button" id="fileName">Choose</div>
+                                    <div class="file-select-name" id="noFile">Vendor Profile...</div>
+                                    <input type="hidden" name="roles" value="vendor">
+                                    <input type="file" name="image" id="chooseFile">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" name="password" id="password" class="pass">
                             <span class="error"></span>
                         </div>
-                        <div class="file-upload">
-                            <div class="file-select">
-                                <div class="file-select-button" id="fileName">Choose Profile Image</div>
-                                <div class="file-select-name" id="noFile">No Image chosen...</div>
-                                <input type="hidden" name="roles" value="vendor">
-                                <input type="file" name="image" id="chooseFile">
-                            </div>
-                        </div>
 
-                        <div class="CTA">                            
+                        <div class="CTA">
                             <input type="submit" value="Signup Now" id="submit"/>
                         </div>
-                        <br>
                         <div class="dotted-section text-center">
                             <h6 class="font-15">Or Already have an account?</h6>
                             <a href="#" class="switch font-15">Sign In !</a>
-                        </div>                        
-                        <br>
+                        </div>
                     </form>
                 </div><!-- End Signup Form -->
             </div>
@@ -769,10 +794,13 @@
 
         'use strict';
 
-        var usernameError = true,
-            emailError    = true,
-            passwordError = true;
-            // passConfirm   = true;
+        var usernameError    = true,
+            emailError       = true,
+            passwordError    = true,
+            panNum           = true,
+            company_name     = true,
+            contact          = true,
+            company_address  = true;
 
         // Detect browser for css purpose
         if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
@@ -823,6 +851,60 @@
                 }
             }
 
+            // Panvat
+            if ($(this).hasClass('pannum')) {
+                if ($(this).val().length == '') {
+                    $(this).siblings('span.error').text('Please type your Pan/VAT number').fadeIn().parent('.form-group').addClass('hasError');
+                    panNum = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    panNum = false;
+                }
+            }
+
+            // company name
+            if ($(this).hasClass('company_name')) {
+                if ($(this).val().length == '') {
+                    $(this).siblings('span.error').text('Please type your company name').fadeIn().parent('.form-group').addClass('hasError');
+                    company_name = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    company_name = false;
+                }
+            }
+
+            // company address
+            if ($(this).hasClass('company_address')) {
+                if ($(this).val().length == '') {
+                    $(this).siblings('span.error').text('Please type your company address').fadeIn().parent('.form-group').addClass('hasError');
+                    company_name = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    company_name = false;
+                }
+            }
+
+            // company address
+            if ($(this).hasClass('company_address')) {
+                if ($(this).val().length == '') {
+                    $(this).siblings('span.error').text('Please type your company address').fadeIn().parent('.form-group').addClass('hasError');
+                    company_address = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    company_address = false;
+                }
+            }
+
+            // company address
+            if ($(this).hasClass('contact')) {
+                if ($(this).val().length == '') {
+                    $(this).siblings('span.error').text('Please type your company number').fadeIn().parent('.form-group').addClass('hasError');
+                    contact = true;
+                } else {
+                    $(this).siblings('.error').text('').fadeOut().parent('.form-group').removeClass('hasError');
+                    contact = false;
+                }
+            }
             //PassWord confirmation
             // if ($('.pass').val() !== $('.passConfirm').val()) {
             //     $('.passConfirm').siblings('.error').text('Passwords don\'t match').fadeIn().parent('.form-group').addClass('hasError');
@@ -857,7 +939,7 @@
         // Form submit
         $('form.signup-form').submit(function (event) {
             // $("input[name='roles']").attr('type','text');
-            event.preventDefault();            
+            event.preventDefault();
             $.ajax({
                 url: "{{ route('users.store') }}",
                 type: 'post',
