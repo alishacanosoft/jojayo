@@ -44,6 +44,11 @@
         border-color: #343a40;
     }
 
+   .btn-dark:hover{
+       color: #fff;
+       background-color: #474e55;
+   }
+
 </style>
 @endsection
 @section('content')
@@ -469,7 +474,7 @@
                               @if(\Auth::user()->roles == 'admin')
                               @php $class = 'btn-dark' @endphp
                               @if(@$data->status == 'verified')
-                               $class = 'btn-success';
+                                       @php $class = 'btn-success' @endphp
                               @endif
                                 <button type="submit" class="btn {{$class}}" name="status" value="verified">Verified</button>
                             @endif
@@ -582,7 +587,7 @@
    $('#delete').on('click', function(){
        $('#append .div').last().remove();
    });
-   
+
    $('#add_color').on('click', function(){
        let html = '';
        num = num+1;
