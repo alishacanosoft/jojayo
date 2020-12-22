@@ -174,7 +174,7 @@
             <!-- @csrf -->
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
                
-                <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
+                <select class="form-control" id="searchCategory" style="text-indent: 0" name="category">
                                 <option value="all" {{($selected_category = 'all') ? 'selected':''}}>All</option>
                                 @foreach($primary_categories as $prime)
                                     @if($prime->secondaryCategories->count() > 0)
@@ -186,19 +186,24 @@
                                                     $secondary->name = str_replace("Men's", "", $secondary->name);
                                                 ?>
 
-                                                <option disabled class="level-0" value="{{$secondary->slug}}">{{trim($secondary->name)}}</option>
+                                                <optgroup label="{{trim($secondary->name)}}">
 
                                                 @foreach($secondary->FinalCategory as $final_cat)
                                                     <?php
                                                         $final_cat->name = str_replace("Women's", "", $final_cat->name);
                                                         $final_cat->name = str_replace("Men's", "", $final_cat->name);
                                                     ?>
-                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>&nbsp;&nbsp;&nbsp;{{trim($final_cat->name)}}</option>
+                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>{{trim($final_cat->name)}}</option>
                                                 @endforeach
+                                                </optgroup>
                                             @endif
                                         @endforeach
                                     @endif
                                 @endforeach
+                </select>
+
+                <select id="compute_select">
+                    <option id="compute_option"></option>
                 </select>
               </div>
 
@@ -242,33 +247,34 @@
                         </div>
                     </div>
               </div>
-              <div class="ps-block--user-header">
-                <div class="ps-block__left"><i class="icon-user"></i></div>
-                <div class="ps-block__right">
-                          
 
-                @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
-                <div class="ps-block--user-header">
-                    <div class="dropdown">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="ps-block__left text-dark font-13 font-weight-normal">
-                            <i class="icon-user text-dark"></i>&nbsp;My Account
-                            &nbsp;<i class="fa fa-angle-down text-dark"></i></div>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ url('/dashboard') }}">My Dashboard</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
-                        </div>
+              @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
+              <div class="ps-block--user-account">
+              <div class="ps-block--user-header">
+                <div class="ps-block__left">
+                <i class="icon-user text-dark"></i>&nbsp;My Account
+                                &nbsp;<i class="fa fa-angle-down text-dark"></i>
                     </div>
-                </div> 
-                @else
-                <a href="{{ route('signinform') }}">Login & Register</a>
-                    
-                @endif
-                
-                
+                    </div>
+              <div class="ps-block__content">
+                  <ul class="ps-list--arrow">
+                    <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                    <li class="ps-block__footer"><a href="{{ route('logout') }}">Logout</a></li>
+                  </ul>
                 </div>
               </div>
+
+              @else
+              <div class="ps-block--user-header">
+               <div class="ps-block__right"> 
+                <div class="ps-block__left"><i class="icon-user text-dark"></i>
+                <a href="{{ route('signinform') }}" class="customer-login">Login & Register</a>
+                </div>
+                </div>
+            </div> 
+            @endif
+
+
             </div>
           </div>
         </div>
@@ -328,7 +334,8 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
+              <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+              <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
              
             </ul>
           </div>
@@ -389,7 +396,7 @@
             <!-- @csrf -->
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
                
-                <select class="form-control resizeselect" id="searchCategory" style="text-indent: 0" name="category">
+                <select class="form-control" id="searchCategory" style="text-indent: 0" name="category">
                                 <option value="all" {{($selected_category = 'all') ? 'selected':''}}>All</option>
                                 @foreach($primary_categories as $prime)
                                     @if($prime->secondaryCategories->count() > 0)
@@ -399,21 +406,25 @@
                                                 <?php
                                                     $secondary->name = str_replace("Women's", "", $secondary->name);
                                                     $secondary->name = str_replace("Men's", "", $secondary->name);
-                                                ?>
-
-                                                <option disabled class="level-0" value="{{$secondary->slug}}">{{trim($secondary->name)}}</option>
-
+                                                ?>  
+                                            <optgroup label="{{trim($secondary->name)}}">
                                                 @foreach($secondary->FinalCategory as $final_cat)
                                                     <?php
                                                         $final_cat->name = str_replace("Women's", "", $final_cat->name);
                                                         $final_cat->name = str_replace("Men's", "", $final_cat->name);
                                                     ?>
-                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>&nbsp;&nbsp;&nbsp;{{trim($final_cat->name)}}</option>
+                                                    <option class="level-1" value="{{$final_cat->slug}}" {{(@$selected_category == $final_cat->slug) ? 'selected':''}}>{{trim($final_cat->name)}}</option>
                                                 @endforeach
+                                            </optgroup>
                                             @endif
                                         @endforeach
                                     @endif
                                 @endforeach
+                </select>
+
+                
+                <select id="compute_select">
+                    <option id="compute_option"></option>
                 </select>
               </div>
             <div class="search-top">
@@ -427,7 +438,7 @@
           <div class="header__right">
             <div class="header__actions">
             
-            <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
+                <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
               <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::content()->count() }}</i></span></a>
                     <div class="ps-cart__content">
                         <div class="ps-cart__items">
@@ -456,31 +467,35 @@
                         </div>
                     </div>
               </div>
+
+              @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
+              <div class="ps-block--user-account">
               <div class="ps-block--user-header">
-               
-                <div class="ps-block__right">
-                          
-                @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
-                <div class="ps-block--user-header">
-                    <div class="dropdown">
-                        <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <div class="ps-block__left text-dark font-13 font-weight-normal">
-                            <i class="icon-user text-dark"></i>&nbsp;My Account
-                            &nbsp;<i class="fa fa-angle-down text-dark"></i></div>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ url('/dashboard') }}">My Dashboard</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}">Log Out</a>
-                        </div>
-                    </div>
-                </div> 
-                @else
-                <div class="ps-block__left"><i class="icon-user"></i> <a href="{{ route('signinform') }}">Login & Register</a></div> 
-                @endif
-                
-                
+              <div class="ps-block__left">
+              <i class="icon-user text-dark"></i>&nbsp;My Account
+                            &nbsp;<i class="fa fa-angle-down text-dark"></i>
+                            </div>
+                            </div>
+              <div class="ps-block__content">
+                  <ul class="ps-list--arrow">
+                    <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                    <li class="ps-block__footer"><a href="{{ route('logout') }}">Logout</a></li>
+                  </ul>
                 </div>
               </div>
+
+              @else
+              <div class="ps-block--user-header">
+               <div class="ps-block__right"> 
+                <div class="ps-block__left"><i class="icon-user text-dark"></i>
+                <a href="{{ route('signinform') }}" class="customer-login">Login & Register</a>
+                </div>
+                </div>
+            </div> 
+            @endif
+
+          
+
             </div>
           </div>
         </div>
@@ -540,7 +555,8 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
+              <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+              <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
              
             </ul>
           </div>
@@ -555,7 +571,8 @@
       </div>
       <div class="header__right">
         <ul class="navigation__extra">
-          <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
+          <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+          <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
           
         </ul>
       </div>
@@ -586,7 +603,7 @@
                   </div>
                   <div class="ps-block--user-header">
                       <div class="ps-block__left"><a href="{{ route('signinform') }}"><i class="icon-user"></i></a></div>
-                      <div class="ps-block__right"><a href="{{ route('signinform') }}">Login</a></div>
+                      <div class="ps-block__right"><a href="{{ route('signinform') }}" class="customer-login">Login</a></div>
                   </div>
               </div>
           </div>

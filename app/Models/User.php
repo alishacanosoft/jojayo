@@ -19,7 +19,7 @@ class User extends Authenticatable
             'image' => 'sometimes|image'
         ];
         if($act !== 'add'){
-            $rules['email'] = 'required|string';
+            $rules['email'] = 'required|unique:users,email,'.$this->id;
         }
         return $rules;
     }

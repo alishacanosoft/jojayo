@@ -3660,14 +3660,14 @@ textarea.form-control {
   padding-left: 10px;
 }
 
-.ps-block--user-header .ps-block__right a {
+.ps-block--user-header .ps-block__right a.customer-login {
   display: block;
   font-weight: 700;
   line-height: 18px;
   color: #ffffff;
 }
 
-.ps-block--user-header .ps-block__right a:hover {
+.ps-block--user-header .ps-block__right a.customer-login:hover {
   color: #000000;
 }
 
@@ -3843,6 +3843,7 @@ textarea.form-control {
   color: #fff;
   border-radius: 3px;
   line-height: 1;
+  padding:10px
 }
 
 .ps-block--countdown-deal figure figcaption {
@@ -6513,7 +6514,7 @@ textarea.form-control {
 }
 
 .ps-block--user-account i {
-  font-size: 30px;
+  font-size: 20px;
   line-height: 1em;
 }
 
@@ -11372,7 +11373,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
-.loaded #loader-wrapper .loader-section.section-right {
+ .loaded #loader-wrapper .loader-section.section-right {
   transform: translateX(100%);
   transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
@@ -17746,4 +17747,66 @@ del.discount-product {
 }
 button[disabled] {
   cursor: not-allowed;
+}
+
+#compute_select {
+  display: none;
+}
+
+
+
+a.dropdown-item {
+  color: #000000;
+  font-size: 10px;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+ 
+  background-color: #cfd8e2;
+}
+
+btn.focus, .btn:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+a.editbutton.btn.btn-xs.btn-warning {
+  background-color: white;
+  border: none;
+}
+
+.action-address{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.address-delete{
+  border: none;
+    background-color: #fff;
+}
+
+figure.flash-sale-header > ul.ps-countdown {
+  margin: 0;
+}
+
+.container-flash {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+section.flash-category .ps-layout--shop {
+  padding-bottom: 30px;
+}
+
+section.flash-category .ps-layout--shop:last-child {
+  padding-bottom: 90px;
+}
+section.flash-category .ps-shopping-product {
+  padding-top: 50px;
+  min-height: 50vh;
+
+}
+
+figure.flash-sale-header figcaption {
+  margin-right: 0;
 }

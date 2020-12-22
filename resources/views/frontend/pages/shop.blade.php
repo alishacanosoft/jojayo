@@ -62,7 +62,6 @@
             </aside>
             <aside class="widget widget_shop">
             @include('frontend.pages.filters.brands')
-                          
             <figure>
                 <h4 class="widget-title">By Price</h4>
                 <div class="form-row" style="height: 35px;">
@@ -112,8 +111,14 @@
                 <a href="#">XL</a>
               </figure>
             </aside>
+<<<<<<< HEAD
          </div>
          <div class="ps-layout__right">
+=======
+          </div>
+                
+          <div class="ps-layout__right">    
+>>>>>>> d4c6deef1ab1a1430206bc0c2529c81904a21028
             <div class="ps-shopping ps-tab-root">
                <div class="ps-shopping__header">
                   <p><strong> {{$allcount}}</strong> Products found</p>
@@ -246,19 +251,11 @@
          </div>
       </div>
 
-   </div>
-</div>
-</div>
-<div class="related-products"></div>
 @endsection
-@section('scripts')
-@include('frontend.layouts.load-more')
-=======
-@endsection
-@section('scripts')
-@include('frontend.layouts.load-more')
 
 
+@section('scripts')
+@include('frontend.layouts.load-more')
 <script>
    var current_url='{{url()->current()}}';
    // var favorite = [];

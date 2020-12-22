@@ -1,6 +1,7 @@
 @extends('frontend.layouts.master')
 @section('styles')
-<link rel="stylesheet" href="/admin/css/jquery.dataTables.min.css">
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 <style>
     .form-control{
         height:40px;
@@ -14,32 +15,52 @@
 </style>
 @endsection
 @section('content')
-@include('frontend.layouts.front-nav')
-            <div class="table-responsive">
-             <table id="all-orders" class="table table-striped table-bordered nowrap" role="grid" aria-describedby="basic-col-reorder_info">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Order No</th>
-                        <th>Purchased by</th>
-                        <th>Area</th>
-                        <th>Total Amount</th>
-                        <th>Order Created At</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
+<main class="ps-page--my-account">
+            @include('frontend.layouts.front-nav')
+            @include('frontend.layouts.customer-nav')
+            <div class="col-lg-8">
+                <div class="ps-section__right">
+                @if(session()->has('success'))
+                    {{frontSuccess()}}
+                @elseif(session()->has('warning'))
+                    {{frontWarning()}}
+                @elseif(session()->has('error'))
+                    {{frontError()}}
+                @endif
+                    <h3>My Order's</h3>
 
-            </table>
-             </div>
+                    <div class="table-responsive">
+                    <table id="all-orders" class="table table-striped table-bordered  responsive" role="grid" aria-describedby="basic-col-reorder_info">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Order No</th>
+                                <th>Purchased by</th>
+                                <th>Area</th>
+                                <th>Total Amount</th>
+                                <th>Order Created At</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                    </div>
+
+                </div>
+            </div>
         </div>
-        @include('frontend.layouts.customer-nav')
     </div>
-</div>
-<div class="mb-5"></div>
+</section>
+</main>
+        
 @endsection
 @section('scripts')
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 <script>
+    $(document).ready(function() {
+        $('#all-orders').DataTable();
+    })
+
     function formats ( d ) {
         //console.log(d);
         var inner_table = '<table class="child_row-verified  table table-striped table-bordered nowrap"><thead><tr><th>Send To</th><th>Product</th><th>Order Detail</th><th>Product Image</th></tr></thead><tbody>'

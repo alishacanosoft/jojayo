@@ -91,10 +91,13 @@
     <i class="fa fa-chevron-up"></i>
     </a>
     <div class="ps-site-overlay"></div>
+    
+    @if(Route::is('home') )
     <div id="loader-wrapper">
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
     </div>
+    @endif
     <!-- <div class="ps-search" id="site-search"><a class="ps-btn--close" href="#"></a>
         <div class="ps-search__content">
             <form class="ps-form--primary-search" action="" method="post">
@@ -505,44 +508,16 @@ $(document).on('click', '.productListMob li', function () {
 	// 	}
     // @endif
 
-    (function($, window){
-        var arrowWidth = 30;
-
-        $.fn.resizeselect = function(settings) {  
-            return this.each(function() { 
-
-            $(this).change(function(){
-                var $this = $(this);
-
-                // create test element
-                var text = $this.find("option:selected").text();
-                
-                var $test = $("<span>").html(text).css({
-                    "font-size": $this.css("font-size"), // ensures same size text
-                "visibility": "hidden" 							 // prevents FOUC
-                });
-                
-
-                // add to body, get width, and get out
-                $test.appendTo($this.parent());
-                var width = $test.width();
-                $test.remove();
-
-                // set select width
-                $this.width(width + arrowWidth);
-
-                // run on start
-            }).change();
-
-            });
-    };
-
-  // run by default
-  $("select.resizeselect").resizeselect();                       
-
-})(jQuery, window);
-
-
+$(document).ready(function() {
+  
+  $("#compute_option").html($('#searchCategory option:selected').text()); 
+  $("#searchCategory").width($("#compute_select").width()); 
+  
+  $('#searchCategory').change(function(){
+    $("#compute_option").html($('#searchCategory option:selected').text()); 
+    $(this).width($("#compute_select").width());  
+  });
+});
 
 $( document ).ready(function() {
     var $scrollTop=$('#scroll-top');

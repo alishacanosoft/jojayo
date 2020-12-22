@@ -35,8 +35,8 @@
                             <div class="ps-block__item">
                                 <div class="ps-block__left"><i class="icon-rocket"></i></div>
                                 <div class="ps-block__right">
-                                    <h4>Free Delivery</h4>
-                                    <p>For all oders over $99</p>
+                                    <h4>Express Delivery</h4>
+                                    <p>Inside KTM Valley</p>
                                 </div>
                             </div>
                         </li>
@@ -44,7 +44,7 @@
                             <div class="ps-block__item">
                                 <div class="ps-block__left"><i class="icon-sync"></i></div>
                                 <div class="ps-block__right">
-                                    <h4>90 Days Return</h4>
+                                    <h4>7 Days Return</h4>
                                     <p>If goods have problems</p>
                                 </div>
                             </div>
@@ -150,10 +150,7 @@
                                       <option value="2">5</option>
                                     </select>
                       </div>
-                      <div class="ps-product__progress-bar ps-progress" data-value="37">
-                        <div class="ps-progress__value"><span></span></div>
-                        <p>Sold:16</p>
-                      </div>
+                      
                     </div>
                   </div>
                 </div>
@@ -406,32 +403,7 @@
             </div>
         </div> -->
 
-        <!-- <div class="ps-download-app">
-              <div class="ps-container">
-                  <div class="ps-block--download-app">
-                      <div class="container">
-                          <div class="row">
-                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
-                                  <div class="ps-block__thumbnail"><img src="/frontend/images/app.png" alt=""></div>
-                              </div>
-                              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
-                                  <div class="ps-block__content">
-                                      <h3>Download Martfury App Now!</h3>
-                                      <p>Shopping fastly and easily more with our app. Get a link to download the app on your phone</p>
-                                      <form class="ps-form--download-app" action="http://nouthemes.net/html/martfury/do_action" method="post">
-                                          <div class="form-group--nest">
-                                              <input class="form-control" type="Email" placeholder="Email Address">
-                                              <button class="ps-btn">Subscribe</button>
-                                          </div>
-                                      </form>
-                                      <p class="download-link"><a href="#"><img src="/frontend/images/google-play.png" alt=""></a><a href="#"><img src="/frontend/images/app-store.png" alt=""></a></p>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-        </div> --> 
+  
 
         <!-- Hot arrivlas -->
         <div class="ps-product-list ps-new-arrivals">
