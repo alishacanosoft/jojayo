@@ -3832,6 +3832,7 @@ textarea.form-control {
   color: #fff;
   border-radius: 3px;
   line-height: 1;
+  padding:10px
 }
 
 .ps-block--countdown-deal figure figcaption {
@@ -17727,4 +17728,30 @@ a.editbutton.btn.btn-xs.btn-warning {
 .address-delete{
   border: none;
     background-color: #fff;
+}
+
+figure.flash-sale-header > ul.ps-countdown {
+  margin: 0;
+}
+
+.container-flash {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+section.flash-category .ps-layout--shop {
+  padding-bottom: 30px;
+}
+
+section.flash-category .ps-layout--shop:last-child {
+  padding-bottom: 90px;
+}
+section.flash-category .ps-shopping-product {
+  padding-top: 50px;
+  min-height: 50vh;
+
+}
+
+figure.flash-sale-header figcaption {
+  margin-right: 0;
 }
