@@ -91,10 +91,13 @@
     <i class="fa fa-chevron-up"></i>
     </a>
     <div class="ps-site-overlay"></div>
+    
+    @if(Route::is('home') )
     <div id="loader-wrapper">
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
     </div>
+    @endif
     <!-- <div class="ps-search" id="site-search"><a class="ps-btn--close" href="#"></a>
         <div class="ps-search__content">
             <form class="ps-form--primary-search" action="" method="post">

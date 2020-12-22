@@ -15,7 +15,7 @@ Route::get('logout', 'Auth\LoginController@logout', function () {
     return abort(404);
 });
 
-Route::get('/', 'FrontController@index');
+Route::get('/', 'FrontController@index')->name('home');
 
 Route::get('/login', function () {
     if (Auth::user() && Auth::user()->roles == 'customers') {
@@ -402,6 +402,11 @@ Route::get('/checkout/payment/{order}/failed', [
 ]);
 
 Route::get('/my-orders', 'OrderController@myOrders');
+
+Route::get('/order-tracking', function () {
+    return view('frontend.pages.order-tracking');
+});
+
 Route::get('/my-wishlist', function () {
     return view('frontend.pages.wishlist');
 });

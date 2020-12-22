@@ -251,9 +251,11 @@
               @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
               <div class="ps-block--user-account">
               <div class="ps-block--user-header">
-              <i class="icon-user text-dark"></i>&nbsp;My Account
-                            &nbsp;<i class="fa fa-angle-down text-dark"></i>
-                            </div>
+                <div class="ps-block__left">
+                <i class="icon-user text-dark"></i>&nbsp;My Account
+                                &nbsp;<i class="fa fa-angle-down text-dark"></i>
+                    </div>
+                    </div>
               <div class="ps-block__content">
                   <ul class="ps-list--arrow">
                     <li><a href="{{ url('/dashboard') }}">Dashboard</a></li>
@@ -332,7 +334,8 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
+              <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+              <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
              
             </ul>
           </div>
@@ -468,8 +471,10 @@
               @if(!empty(Auth::user()) && Auth::user()->roles == 'customers')
               <div class="ps-block--user-account">
               <div class="ps-block--user-header">
+              <div class="ps-block__left">
               <i class="icon-user text-dark"></i>&nbsp;My Account
                             &nbsp;<i class="fa fa-angle-down text-dark"></i>
+                            </div>
                             </div>
               <div class="ps-block__content">
                   <ul class="ps-list--arrow">
@@ -550,7 +555,8 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
+              <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+              <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
              
             </ul>
           </div>
@@ -565,7 +571,8 @@
       </div>
       <div class="header__right">
         <ul class="navigation__extra">
-          <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
+          <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+          <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
           
         </ul>
       </div>
