@@ -48,10 +48,24 @@
        color: #fff;
        background-color: #474e55;
    }
+   .action-buttons .popover{
+      background-color: #000;
+      color: #fff;
+      border-color: #000;
+   }
+   .action-buttons .popover.top .arrow:after {
+      border-top-color: black;
+   }
+   .action-buttons .popover .popover-title{
+      background-color: red;
+   }
 
 </style>
 @endsection
 @section('content')
+@php
+$active_tab = session()->get('active_tab');
+@endphp
 <div class="row">
    <div class="col-lg-12">
       <div class="row">
@@ -468,9 +482,13 @@
                         </div>
 
                         <div class="row text-right">
-                           <div class="col-12">
-                              <button type="submit" class="btn btn-primary" name="status" value="active">{{ !empty($data) ? 'Update' : 'Add' }} Product</button>
+                           <div class="col-12 action-buttons">
+                              <span class="d-inline-block" data-toggle="popover" data-placement="top" data-title="Missing Properties" data-content="Please click the plus button to add product related images and sizes.">
+                              <button class="btn btn-primary" type="submit" name="status" value="active" type="button">{{ !empty($data) ? 'Update' : 'Add' }} Product</button>
+                              </span>
+                              <span class="d-inline-block" data-toggle="popover" data-placement="top" data-title="Missing Properties" data-content="Please click the plus button to add product related images and sizes.">
                               <button type="submit" class="btn btn-danger" name="status" value="inactive">Draft</button>
+                              </span>                                                            
                               @if(\Auth::user()->roles == 'admin')
                               @php $class = 'btn-dark' @endphp
                               @if(@$data->status == 'verified')
@@ -491,6 +509,9 @@
 @endsection
 @section('scripts')
 <script>
+   $('button[type=submit]').prop('disabled', true);
+   $('button[type=submit]').css('pointer-events','none');
+   $('[data-toggle="popover"]').popover();
    let edit = '';
    if("{{ @$data->id }}" > 0){
       let edit = 'yes';
@@ -589,6 +610,8 @@
    });
 
    $('#add_color').on('click', function(){
+       $('button[type=submit]').prop('disabled', false);
+       $('button[type=submit]').css('pointer-events','');
        let html = '';
        num = num+1;
        html = '<div class="form-group row image afterappend"><div class="col-md-6 col-lg-6 col-sm-12"><select name="imageColor[]" id="colorsData'+num+'" data-num="'+num+'" class="form-control color_select" data="sizesData'+num+'"><option>--Select any One--</option></select></div><div class="col-md-6 col-lg-6 col-sm-12"><select id="sizesData'+num+'" class="form-control selectebox" name="demosize[]" multiple></select></div><div class="col-md-12 col-lg-12 col-sm-12" style="display:inherit;margin-top:10px"><div class="dropzone"><div class="drop-upload" aria-disabled="false"><div class="input-group"><span class="input-group-btn"><a id="lfm" data-input="thumbnail'+num+'" data-preview="holder'+num+'" style="border: 1px dashed rgb(196, 198, 207); border-radius: 2px; width: 140px; height: 45px; background-color: rgb(255, 255, 255); text-align: center; cursor: pointer; transition: border-color 0.3s ease 0s; display: inline-block; vertical-align: top;"><img src="//laz-g-cdn.alicdn.com/lazada/lib/0.0.81/image/publish/IC_MediaCenter.png" style="position: relative;"><span class="upload-text" data-spm-anchor-id="0.0.p-30129.i2.81e84edfnX8IMm" style="font-size: 14px; position: relative; top: 10px; color: rgb(102, 102, 102); width: 96px; display: inline-block; text-align: left; margin-left: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Media Center</span></a></span><input id="thumbnail'+num+'" class="form-control hidden" type="text" name="image[]"><span id="holder'+num+'" style="max-height:100px;margin-left:10px;display:flex"></span></div><div class="medi"><div class="file-upload"><input type="file" class="files" name="images[]" multiple=""><img src="//laz-g-cdn.alicdn.com/lazada/lib/0.0.81/image/publish/IC_upload.png" style="position: relative;top: 11px;height: 16px;width: 16px;margin-left: 8px;"><span class="upload-text">Upload</span></div></div></div></div></div></div>';

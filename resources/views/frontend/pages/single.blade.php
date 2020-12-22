@@ -598,7 +598,7 @@
         data: { _token:"{{ csrf_token() }}", id: id, size_id: size_id, color_id:color_id},
         success(response){
             $('.ps-product__info').closest('div').find('span').attr('value', response.rowId)
-            cartCount();
+            wishCount();
             toastr.success(response.message);                
         },
         error: function(response){

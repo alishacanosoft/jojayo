@@ -227,7 +227,13 @@
                                                             <span class="messages"></span>
                                                         </div>
                                                     </div>
-
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-2 control-label"><strong>PAN</strong> <span class="text-danger">*</span></label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control" value="{{ @$vendor_data->pan }}" name="pan" id="address" placeholder="PAN Number">
+                                                            <span class="messages"></span>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group row">
                                                         <label class="col-sm-2 control-label"><strong>Categories</strong> <span class="text-danger">*</span></label>
                                                         <div class="col-sm-8">

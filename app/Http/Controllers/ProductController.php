@@ -19,7 +19,7 @@ use App\Models\SimilarProduct;
 use App\Models\ProductExpense;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Auth;
+use Session;
 
 class ProductController extends Controller
 {
@@ -112,8 +112,29 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $rules = $this->product->getRules();
-        $request->validate($rules);
+        //$rules = $this->product->getRules();
+        $validator = Validator::make($request->all(), [
+            'name' => 'bail|required|string|unique:products,name',
+            'slug' => 'bail|required|string|unique:products,slug',
+            'sku' => 'bail|required|string|unique:products,sku',
+            'jojayo_sku' => 'bail|required|string|unique:products,jojayo_sku',
+            'specification' => 'bail|required|string',
+            'description' => 'bail|required|string',
+            'category_id' => 'required|exists:product_categories,id',
+            'brand_id' => 'nullable|exists:brands,id',
+            'vendor_id' => 'nullable|exists:vendors,id',
+            'video' => 'nullable|string',
+            'warranty' => 'nullable|string',
+            'status' => 'nullable|in:active,inactive,verified',
+        ]);
+    
+        if ($validator->fails()) {
+            session(['active_tab' => 'create']);
+            return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+        }
+        //$request->validate($rules);
         $data = $request->all();
         $data['name'] = $request->name;
         $data['slug'] = $request->slug . '-' . $request->sku;
@@ -208,7 +229,16 @@ class ProductController extends Controller
                     ];
                     // echo 'color=>' . $color . ', size=>' . $request->size[$key] . ', stock=>' . $request->stock[$key] . ', price=>' . $request->price[$key] . ', purchase=>' . $request->purchase[$key] . ', discount=>' . $request->discount[$key] . '<br>';
                 }
-                $product_seze = ProductSize::insert($data);                
+                $product_seze = ProductSize::insert($data);  
+                if($product_seze){
+                    $notification = array(
+                        'message' => 'Please add sizes for this product.',
+                        'alert-type' => 'error'
+                    );
+                    $delete_product = $this->product->find($product_id);
+                    $success = $this->product->delete();
+                    return redirect()->back()->with($notification);
+                }              
             } else {
                 $notification = array(
                     'message' => 'Please select sizes for this product.',

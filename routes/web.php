@@ -182,7 +182,7 @@ Route::get('/wish/get_wishlist_count/', 'WishlistController@wishlistCount')->nam
 
 Route::resource('users', 'UserController');
 
-Route::resource('wish', 'wishListController');
+Route::resource('wish', 'WishlistController');
 
 Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
 
