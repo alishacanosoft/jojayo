@@ -55,8 +55,16 @@ class CartController extends Controller
         $selected_size = $request->size_id;
         $productimg = $this->product_images->where('product_id', $request->id)->first();
         $prodimage = $this->image->where('imageable_id', $productimg->id)->where('imageable_type','App\Models\ProductImages')->pluck('image')->first();
-        $cart_data = Cart::instance('cart')->add($product_data->id, $product_data->name, 1, $price, ['discount' => $discount, 'image' => $prodimage, 'slug' => $product_data->slug, 'color_id' => $selected_color, 'size_id' => $selected_size])->associate('App\Models\Product');
-        return response()->json(['rowId' => $cart_data->rowId, 'message'=>'Product added to cart!']);
+        $cart_data = Cart::instance('cart')->add($product_data->id, $product_data->name, 1, $price, ['discount' => $discount, 'image' => $prodimage, 'slug' => $product_data->slug, 'color_id' => $selected_color, 'size_id' => $selected_size])->associate('App\Models\Product');       
+        if($request->ajax()){
+            return response()->json(['rowId' => $cart_data->rowId, 'message'=>'Product added to cart!']);
+        } else {
+            $notification = array(
+                'message' => 'Product added to the cart.',
+                'alert-type' => 'success'
+            );
+            return redirect()->back()->with($notification);
+        }
     }
 
     /**

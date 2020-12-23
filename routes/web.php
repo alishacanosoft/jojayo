@@ -184,6 +184,8 @@ Route::resource('users', 'UserController');
 
 Route::resource('wish', 'WishlistController');
 
+Route::delete('/wish/remove/{id}', 'WishlistController@remove')->name('wish.remove');
+
 Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
 
     Route::get('/expenses', 'ProductExpenseController@index')->name('record-list');
@@ -415,8 +417,6 @@ Route::get('/order-tracking', function () {
     return view('frontend.pages.order-tracking');
 });
 
-Route::get('/my-wishlist', function () {
-    return view('frontend.pages.wishlist');
-});
+Route::get('/my-wishlist', 'FrontController@wishlist');
 
 Route::get('/{slug}', 'FrontController@page')->name('pageDetail');

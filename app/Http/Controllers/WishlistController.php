@@ -108,6 +108,7 @@ class WishlistController extends Controller
     public function destroy($id)
     {
         $find = Cart::instance('wishlist')->get($id);
+        // $this->wish = $this->wish->find($id);
         if($find){
             $status = Cart::instance('wishlist')->remove($id);
         }
@@ -116,5 +117,34 @@ class WishlistController extends Controller
         } else {
             return response()->json(['status'=>false,'data'=>'Something went wrong!']);
         }
+        
+    }
+
+    public function remove($id)
+    {
+        $this->wish = $this->wish->find($id);
+        if (!$this->wish) {
+            $notification = array(
+                'message' => 'Product Not found.',
+                'alert-type' => 'error'
+            );
+            return redirect()->back0
+            +++0
+            45;mk;()->with($notification);
+        }
+
+        $success = $this->wish->delete();
+        if ($success) {
+            $notification = array(
+                'message' => 'Product removed from wishlist.',
+                'alert-type' => 'success'
+            );
+        } else {
+            $notification = array(
+                'message' => 'Sorry! Product could not be removed at this moment.',
+                'alert-type' => 'error'
+            );
+        }
+        return redirect()->back()->with($notification);        
     }
 }
