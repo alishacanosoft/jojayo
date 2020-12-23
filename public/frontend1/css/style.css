@@ -17871,7 +17871,8 @@ line-height: 1em;
 }
 
 
-/** Order Details Tracking**/.track {
+/** Order Details Tracking**/
+.track {
      position: relative;
      background-color: #ddd;
      height: 7px;

@@ -1,9 +1,6 @@
 @extends('frontend.layouts.master')
+
 @section('content')
-
-
-     
-  
 
     <div class="ps-my-account">        
         <div class="ps-form--account ps-tab-root">
@@ -24,7 +21,7 @@
                         @csrf
                         <h5>Log In Your Account</h5>
                         <div class="form-group">
-                            <input class="form-control" type="text" name="email" placeholder="Username or email address">
+                            <input class="form-control" type="text" name="email" placeholder="Email address">
                             @if($errors->has('email'))
                                 <span class="text-danger small">{{ $errors->first('email') }}</span><br>
                             @endif
@@ -49,11 +46,12 @@
                 </div>
                 <div class="ps-tab" id="register">
                 <div class="ps-form__content">
-                    <form action="{{ route('customerSignUp') }}" method="POST">
+                    <form action="{{ route('customerSignUp') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <h5>Register An Account</h5>
+
                         <div class="form-group">
-                            <input class="form-control" name="email" type="text" placeholder="Username or email address">
+                            <input class="form-control" name="email" type="text" placeholder="Email address">
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('email') }}</strong>
@@ -84,6 +82,7 @@
                                 </span>
                             @endif
                         </div>
+
                         <div class="form-group submtit">
                             <button type="submit" class="ps-btn ps-btn--fullwidth">Register</button>
                         </div>

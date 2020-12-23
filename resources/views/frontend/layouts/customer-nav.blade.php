@@ -5,7 +5,8 @@ $title = Request::segment(1);
 <div class="col-lg-4">
     <div class="ps-section__left">
         <aside class="ps-widget--account-dashboard">
-            <div class="ps-widget__header"><img src="{{ Auth::user()->image ? asset('/uploads/users/'.Auth::user()->image) : asset('/images/dummy.jpg')}}" alt="{{ Auth::user()->name }}">
+        <div class="ps-widget__header"><img src="<?php if(Auth::user()->image && str_contains(Auth::user()->image, 'https')){?>
+            {{Auth::user()->image}}<?php }else{ if(Auth::user()->image){?>{{asset('/uploads/users/'.Auth::user()->image)}}<?php }else{?>{{asset('/images/dummy.jpg')}}<?php }}?>" alt="{{ Auth::user()->name }}">
             <figure>
                 <figcaption>{{ ucwords(Auth::user()->name) }}</figcaption>
                 <p><a href="mailto:{{ $sensitive_data->email }}"><span class="__cf_email__">{{ Auth::user()->email }}</span></a></p>
