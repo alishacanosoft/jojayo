@@ -17710,7 +17710,7 @@ a.dropdown-item {
   background-color: #cfd8e2;
 }
 
-btn.focus, .btn:focus {
+.btn.focus, .btn:focus {
   outline: 0;
   box-shadow: none;
 }
