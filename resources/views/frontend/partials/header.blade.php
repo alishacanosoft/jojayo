@@ -334,7 +334,8 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor/login')}}">Login | Sell on JoJayo</a></li>
+                <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
+              <li><a href="{{url('/vendor/login')}}">Sell on JoJayo</a></li>
               <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
 
             </ul>
@@ -437,7 +438,7 @@
           </div>
           <div class="header__right">
             <div class="header__actions">
-
+            
                 <a class="header__extra" href="{{ url('/my-wishlist') }}"><i class="icon-heart"></i><span><i>{{ Cart::instance('wishlist')->content()->count() }}</i></span></a>
               <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::instance('cart')->content()->count() }}</i></span></a>
                     <div class="ps-cart__content">
@@ -552,12 +553,12 @@
                 </li>
                 <li><a href="{{ url('/shop') }}">Shop</a></li>
                 <li><a href="{{ url('/about-us') }}">About</a></li>
-                <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
+                <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
             </ul>
             <ul class="navigation__extra">
               <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
               <li><a href="{{url('/vendor/')}}">Sell on JoJayo</a></li>
-              <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
+              <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>             
             </ul>
           </div>
         </div>
@@ -571,7 +572,8 @@
       </div>
       <div class="header__right">
         <ul class="navigation__extra">
-          <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+            <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
+          <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
           <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
 
         </ul>
