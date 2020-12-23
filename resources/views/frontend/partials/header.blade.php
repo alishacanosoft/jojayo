@@ -716,15 +716,14 @@
       </div>
       <div class="ps-panel__content">
             <ul class="menu--mobile">
-            <li class="current-menu-item "><a href="/">Home</a>
-            </li>
-            <li class="current-menu-item "><a href="{{ url('/shop') }}">Shop</a>
-            </li>
-            <li class="current-menu-item "><a href="{{ url('/about-us') }}">About</a>
-            </li>
-            <li class="current-menu-item "><a href="{{ url('/privacy-policy') }}">Privacy Policy</a>
-            </li>
-
+                <li class="current-menu-item "><a href="/">Home</a>
+                </li>
+                <li class="current-menu-item "><a href="{{ url('/shop') }}">Shop</a>
+                </li>
+                <li class="current-menu-item "><a href="{{ url('/about-us') }}">About</a>
+                </li>
+                <li class="current-menu-item "><a href="{{ url('/privacy-policy') }}">Privacy Policy</a>
+                </li>
             </ul>
       </div>
     </div>

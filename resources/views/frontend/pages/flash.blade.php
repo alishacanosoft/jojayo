@@ -1,7 +1,9 @@
 @extends('frontend.layouts.master')
 @section('styles')
 <style>
-
+.scroll{
+    cursor: pointer;
+}
 .ps-block__right .text-dark{
     font-size: 14px;
     font-weight: 500
@@ -27,17 +29,44 @@
                     <div class="ps-block--countdown-deal">                    
                         <div class="ps-block__right">
                             <figure class="flash-sale-header">
+                                @php
+                                if(date('H') >= '07' && date('H') <= '11' && !empty($mid) && count($mid) > 0){
+                                    $date = date('F d, Y');
+                                    $next_sale = '12:00:00';
+                                } elseif(date('H') >= '12' && date('H') <= '19' && !empty($three) && count($three) > 0){
+                                    $date = date('F d, Y');
+                                    $next_sale = '15:00:00';
+                                } elseif(date('H') >= '00' && date('H') <= '07' && !empty($first) && count($first) > 0){
+                                    $date = date("Y-m-d", strtotime("+1 day"));
+                                    $next_sale = '11:00:00';
+                                } elseif(date('H') >= '12' && date('H') <= '15' && !empty($second) && count($second) > 0){                                    
+                                    $date = date("Y-m-d", strtotime("+1 day"));
+                                    $next_sale = '12:00:00';
+                                } elseif(date('H') >= '15' && date('H') <= '19' && !empty($third) && count($third) > 0){
+                                    $date = date("Y-m-d", strtotime("+1 day"));
+                                    $next_sale = '15:00:00';
+                                }                                
+                                @endphp
+                                @if(!empty($flash) && count($flash) > 0)                              
                                 <figcaption>Current sale Ends in:</figcaption>
                                 <ul class="ps-countdown" data-time="{{ date('F d, Y') }} {{$end_time}}">
                                     <li><span class="hours"></span></li> <span class="text-dark bold">:</span>
                                     <li><span class="minutes"></span></li> <span class="text-dark bold">:</span>
                                     <li><span class="seconds"></span></li>
                                 </ul>
-                                <a href="#today11" class="text-dark today11" @if(date('H') > 11) hidden @endif>&nbsp; &nbsp; 11:00 &nbsp; |</a>
-                                <a href="#today15" class="text-dark today15" @if(date('H') > 15) hidden @endif>&nbsp; &nbsp; 15:00 &nbsp; |</a>
-                                <a href="#tomorrow00" class="text-dark tomorrow00">&nbsp; Tomorrow 00:00 &nbsp; |</a>
-                                <a href="#tomorrow11" class="text-dark tomorrow11">&nbsp; Tomorrow 11:00 &nbsp; |</a>
-                                <a href="#tomorrow15" class="text-dark tomorrow15">&nbsp; Tomorrow 15:00 &nbsp;</a>
+                                @else
+                                <figcaption>Sale starts in:</figcaption>
+                                <ul class="ps-countdown" data-time="{{ $date }} {{ $next_sale }}">
+                                    <li><span class="hours"></span></li> <span class="text-dark bold">:</span>
+                                    <li><span class="minutes"></span></li> <span class="text-dark bold">:</span>
+                                    <li><span class="seconds"></span></li>
+                                </ul>
+                                @endif
+                                @if(!empty($mid) && count($mid) > 0)<a data-href="today11" class="text-dark scroll today11" @if(date('H') > 11) hidden @endif>&nbsp; &nbsp; 11:00 &nbsp; |</a>@endif
+                                @if(!empty($three) && count($three) > 0)<a data-href="today15" class="text-dark scroll today15" @if(date('H') > 15) hidden @endif>&nbsp; &nbsp; 15:00 &nbsp; |</a>@endif
+                                @if(!empty($first) && count($first) > 0)<a data-href="tomorrow00" class="text-dark scroll tomorrow00">&nbsp; Tomorrow 00:00 &nbsp; |</a>@endif
+                                @if(!empty($second) && count($second) > 0)<a data-href="tomorrow11" class="text-dark scroll tomorrow11">&nbsp; Tomorrow 11:00 &nbsp; |</a>@endif
+                                @if(!empty($third) && count($third) > 0)<a data-href="tomorrow15" class="text-dark scroll tomorrow15">&nbsp; Tomorrow 15:00 &nbsp;</a>@endif
                             </figure>                        
                         </div>
                     </div>
@@ -47,6 +76,7 @@
     </div>
 
     <section class="flash-category">
+            @if(!empty($flash) && count($flash) > 0)
             <div class="ps-layout--shop">
                 <div class="ps-product-list ps-clothings">
                     <div class="ps-container"> 
@@ -101,18 +131,18 @@
                     </div>
                 </div>
             </div>
-
-            <div class="ps-layout--shop"  id="today11" @if(date("H") > 11) hidden @endif>
+            @endif
+            @if(!empty($mid) && count($mid) > 0)
+            <div class="ps-layout--shop" id="today11" @if(date("H") > 11) hidden @endif>
                 <div class="ps-product-list ps-clothings">
-                    <div class="ps-container"> 
-
+                    <div class="ps-container">
                         <div class="ps-section__header">
                             <h3>Flash Sales | Today 11</h3>
                         </div>
                         <div class="ps-shopping-product">                
                             <div class="row" @if(date("H") > 11) hidden @endif >
-                                @if(!empty($eleven))
-                                @foreach($eleven as $product_list)
+                                @if(!empty($mid))
+                                @foreach($mid as $product_list)
                                 @php
                                 $starting_price = App\Models\ProductSize::where('product_id', $product_list->product_id)->first();
                                 $total_price = $product_list->selling_price;
@@ -154,8 +184,8 @@
                     </div>
                 </div>
             </div>
-
-
+            @endif
+            @if(!empty($three) && count($three) > 0)
             <div class="ps-layout--shop" @if(date('H') > 15) hidden @endif id="today15">
                 <div class="ps-product-list ps-clothings">
                     <div class="ps-container"> 
@@ -209,9 +239,9 @@
                     </div>
                 </div>
             </div>
-
-
-            <div class="ps-layout--shop">
+            @endif
+            @if(!empty($first) && count($first) > 0)
+            <div class="ps-layout--shop" id="tomorrow00">
                 <div class="ps-product-list ps-clothings">
                     <div class="ps-container"> 
 
@@ -219,9 +249,9 @@
                             <h3>Flash Sales | Tomorrow 00</h3>
                         </div>
                         <div class="ps-shopping-product">
-                            <div class="row" id="tomorrow00">
-                                @if(!empty($tom0))
-                                @foreach($tom0 as $product_list)
+                            <div class="row">
+                                @if(!empty($first))
+                                @foreach($first as $product_list)
                                 @php
                                 $starting_price = App\Models\ProductSize::where('product_id', $product_list->product_id)->first();
                                 $total_price = $product_list->selling_price;
@@ -263,8 +293,9 @@
                     </div>
                 </div>
             </div>
-
-            <div class="ps-layout--shop">
+            @endif
+            @if(!empty($second) && count($second) > 0)
+            <div class="ps-layout--shop"  id="tomorrow11">
                 <div class="ps-product-list ps-clothings">
                     <div class="ps-container"> 
 
@@ -272,9 +303,9 @@
                             <h3>Flash Sales | Tomorrow 11</h3>
                         </div>
                         <div class="ps-shopping-product">
-                            <div class="row" id="tomorrow11">
-                                @if(!empty($tom1))
-                                @foreach($tom1 as $product_list)
+                            <div class="row">
+                                @if(!empty($second))
+                                @foreach($second as $product_list)
                                 @php
                                 $starting_price = App\Models\ProductSize::where('product_id', $product_list->product_id)->first();
                                 $total_price = $product_list->selling_price;
@@ -317,8 +348,9 @@
                     </div>
                 </div>
             </div>
-
-            <div class="ps-layout--shop">
+            @endif
+            @if(!empty($third) && count($third) > 0)
+            <div class="ps-layout--shop" id="tomorrow15">
                 <div class="ps-product-list ps-clothings">
                     <div class="ps-container"> 
 
@@ -326,9 +358,9 @@
                             <h3>Flash Sales | Tomorrow 15</h3>
                         </div>
                         <div class="ps-shopping-product">
-                            <div class="row" id="tomorrow15">
-                                @if(!empty($tom1))
-                                @foreach($tom1 as $product_list)
+                            <div class="row">
+                                @if(!empty($third))
+                                @foreach($third as $product_list)
                                 @php
                                 $starting_price = App\Models\ProductSize::where('product_id', $product_list->product_id)->first();
                                 $total_price = $product_list->selling_price;
@@ -370,32 +402,19 @@
                     </div>
                 </div>
             </div>
-
+            @endif
     </section>
 
 </div>
 @endsection
 
-<!-- @section('scripts')
+@section('scripts')
 <script>
-$(document).ready(function () {
-
-    $('.today15').on("click", function(){
+    $(".scroll").click(function() {
+        id = $(this).attr('data-href');
         $('html, body').animate({
-                scrollTop: $('#today15').offset().top - 30
-            }, 'slow');
-        });
+            scrollTop: $("#"+id).offset().top
+        }, 2000);
     });
-
-    $('.today11').on("click", function(){
-        $('html, body').animate({
-                scrollTop: $('#today11').offset().top - 50
-            }, 'slow');
-        });
-    });
-
-           
 </script>
-
-
-@endsection -->
+@endsection

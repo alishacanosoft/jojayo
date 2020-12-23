@@ -33,11 +33,16 @@ class ProductService{
         return $products;
     }
 
-    public static function flash($date, $time){
-        $flash= \App\Models\ProductSize::with('product')->whereNotNull('flash_price')
-         ->whereDate('from_date','<=',$date)
-         ->whereTime('from_date','>=',$time)
-         ->groupBy('product_id')->get();
-         return $flash;
+    public static function flash($date, $time, $endtime){
+        $flash = \App\Models\ProductSize::with('product')
+        ->whereHas('product', function ($query) {
+            $query->where('status', 'verified');
+        })
+        ->whereNotNull('flash_price')
+        ->whereDate('to_date', '<=', $date)
+        ->whereTime('from_date', '>=', $time)
+        ->whereTime('from_date', '<=', $endtime)
+        ->groupBy('product_id')->get();
+        return $flash;
     }
 }

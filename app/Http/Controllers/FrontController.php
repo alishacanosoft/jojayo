@@ -86,16 +86,9 @@ class FrontController extends Controller
         } elseif (date('H') >= '20' && date('H') <= '24') { 
             $end_time = '24:00:00';
             $time = '20:00:00';
-        } 
-        $flash = $this->product_sizes->with('product')
-        ->whereHas('product', function ($query) {
-            $query->where('status', 'verified');
-        })
-        ->whereNotNull('flash_price')
-        ->whereDate('to_date', '<=', date('Y-m-d'))
-        ->whereTime('from_date', '>=', $time)           
-        ->groupBy('product_id')->get();// dd($time);
-        // dd($flash);
+        }
+        $date = date('Y-m-d'); 
+        $flash = ProductService::flash($date, $time, $end_time);        
         $men_fashion = ProductService::getProduct("Men's Fashion", 20);
         $women_fashion = ProductService::getProduct("Women's Fashion", 20); //dd($women_fashion);
         $kid_fashion = ProductService::getProduct("Kid's Fashion", 20); //dd($women_fashion);
@@ -263,15 +256,16 @@ class FrontController extends Controller
         } elseif (date('H') >= '20' && date('H') <= '24') { 
             $end_time = '24:00:00';
             $time = '20:00:00';
-        } 
-        $flash = ProductService::flash(date('Y-m-d'), $time);
-        $three = ProductService::flash(date('Y-m-d'), '15:00:00');
-        //  $three = $this->product_sizes->with('product')->whereNotNull('flash_price')
-        //  ->whereDate('from_date','<=',date('Y-m-d'))
-        //  ->whereTime('from_date','<=','15:00:00')
-        //  comment ->whereDate('from_date', '>=', date('Y-m-d '))->whereTime('from_date','>=',$time)
-        //  ->groupBy('product_id')->get();
-        return view('frontend.pages.flash', compact('flash', 'three', 'end_time'));
+        }            
+        $flash = ProductService::flash(date('Y-m-d'), '07:00:00', '11:00:00');
+        $mid = ProductService::flash(date('Y-m-d'), '12:00:00', '15:00:00');
+        $three = ProductService::flash(date('Y-m-d'), '15:00:00', '19:00:00');
+        //Tomorrow
+        $tdate = date("Y-m-d", strtotime("+1 day"));
+        $first = ProductService::flash($tdate, '07:00:00', '11:00:00');
+        $second = ProductService::flash($tdate, '12:00:00', '15:00:00');
+        $third = ProductService::flash($tdate, '16:00:00', '19:00:00');
+        return view('frontend.pages.flash', compact('flash', 'three', 'mid', 'end_time','first', 'second', 'third'));
     }
 
     private function seperateRequest()
@@ -521,33 +515,7 @@ class FrontController extends Controller
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
             return $e;
         }
-        die;
-
-        //         'query' => [
-        // 				'token' => $accessToken,
-        // 				'from' => $from,
-        // 				'to' => $to,
-        // 				'text' => $text
-        // 			],
-        // $http= new Client();
-        // try {
-        //     $params = [
-        //         'query' => [
-        //             'token' => 'cdKlsNCZZ0oSTLMMylIC',
-        //             'from' => 'InfoSMS',
-        //             'to' => '9814786767',
-        //             'text' => 'test message from server'
-        //       ]
-        //     ];
-
-        //     // $response = $guzzle_client->request('GET','/api.com',$params);
-        //     $response = $http->request('GET','http://api.sparrowsms.com/v2/sms/',$params);
-        //     dd($response->getBody());
-
-        //     return response()->json(['token' => json_decode((string) $response->getBody(), true)]);
-        // } catch (\GuzzleHttp\Exception\BadResponseException $e) {
-        //     return $e;
-        // }
+        die;        
     }
     public function ipsconnect()
     {
