@@ -231,7 +231,7 @@ class FrontController extends Controller
     {
         $requested = $this->seperateRequest();
 
-        $all_products = $this->products->with('images', 'sizes','category')
+        $all_products = $this->products->with('images', 'sizes','VendorName')
             ->where('status', 'verified')
             ->has('sizes')
             ->sortBrand($request['selected_brands'])
@@ -745,6 +745,12 @@ die;
     public function getVendorProduct($id){
         $data = $this->products->where('vendor_id', $id)->get();
         return response()->json($data);
+    }
+
+    public function wishlist(){
+        $user_id = auth()->user()->id;
+        $my_wish = \App\Models\Wishlist::where('user_id', $user_id)->get();
+        return view('frontend.pages.wishlist', compact('my_wish'));
     }
 
 }

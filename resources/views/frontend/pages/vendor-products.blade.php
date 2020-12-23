@@ -32,11 +32,11 @@
                     <p><strong>{{ $vendor_data->company }}</strong>, {{ $vendor_data->intro }}</p><span class="ps-block__divider"></span>
                     </figure>
                   </div>
-                
+
                 </div>
               </div>
             </div>
-            <div class="ps-section__right">              
+            <div class="ps-section__right">
               <div class="ps-vendor-best-seller">
                 <div class="ps-section__header">
                   <h3>Best Seller items</h3>
@@ -55,7 +55,7 @@
                    @endphp
                     <div class="ps-product">
                         <div class="ps-product__thumbnail"><a href="{{ route('single-product', $value->products->slug) }}"><img src="{{ $product_image }}" alt=""></a>
-                        @if(@$starting_price->discount > 0)<div class="ps-product__badge">NPR @$starting_price->discount</div>@endif
+                        @if(@$starting_price->discount > 0)<div class="ps-product__badge">NPR {{ @$starting_price->discount }}</div>@endif
                         <ul class="ps-product__actions">
                             <li><a href="{{ route('single-product', $value->products->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                             <li><a href="" data-placement="top" class="btn-quick-view" value="{{ $value->products->id }}" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                    @endforeach
-                   @endif     
+                   @endif
                   </div>
                 </div>
               </div>
@@ -120,7 +120,7 @@
                         <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 ">
                             <div class="ps-product">
                                 <div class="ps-product__thumbnail"><a href="{{ route('single-product', $value->slug) }}"><img src="{{ $product_image }}" alt="{{ $value->name }}"></a>
-                                @if(@$starting_price->discount > 0)<div class="ps-product__badge">NPR @$starting_price->discount</div>@endif
+                                @if(@$starting_price->discount > 0)<div class="ps-product__badge">NPR {{ @$starting_price->discount }}</div>@endif
                                 <ul class="ps-product__actions">
                                   <li><a href="{{ route('single-product', $value->slug) }}" data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="icon-bag2"></i></a></li>
                                   <li><a href="" data-placement="top" class="btn-quick-view" value="{{ $value->id }}" title="Quick View" data-toggle="modal" data-target="#product-quickview"><i class="icon-eye"></i></a></li>
@@ -144,13 +144,13 @@
                                     <p class="ps-product__price sale">NPR {{ $new_price }} @if(@$starting_price->discount > 0)<del>NPR {{ $old_price }}</del>@endif</p>
                                 </div>
                                 </div>
-                            </div>                        
+                            </div>
                         </div>
                         @endforeach
                         @endif
                     </div>
                     <div class="ps-pagination">
-                        
+
                     </div>
                   </div>
                   <div class="ps-tab" id="tab-2">
@@ -164,7 +164,7 @@
                         @endphp
                         <div class="ps-product ps-product--wide">
                             <div class="ps-product__thumbnail"><a href="{{ route('single-product', $value->slug) }}"><img src="{{ $product_image }}" alt="{{ $value->name }}"></a>
-                            @if(@$starting_price->discount > 0)<div class="ps-product__badge">NPR @$starting_price->discount</div>@endif
+                            @if(@$starting_price->discount > 0)<div class="ps-product__badge">NPR {{ @$starting_price->discount }}</div>@endif
                             </div>
                             <div class="ps-product__container">
                             <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $value->slug) }}">{{ $value->name }}</a>
@@ -194,7 +194,7 @@
                         @endforeach
                         @endif
                         <div class="ps-pagination">
-                            
+
                         </div>
                   </div>
                 </div>
@@ -208,22 +208,22 @@
 @section('scripts')
 <script>
    var current_url='{{url()->current()}}';
-   var sort = '{{$requested["sort"]}}';   
+   var sort = '{{$requested["sort"]}}';
    $('#onSort').change(function(){
       var sortBy=$(this).val();
       sort = sortBy
       window.location.replace(getUrl());
-   })   
+   })
    function getUrl(){
        var new_url=current_url
        var brand_url='';
        var price_url='';
        // var size_url='';
        var sort_url='';
-   
+
        if(sort.length>0){
            sort_url = 'sort=' + sort + '&';
-       }   
+       }
        return new_url+='?' + sort_url
    }
 </script>

@@ -111,14 +111,9 @@
                 <a href="#">XL</a>
               </figure>
             </aside>
-<<<<<<< HEAD
-         </div>
-         <div class="ps-layout__right">
-=======
           </div>
                 
           <div class="ps-layout__right">    
->>>>>>> d4c6deef1ab1a1430206bc0c2529c81904a21028
             <div class="ps-shopping ps-tab-root">
                <div class="ps-shopping__header">
                   <p><strong> {{$allcount}}</strong> Products found</p>
@@ -166,7 +161,7 @@
                                     
                                     ?>
                                  <div class="ps-product__container">
-                                    <a class="ps-product__vendor" href="{{ route('categories.sec',[isset($rout[$key]) ? $rout[$key]->slug : '',$product_list->productCategory->slug]) }}">{{ $product_list->productCategory->name }}</a>
+                                    <a class="ps-product__vendor" href="{{ route('vendor.store', $product_list->VendorName->vendor_slug) }}">{{ $product_list->VendorName->company }}</a>
                                     <div class="ps-product__content">
                                        <a class="ps-product__title" href="{{ route('single-product', $product_list->slug) }}">{{ $product_list->name }}</a>
                                        <div class="ps-product__rating">
@@ -190,10 +185,7 @@
                            @endforeach
                            @endif          
                         </div>
-                     </div>
-                     <div class="ps-pagination">
-                        {{ $all_products->links() }}
-                     </div>
+                     </div>                  
                   </div>
                   <div class="ps-tab" id="tab-2">
                      @if(!empty($all_products))
@@ -214,7 +206,7 @@
                                  ?>
                               <div class="ps-product__content">
                                  <a class="ps-product__title" href="{{ route('single-product', $product_list->slug) }}">{{ $product_list->name }}</a>
-                                 <div class="ps-product__vendor"><strong>Sold by: </strong><a href="#">Vendor STORE</a></div>
+                                 <div class="ps-product__vendor"><strong>Sold by: </strong><a href="{{ route('vendor.store', $product_list->VendorName->vendor_slug) }}">{{ $product_list->VendorName->company }}</a></div>
                                  <div class="ps-product__vendor"><strong>Category: </strong><a href="{{ route('categories.sec',[isset($rout[$key]) ? $rout[$key]->slug : '',$product_list->productCategory->slug]) }}">{{ $product_list->productCategory->name }}</a></div>
                                  <ul class="ps-product__desc">
                                     {!! shortContent($product_list->specification, 10) !!} <?php if($product_list->specification) echo"..." ?>
@@ -233,9 +225,6 @@
                         @endforeach
                      </div>
                      @endif
-                     <div class="ps-pagination">
-                        {{ $all_products->links() }}
-                     </div>
                   </div>
                </div>
             </div>

@@ -746,7 +746,7 @@
                                     <div class="file-select-button" id="fileName">Choose</div>
                                     <div class="file-select-name" id="noFile">Vendor Profile...</div>
                                     <input type="hidden" name="roles" value="vendor">
-                                    <input type="file" name="image" id="chooseFile">
+                                    <input type="file" name="logo" id="chooseFile">
                                 </div>
                             </div>
                         </div>

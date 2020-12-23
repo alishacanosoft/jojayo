@@ -575,48 +575,7 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        // $this->product_size = $this->product_size->find($id);
-        // $product = $this->product->findOrFail($this->product_size->product_id);
-        // $product_count = $product->sizes->count();
-        // if (!$this->product_size) {
-        //     $notification = array(
-        //         'message' => 'Product Not found.',
-        //         'alert-type' => 'error'
-        //     );
-        //     return redirect()->route('products.index')->with($notification);
-        // }
-        // $pro_images = $this->product_image->where(['product_id' => $this->product_size->product_id, 'color_id' => $this->product_size->color_id])->get();
-        // $location = './uploads/products/';
-        // foreach ($pro_images as $images) {
-        //     foreach ($images->images as $image) {
-        //         $to_delete_image = $image->image;
-        //         $exist_file = $location . $to_delete_image;
-        //         if (file_exists($exist_file)) {
-        //             @unlink($exist_file);
-        //             $image->delete();
-        //         }
-        //     }
-        //     $images->delete();
-        // }
-        // $success = $this->product_size->delete();
-
-        // if ($product_count == 1) {
-        //     $product->delete();
-        // }
-
-        // if ($success) {
-        //     $notification = array(
-        //         'message' => 'Product deleted successfully.',
-        //         'alert-type' => 'success'
-        //     );
-        // } else {
-        //     $notification = array(
-        //         'message' => 'Sorry! Product could not be deleted at this moment.',
-        //         'alert-type' => 'success'
-        //     );
-        // }
-        // return redirect()->route('products.index')->with($notification);
+    {        
         $this->product = $this->product->find($id);
         if (!$this->product) {
             $notification = array(

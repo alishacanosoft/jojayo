@@ -30,7 +30,7 @@
 
     <title>JoJayo Shopping</title>
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,600,700&amp;amp;subset=latin-ext" rel="stylesheet">
-   
+
     <link rel="stylesheet" href="{{asset('frontend1/plugins/font-awesome/css/font-awesome.min.css')}}">
     <link rel="stylesheet" href="{{asset('frontend1/fonts/Linearicons/Linearicons/Font/demo-files/demo.css')}}">
     <link rel="stylesheet" href="{{asset('frontend1/plugins/bootstrap/css/bootstrap.min.css')}}">
@@ -86,7 +86,7 @@
             background: #000000;
             color: #fff;
         }
-        
+
         .productListMob li{
             padding: 5px 15px;
             border-bottom: 1px solid #000;
@@ -109,7 +109,7 @@
         }
       .font-13{
           font-size: 13px;
-      } 
+      }
       .font-weight-normal{
           font-weight: normal;
       }
@@ -126,14 +126,14 @@
         <div class="ps-container">
           <div class="header__left">
             <div class="menu--product-categories">
-            <ul id="nav">  
-                <li class="yahoo">      
+            <ul id="nav">
+                <li class="yahoo">
                 <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
                     <ul style="z-index:1000;min-width:260px;margin-top:10px">
                         @if(!empty($primary_categories))
                         @foreach($primary_categories as $prime)
                             @if($prime->secondaryCategories->count() > 0)
-                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>            
+                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>
                                 <ul>
                                     @foreach($prime->secondaryCategories as $secondary)
                                         @if($secondary->FinalCategory->count() > 0)
@@ -155,7 +155,7 @@
                                         @else
                                         <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }}</a></li>
                                         @endif
-                                    @endforeach                                                                                        
+                                    @endforeach
                                 </ul>
                             </li>
                             @else
@@ -165,7 +165,7 @@
                         @endif
                     </ul>
                 </li>
-              </ul> 
+              </ul>
             </div>
             <a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt="jojayo-logo"></a>
           </div>
@@ -173,7 +173,7 @@
             <form class="ps-form--quick-search" action="{{ route('searchProduct')}}" method="GET">
             <!-- @csrf -->
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
-               
+
                 <select class="form-control" id="searchCategory" style="text-indent: 0" name="category">
                                 <option value="all" {{($selected_category = 'all') ? 'selected':''}}>All</option>
                                 @foreach($primary_categories as $prime)
@@ -210,14 +210,14 @@
             <div class="search-top">
              <input class="form-control" required name="q" id="productSearch"   type="text" placeholder="I'm shopping for...">
                 <div id="productList" class="productList">
-                </div>         
+                </div>
             </div>
             <button >Search</button>
             </form>
           </div>
           <div class="header__right">
             <div class="header__actions">
-            
+
             <a class="header__extra" href="#"><i class="icon-heart"></i><span><i class="wish-count">{{ Cart::instance('wishlist')->content()->count() }}</i></span></a>
               <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::instance('cart')->content()->count() }}</i></span></a>
                     <div class="ps-cart__content">
@@ -266,12 +266,12 @@
 
               @else
               <div class="ps-block--user-header">
-               <div class="ps-block__right"> 
+               <div class="ps-block__right">
                 <div class="ps-block__left"><i class="icon-user text-dark"></i>
                 <a href="{{ route('signinform') }}" class="customer-login">Login & Register</a>
                 </div>
                 </div>
-            </div> 
+            </div>
             @endif
 
 
@@ -282,15 +282,15 @@
       <nav class="navigation">
         <div class="ps-container">
           <div class="navigation__left">
-            <div class="menu--product-categories">            
-              <ul id="nav">  
-                <li class="yahoo">      
+            <div class="menu--product-categories">
+              <ul id="nav">
+                <li class="yahoo">
                 <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
                     <ul style="z-index:1000;min-width:260px;margin-top:10px">
                         @if(!empty($primary_categories))
                         @foreach($primary_categories as $prime)
                             @if($prime->secondaryCategories->count() > 0)
-                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>            
+                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>
                                 <ul>
                                     @foreach($prime->secondaryCategories as $secondary)
                                         @if($secondary->FinalCategory->count() > 0)
@@ -312,7 +312,7 @@
                                         @else
                                         <li><a href="{{route('categories', $secondary->slug)}}">{{ ucwords($secondary->name) }}</a></li>
                                         @endif
-                                    @endforeach                                                                                        
+                                    @endforeach
                                 </ul>
                             </li>
                             @else
@@ -322,7 +322,7 @@
                         @endif
                     </ul>
                 </li>
-              </ul>  
+              </ul>
             </div>
           </div>
           <div class="navigation__right">
@@ -331,12 +331,12 @@
                             </li>
                             <li><a href="{{ url('/shop') }}">Shop</a></li>
                             <li><a href="{{ url('/about-us') }}">About</a></li>
-                            <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
+                            <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
                         </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+              <li><a href="{{url('/vendor/login')}}">Login | Sell on JoJayo</a></li>
               <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
-             
+
             </ul>
           </div>
         </div>
@@ -348,14 +348,14 @@
         <div class="ps-container">
           <div class="header__left">
             <div class="menu--product-categories">
-            <ul id="nav">  
-                <li class="yahoo">      
+            <ul id="nav">
+                <li class="yahoo">
                 <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
                     <ul style="z-index:1000;min-width:260px;margin-top:10px">
                         @if(!empty($primary_categories))
                         @foreach($primary_categories as $prime)
                             @if($prime->secondaryCategories->count() > 0)
-                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>            
+                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>
                                 <ul>
                                     @foreach($prime->secondaryCategories as $secondary)
                                         @if($secondary->FinalCategory->count() > 0)
@@ -377,7 +377,7 @@
                                         @else
                                         <li><a href="{{route('categories', $secondary->slug)}}">{{ $secondary->name }}</a></li>
                                         @endif
-                                    @endforeach                                                                                        
+                                    @endforeach
                                 </ul>
                             </li>
                             @else
@@ -387,7 +387,7 @@
                         @endif
                     </ul>
                 </li>
-              </ul> 
+              </ul>
             </div>
             <a class="ps-logo" href="{{ url('/') }}"><img src="{{ $sensitive_data->logo }}" alt="jojayo-logo"></a>
           </div>
@@ -395,7 +395,7 @@
             <form class="ps-form--quick-search" action="{{ route('searchProduct') }}" method="GET">
             <!-- @csrf -->
               <div class="form-group--icon"><i class="icon-chevron-down"></i>
-               
+
                 <select class="form-control" id="searchCategory" style="text-indent: 0" name="category">
                                 <option value="all" {{($selected_category = 'all') ? 'selected':''}}>All</option>
                                 @foreach($primary_categories as $prime)
@@ -406,7 +406,7 @@
                                                 <?php
                                                     $secondary->name = str_replace("Women's", "", $secondary->name);
                                                     $secondary->name = str_replace("Men's", "", $secondary->name);
-                                                ?>  
+                                                ?>
                                             <optgroup label="{{trim($secondary->name)}}">
                                                 @foreach($secondary->FinalCategory as $final_cat)
                                                     <?php
@@ -422,7 +422,7 @@
                                 @endforeach
                 </select>
 
-                
+
                 <select id="compute_select">
                     <option id="compute_option"></option>
                 </select>
@@ -437,9 +437,9 @@
           </div>
           <div class="header__right">
             <div class="header__actions">
-            
-                <a class="header__extra" href="#"><i class="icon-heart"></i><span><i>0</i></span></a>
-              <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::content()->count() }}</i></span></a>
+
+                <a class="header__extra" href="{{ url('/my-wishlist') }}"><i class="icon-heart"></i><span><i>{{ Cart::instance('wishlist')->content()->count() }}</i></span></a>
+              <div class="ps-cart--mini"><a class="header__extra" href="#"><i class="icon-bag2"></i><span><i class="cart-count">{{ Cart::instance('cart')->content()->count() }}</i></span></a>
                     <div class="ps-cart__content">
                         <div class="ps-cart__items">
                         @if(!empty(Cart::content()))
@@ -486,15 +486,15 @@
 
               @else
               <div class="ps-block--user-header">
-               <div class="ps-block__right"> 
+               <div class="ps-block__right">
                 <div class="ps-block__left"><i class="icon-user text-dark"></i>
                 <a href="{{ route('signinform') }}" class="customer-login">Login & Register</a>
                 </div>
                 </div>
-            </div> 
+            </div>
             @endif
 
-          
+
 
             </div>
           </div>
@@ -503,15 +503,15 @@
       <nav class="navigation">
         <div class="ps-container">
           <div class="navigation__left">
-            <div class="menu--product-categories">            
-              <ul id="nav">  
-                <li class="yahoo">      
+            <div class="menu--product-categories">
+              <ul id="nav">
+                <li class="yahoo">
                 <div class="menu__toggle"><i class="icon-menu"></i><span> Shop By Categories</span></div>
                     <ul style="z-index:1000;min-width:260px;margin-top: 10px;">
                         @if(!empty($primary_categories))
                         @foreach($primary_categories as $prime)
                             @if($prime->secondaryCategories->count() > 0)
-                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>            
+                            <li><a href="#"><i class="{{ $prime->icon }}"></i> {{ $prime->name }} »</a>
                                 <ul>
                                     @foreach($prime->secondaryCategories as $secondary)
                                         @if($secondary->FinalCategory->count() > 0)
@@ -533,7 +533,7 @@
                                         @else
                                         <li><a href="{{route('categories', $secondary->slug)}}">{{ ucwords($secondary->name) }}</a></li>
                                         @endif
-                                    @endforeach                                                                                        
+                                    @endforeach
                                 </ul>
                             </li>
                             @else
@@ -543,21 +543,21 @@
                         @endif
                     </ul>
                 </li>
-              </ul>  
+              </ul>
             </div>
           </div>
           <div class="navigation__right">
-                        <ul class="menu">
-                            <li><a href="{{ url('/') }}">Home</a>
-                            </li>
-                            <li><a href="{{ url('/shop') }}">Shop</a></li>
-                            <li><a href="{{ url('/about-us') }}">About</a></li>
-                            <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
-                        </ul>
+            <ul class="menu">
+                <li><a href="{{ url('/') }}">Home</a>
+                </li>
+                <li><a href="{{ url('/shop') }}">Shop</a></li>
+                <li><a href="{{ url('/about-us') }}">About</a></li>
+                <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
+            </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
+              <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
+              <li><a href="{{url('/vendor/')}}">Sell on JoJayo</a></li>
               <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
-             
             </ul>
           </div>
         </div>
@@ -573,7 +573,7 @@
         <ul class="navigation__extra">
           <li><a href="{{url('/vendor')}}">Login | Sell on JoJayo</a></li>
           <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
-          
+
         </ul>
       </div>
     </div>
@@ -698,14 +698,14 @@
         <div class="ps-panel__header">
             <form class="ps-form--search-mobile" action="{{ route('searchProduct') }}" method="GET" autocomplete="off">
             <!-- @csrf -->
-               
+
             <div class="form-group--nest">
                     <input type="hidden" name="category" value="all">
                     <input class="form-control" name="q" id="productSearchMob" value="{{@$query}}" type="text" placeholder="Search something...">
                     <button><i class="icon-magnifier"></i></button>
                 </div>
 
-              
+
             </form>
         </div>
       <div class="navigation__content"></div>
@@ -715,21 +715,18 @@
         <h3>Menu</h3>
       </div>
       <div class="ps-panel__content">
-                    <ul class="menu--mobile">
-                    <li class="current-menu-item "><a href="/">Home</a>
-                    </li>
-                    <li class="current-menu-item "><a href="{{ url('/shop') }}">Shop</a>
-                    </li>
-                    <li class="current-menu-item "><a href="{{ url('/about-us') }}">About</a>
-                    </li>
-                    <li class="current-menu-item "><a href="{{ url('/privacy-policy') }}">Privacy Policy</a>
-                    </li>
-                    
-                    </ul>
+            <ul class="menu--mobile">
+            <li class="current-menu-item "><a href="/">Home</a>
+            </li>
+            <li class="current-menu-item "><a href="{{ url('/shop') }}">Shop</a>
+            </li>
+            <li class="current-menu-item "><a href="{{ url('/about-us') }}">About</a>
+            </li>
+            <li class="current-menu-item "><a href="{{ url('/privacy-policy') }}">Privacy Policy</a>
+            </li>
+
+            </ul>
       </div>
     </div>
-  
+
 @endif
-
-
-  
