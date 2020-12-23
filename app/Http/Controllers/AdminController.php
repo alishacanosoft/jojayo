@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\vendor;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -21,11 +23,45 @@ class AdminController extends Controller
         $vendor     = User::where('roles','vendor')->count();
         $customer   = User::where('roles','customers')->count();
         $admin      = User::where('roles','admin')->count();
-//
+
         $delivered  = Order::where('status','delivered')->count();
         $shipped    = Order::where('status','shipped')->count();
         $verified   = Order::where('status','verified')->count();
         $packed     = Order::where('status','packed')->count();
+
+
+        $user_id        = \Auth::user()->id;
+        $user_type        = \Auth::user()->roles;
+//        $vendorCategory = array();
+//        $vendorproduct  = array();
+//        $finalpieVendor  = array();
+//        $vendorChart ="";
+        $productVerified = "1";
+        $productinactive = "1";
+        $productactive = "1";
+
+        if($user_type === "vendor"){
+            $vendorChart     = \App\Models\Vendor::where('user_id',$user_id)->first();
+            $vendorID        = $vendorChart->id;
+            $productVerified = Product::where('vendor_id',$vendorID)->where('status','verified')->count();
+            $productinactive = Product::where('vendor_id',$vendorID)->where('status','inactive')->count();
+            $productactive   = Product::where('vendor_id',$vendorID)->where('status','active')->count();
+
+//            $array_length = count($vendorChart->categoryAssigned);
+//            for($i=0;$i<$array_length;$i++){
+//                if($array_length-1 == $i){
+//                    $vendorCategory[$i] = '"'.ProductCategory::find($vendorChart->categoryAssigned[$i]->category_id)->name.'"';
+//                    $vendorproduct[$i] = '"'.Product::where('category_id',$vendorChart->categoryAssigned[$i]->category_id)->where('vendor_id',$vendorID)->count().'"';
+//                    $finalpieVendor[$i] = '{ value:'. $vendorproduct[$i] .', name:'. $vendorCategory[$i].'}';
+//                }else{
+//                    $vendorCategory[$i] = '"'.ProductCategory::find($vendorChart->categoryAssigned[$i]->category_id)->name.'", ';
+//                    $vendorproduct[$i] = '"'.Product::where('category_id',$vendorChart->categoryAssigned[$i]->category_id)->where('vendor_id',$vendorID)->count().'", ';
+//                    $finalpieVendor[$i] = '{ value:'. $vendorproduct[$i] .' name:'. $vendorCategory[$i] .'}, ';
+//                }
+//            }
+        }
+
+
 
         $allorders = array();
         $alldelivered = array();
@@ -43,7 +79,7 @@ class AdminController extends Controller
                 $alldelivered[$i] = Order::where('status','delivered')->whereMonth('created_at', $i)->count();
             }
         }
-        return view('admin.pages.index', compact('vendor','customer','admin','allorders', 'alldelivered','delivered','shipped','verified','packed'));
+        return view('admin.pages.index', compact('vendor','customer','admin','allorders', 'alldelivered','delivered','shipped','verified','packed','productactive','productinactive','productVerified'));
     }
 
     /**
