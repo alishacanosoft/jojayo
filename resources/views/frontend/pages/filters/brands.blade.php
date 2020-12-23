@@ -18,37 +18,7 @@
     </figure>
 
     @push('scripts')
-    <script>  
-    $('#chkfilter').on('keyup', function() {
-    var query = this.value;
-
-        $('[name^="brands"]').each(function(i, elem) {
-            if (elem.value.indexOf(query) != -1) {
-                elem.style.display = 'block';
-
-                if(this.style.display === 'block'){ 
-                    var mainid = this.id
-                    var aa =$('#'+mainid).attr("myname");
-                    if(this.id===aa){
-                        $('.'+aa).show();
-                    }
-                }
-                
-            }else{
-                elem.style.display = 'none';
-                if(this.style.display === 'none'){ 
-                    var mainid = this.id
-                    var aa =$('#'+mainid).attr("myname");
-                    if(this.id===aa){
-                        $('.'+aa).hide();
-                    }
-
-                }
-
-            }
-        });
-    });
-    </script>
+    
     <script>
     var current_url='{{url()->current()}}'
     // var favorite = [];
