@@ -17657,11 +17657,7 @@ del.discount-product {
     color: #666;
 }
 
-/* .related-products{
-    padding-top: 0px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e1e1e1;
-} */
+
 
 .available-items {
   margin-top: 20px;
@@ -17765,7 +17761,7 @@ a.dropdown-item {
   background-color: #cfd8e2;
 }
 
-btn.focus, .btn:focus {
+.btn.focus, .btn:focus {
   outline: 0;
   box-shadow: none;
 }
