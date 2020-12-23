@@ -406,67 +406,416 @@ class AjaxController extends Controller
     //function for all tables order that differs from other tables.
     public function ajaxOrdersget(Request $request)
     {
+        $currentroles = \Auth::user()->roles;
+        $currentid = \Auth::user()->id;
         if ($request->ajax()) {
-            $records = Order::all();
-            $data_arr = array();
+            //this is for all orders display with two of the filter condition like start and end date
+            if(!empty($request->start) && !empty($request->end) && empty($request->orderid)){
+                $records = Order::whereBetween('created_at', array($request->start, $request->end))
+                    ->get();
+                $data_arr = array();
+                $dc       = array();
 
-            foreach ($records as $record) {
-                $id = $record->id;
-                $area_detail = @Area::where('id', $record->address_detail->area)->first();
-                if($record->delivery_type == 'express'){
-                    $deliver_charge = @$area_detail->express_charge;
-                } else {
-                    $deliver_charge = @$area_detail->delivery_charge;
+                foreach ($records as $record) {
+                    $id = $record->id;
+                    if ($currentroles == "admin") {
+                        $area_detail = Area::where('id', $record->address_detail->area)->first();
+                        if ($record->delivery_type == 'express') {
+                            $deliver_charge = $area_detail->express_charge;
+                        } else {
+                            $deliver_charge = $area_detail->delivery_charge;
+                        }
+                        $order_no = $record->order_no;
+                        $user_id = $record->user_id;
+                        $area_id = $record->area_id;
+                        $status = $record->status;
+                        $delivery_type = $record->delivery_type;
+                        $total_amount = $record->total_amount;
+                        $created_at = $record->created_at->format('Y-m-d - H:i:s');
+                        $useraddress = @$record->address_detail->address;
+                        $region = Region::find($record->address_detail->region_id)->name;
+                        $city = City::find($record->address_detail->city)->name;
+                        $area = Area::find($record->address_detail->area)->name;
+                        $colors = Color::all();
+                        $size = Size::all();
+                        $image_data = ProductImages::all();
+                        $images = Image::all();
+                        $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                        $data_arr[] = array(
+                            "order_no" => $order_no,
+                            "user_id" => User::find($user_id)->name,
+                            "user_address" => $useraddress,
+                            "user_d" => $order_detail,
+                            "colors" => $colors,
+                            "size" => $size,
+                            "image_data" => $image_data,
+                            "images" => $images,
+                            "user_region" => $region,
+                            "user_city" => $city,
+                            "user_area" => $area,
+                            "area_id" => Area::find($area_id)->name,
+                            "delivery_type" => $delivery_type,
+                            "delivery_charge" => $deliver_charge,
+                            "total_amount" => $total_amount,
+                            "status" => $status,
+                            "created_at" => $created_at,
+                            "action" => '<div class="dropdown">
+                                              <button class="dropbtn">Action</button>
+                                              <div class="dropdown-content">
+                                                 <ul>
+                                                    <li value="' . $id . '">Verified</li>
+                                                    <li value="' . $id . '">Packed</li>
+                                                    <li value="' . $id . '">Shipped</li>
+                                                    <li value="' . $id . '">Delivered</li>
+                                                 </ul>
+                                              </div>
+                                              </div>'
+                        );
+                    }else{
+                        //this is for all orders display for specific vendor with two filter conditions active
+                        //where if the order does not contain any of the vendor's product, it will not show in their orderlist
+                        $vendor  = Vendor::where('user_id',$currentid)->first();
+                        $vendorid = $vendor->id;
+                        $ordervalidation = ProductOrder::with('products')->where('order_id', $id)->get();
+                        foreach ($ordervalidation as $op) {
+                            $dc[] = $op->products->vendor_id;
+                        }
+                        if (in_array($vendorid, $dc)) {
+                            $area_detail = Area::where('id', $record->address_detail->area)->first();
+                            if ($record->delivery_type == 'express') {
+                                $deliver_charge = $area_detail->express_charge;
+                            } else {
+                                $deliver_charge = $area_detail->delivery_charge;
+                            }
+                            $order_no = $record->order_no;
+                            $user_id = $record->user_id;
+                            $area_id = $record->area_id;
+                            $status = $record->status;
+                            $delivery_type = $record->delivery_type;
+                            $total_amount = $record->total_amount;
+                            $created_at = $record->created_at->format('Y-m-d - H:i:s');
+                            $useraddress = @$record->address_detail->address;
+                            $region = Region::find($record->address_detail->region_id)->name;
+                            $city = City::find($record->address_detail->city)->name;
+                            $area = Area::find($record->address_detail->area)->name;
+                            $colors = Color::all();
+                            $size = Size::all();
+                            $image_data = ProductImages::all();
+                            $images = Image::all();
+                            $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                            $data_arr[] = array(
+                                "order_no" => $order_no,
+                                "user_id" => User::find($user_id)->name,
+                                "user_address" => $useraddress,
+                                "user_d" => $order_detail,
+                                "colors" => $colors,
+                                "size" => $size,
+                                "image_data" => $image_data,
+                                "images" => $images,
+                                "user_region" => $region,
+                                "user_city" => $city,
+                                "user_area" => $area,
+                                "area_id" => Area::find($area_id)->name,
+                                "delivery_type" => $delivery_type,
+                                "delivery_charge" => $deliver_charge,
+                                "total_amount" => $total_amount,
+                                "status" => $status,
+                                "created_at" => $created_at,
+                                "action" => '<div class="dropdown">
+                                              <button class="dropbtn">Action</button>
+                                              <div class="dropdown-content">
+                                                 <ul>
+                                                    <li value="' . $id . '">Verified</li>
+                                                    <li value="' . $id . '">Packed</li>
+                                                    <li value="' . $id . '">Shipped</li>
+                                                    <li value="' . $id . '">Delivered</li>
+                                                 </ul>
+                                              </div>
+                                              </div>'
+                            );
+                        }
+                        //end of sorting out the vendor specific order for each vendor
+                    }
+                    //end of checking the user role for admin and vendor
                 }
-                $order_no = $record->order_no;
-                $user_id = $record->user_id;
-                $area_id = $record->area_id;
-                $status = $record->status;
-                $delivery_type = $record->delivery_type;
-                $total_amount = $record->total_amount;
-                $created_at = $record->created_at->format('Y-m-d - H:i:s');
-                $useraddress = @$record->address_detail->address;
-                $region = @Region::find($record->address_detail->region_id)->name;
-                $city = @City::find($record->address_detail->city)->name;
-                $area = @Area::find($record->address_detail->area)->name;
-                $colors = Color::all();
-                $size = Size::all();
-                $image_data = ProductImages::all();
-                $images = Image::all();
-                $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
-                $data_arr[] = array(
-                    "order_no" =>$order_no,
-                    "user_id" => User::find($user_id)->name,
-                    "user_address" => $useraddress,
-                    "user_d" => $order_detail,
-                    "colors" => $colors,
-                    "size" => $size,
-                    "image_data" => $image_data,
-                    "images" => $images,
-                    "user_region" => $region,
-                    "user_city" => $city,
-                    "user_area" => $area,
-                    "area_id" =>  @Area::find($area_id)->name,
-                    "delivery_type" => $delivery_type,
-                    "delivery_charge" =>  $deliver_charge,
-                    "total_amount" => $total_amount,
-                    "status" => $status,
-                    "created_at" => $created_at,
-                    "action" => '<div class="dropdown">
-                                          <button class="dropbtn">Action</button>
-                                          <div class="dropdown-content">
-                                             <ul>
-                                                <li value="'. $id .'">Verified</li>
-                                                <li value="'. $id .'">Packed</li>
-                                                <li value="'. $id .'">Shipped</li>
-                                                <li value="'. $id .'">Delivered</li>
-                                             </ul>
-                                          </div>
-                                          </div>'
+                return response()->json(['data' => $data_arr]);
+                //first filter with all start and end date as active condition
+            }else if (!empty($request->start) && !empty($request->end) && !empty($request->orderid)){
+                //this is for all orders display with all of the filter condition like start and end date
+                // with order ID
+                $records = Order::whereBetween('created_at', array($request->start, $request->end))
+                    ->where('order_no',$request->orderid)
+                    ->get();
+                $data_arr = array();
+                $dc = array();
+                foreach ($records as $record) {
+                    $id = $record->id;
+                    //this is for all filter display for main admin who sees all the data
+                    if ($currentroles == "admin") {
+                        $area_detail = Area::where('id', $record->address_detail->area)->first();
+                        if ($record->delivery_type == 'express') {
+                            $deliver_charge = $area_detail->express_charge;
+                        } else {
+                            $deliver_charge = $area_detail->delivery_charge;
+                        }
+                        $order_no = $record->order_no;
+                        $user_id = $record->user_id;
+                        $area_id = $record->area_id;
+                        $status = $record->status;
+                        $delivery_type = $record->delivery_type;
+                        $total_amount = $record->total_amount;
+                        $created_at = $record->created_at->format('Y-m-d - H:i:s');
+                        $useraddress = @$record->address_detail->address;
+                        $region = Region::find($record->address_detail->region_id)->name;
+                        $city = City::find($record->address_detail->city)->name;
+                        $area = Area::find($record->address_detail->area)->name;
+                        $colors = Color::all();
+                        $size = Size::all();
+                        $image_data = ProductImages::all();
+                        $images = Image::all();
+                        $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                        $data_arr[] = array(
+                            "order_no" => $order_no,
+                            "user_id" => User::find($user_id)->name,
+                            "user_address" => $useraddress,
+                            "user_d" => $order_detail,
+                            "colors" => $colors,
+                            "size" => $size,
+                            "image_data" => $image_data,
+                            "images" => $images,
+                            "user_region" => $region,
+                            "user_city" => $city,
+                            "user_area" => $area,
+                            "area_id" => Area::find($area_id)->name,
+                            "delivery_type" => $delivery_type,
+                            "delivery_charge" => $deliver_charge,
+                            "total_amount" => $total_amount,
+                            "status" => $status,
+                            "created_at" => $created_at,
+                            "action" => '<div class="dropdown">
+                                              <button class="dropbtn">Action</button>
+                                              <div class="dropdown-content">
+                                                 <ul>
+                                                    <li value="' . $id . '">Verified</li>
+                                                    <li value="' . $id . '">Packed</li>
+                                                    <li value="' . $id . '">Shipped</li>
+                                                    <li value="' . $id . '">Delivered</li>
+                                                 </ul>
+                                              </div>
+                                              </div>'
+                        );
+                    }else{
+                        //this is for all orders display for specific vendor with all filter conditions active
+                        //where if the order does not contain any of the vendor's product, it will not show in their orderlist
+                        $vendor  = Vendor::where('user_id',$currentid)->first();
+                        $vendorid = $vendor->id;
+                        $ordervalidation = ProductOrder::with('products')->where('order_id', $id)->get();
+                        foreach ($ordervalidation as $op) {
+                            $dc[] = $op->products->vendor_id;
+                        }
+                        if (in_array($vendorid, $dc)) {
+                            $area_detail = Area::where('id', $record->address_detail->area)->first();
+                            if ($record->delivery_type == 'express') {
+                                $deliver_charge = $area_detail->express_charge;
+                            } else {
+                                $deliver_charge = $area_detail->delivery_charge;
+                            }
+                            $order_no = $record->order_no;
+                            $user_id = $record->user_id;
+                            $area_id = $record->area_id;
+                            $status = $record->status;
+                            $delivery_type = $record->delivery_type;
+                            $total_amount = $record->total_amount;
+                            $created_at = $record->created_at->format('Y-m-d - H:i:s');
+                            $useraddress = @$record->address_detail->address;
+                            $region = Region::find($record->address_detail->region_id)->name;
+                            $city = City::find($record->address_detail->city)->name;
+                            $area = Area::find($record->address_detail->area)->name;
+                            $colors = Color::all();
+                            $size = Size::all();
+                            $image_data = ProductImages::all();
+                            $images = Image::all();
+                            $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                            $data_arr[] = array(
+                                "order_no" => $order_no,
+                                "user_id" => User::find($user_id)->name,
+                                "user_address" => $useraddress,
+                                "user_d" => $order_detail,
+                                "colors" => $colors,
+                                "size" => $size,
+                                "image_data" => $image_data,
+                                "images" => $images,
+                                "user_region" => $region,
+                                "user_city" => $city,
+                                "user_area" => $area,
+                                "area_id" => Area::find($area_id)->name,
+                                "delivery_type" => $delivery_type,
+                                "delivery_charge" => $deliver_charge,
+                                "total_amount" => $total_amount,
+                                "status" => $status,
+                                "created_at" => $created_at,
+                                "action" => '<div class="dropdown">
+                                              <button class="dropbtn">Action</button>
+                                              <div class="dropdown-content">
+                                                 <ul>
+                                                    <li value="' . $id . '">Verified</li>
+                                                    <li value="' . $id . '">Packed</li>
+                                                    <li value="' . $id . '">Shipped</li>
+                                                    <li value="' . $id . '">Delivered</li>
+                                                 </ul>
+                                              </div>
+                                              </div>'
+                            );
+                        }
+                        //end of sorting out the vendor specific order for each vendor
+                    }
+                    //end of checking the user role for admin and vendor
+                }
+                return response()->json(['data' => $data_arr]);
+                //second filter with all conditions active
 
-                );
+            }else{
+                //this is for all orders display without any filter condition
+                $records = Order::all();
+                $data_arr = array();
+                $dc       = array();
+                $vendor_name       = array();
+                foreach ($records as $record) {
+                    $id = $record->id;
+                    if($currentroles =="admin") {
+                        $ordervalidation = ProductOrder::with('products')->where('order_id', $id)->get();
+                        foreach ($ordervalidation as $op) {
+                            $vendor_name[] = Vendor::find($op->products->vendor_id)->company;
+                        }
+                        //this is for all orders display for main admin who sees all the data
+                        $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                        $area_detail = Area::where('id', $record->address_detail->area)->first();
+                        if ($record->delivery_type == 'express') {
+                            $deliver_charge = $area_detail->express_charge;
+                        } else {
+                            $deliver_charge = $area_detail->delivery_charge;
+                        }
+                        $order_no = $record->order_no;
+                        $user_id = $record->user_id;
+                        $area_id = $record->area_id;
+                        $status = $record->status;
+                        $delivery_type = $record->delivery_type;
+                        $total_amount = $record->total_amount;
+                        $created_at = wordwrap($record->created_at->format('Y-m-d - H:i:s'), 11, "<br />\n");
+                        $useraddress = @$record->address_detail->address;
+                        $region = @Region::find($record->address_detail->region_id)->name;
+                        $city = @City::find($record->address_detail->city)->name;
+                        $area = @Area::find($record->address_detail->area)->name;
+                        $colors = Color::all();
+                        $size = Size::all();
+                        $image_data = ProductImages::all();
+                        $images = Image::all();
+                        $data_arr[] = array(
+                            "order_no" => $order_no,
+                            "user_id" => User::find($user_id)->name,
+                            "user_address" => $useraddress,
+                            "user_d" => $order_detail,
+                            "colors" => $colors,
+                            "size" => $size,
+                            "image_data" => $image_data,
+                            "images" => $images,
+                            "user_region" => $region,
+                            "vendor_name" => $vendor_name,
+                            "user_city" => $city,
+                            "user_area" => $area,
+                            "area_id" => Area::find($area_id)->name,
+                            "delivery_type" => $delivery_type,
+                            "delivery_charge" => $deliver_charge,
+                            "total_amount" => $total_amount,
+                            "status" => $status,
+                            "created_at" => $created_at,
+                            "action" => '<div class="dropdown">
+                                              <button class="dropbtn">Action</button>
+                                              <div class="dropdown-content">
+                                                 <ul>
+                                                    <li value="' . $id . '">Verified</li>
+                                                    <li value="' . $id . '">Packed</li>
+                                                    <li value="' . $id . '">Shipped</li>
+                                                    <li value="' . $id . '">Delivered</li>
+                                                 </ul>
+                                              </div>
+                                              </div>'
+                        );
+                    }else{
+                        //this is for all orders display for specific vendor filter
+                        //where if the order does not contain any of the vendor's product, it will not show in their orderlist
+
+                        $vendor  = Vendor::where('user_id',$currentid)->first();
+                        $vendorid = $vendor->id;
+                        $ordervalidation = ProductOrder::with('products')->where('order_id', $id)->get();
+                        foreach($ordervalidation as $op){
+                            $dc[]= $op->products->vendor_id;
+                            $vendor_name[] = Vendor::find($op->products->vendor_id)->company;
+                        }
+                        if (in_array($vendorid, $dc)) {
+                            $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                            $area_detail = Area::where('id', $record->address_detail->area)->first();
+                            if ($record->delivery_type == 'express') {
+                                $deliver_charge = $area_detail->express_charge;
+                            } else {
+                                $deliver_charge = $area_detail->delivery_charge;
+                            }
+                            $order_no = $record->order_no;
+                            $user_id = $record->user_id;
+                            $area_id = $record->area_id;
+                            $status = $record->status;
+                            $delivery_type = $record->delivery_type;
+                            $total_amount = $record->total_amount;
+                            $created_at = wordwrap($record->created_at->format('Y-m-d - H:i:s'), 11, "<br />\n");
+                            $useraddress = @$record->address_detail->address;
+                            $region = @Region::find($record->address_detail->region_id)->name;
+                            $city = @City::find($record->address_detail->city)->name;
+                            $area = @Area::find($record->address_detail->area)->name;
+                            $colors = Color::all();
+                            $size = Size::all();
+                            $image_data = ProductImages::all();
+                            $images = Image::all();
+                            $data_arr[] = array(
+                                "order_no" => $order_no,
+                                "user_id" => User::find($user_id)->name,
+                                "user_address" => $useraddress,
+                                "user_d" => $order_detail,
+                                "colors" => $colors,
+                                "size" => $size,
+                                "image_data" => $image_data,
+                                "images" => $images,
+                                "user_region" => $region,
+                                "test" => $dc,
+                                "vendor_name" => $vendor_name,
+                                "user_city" => $city,
+                                "user_area" => $area,
+                                "area_id" => Area::find($area_id)->name,
+                                "delivery_type" => $delivery_type,
+                                "delivery_charge" => $deliver_charge,
+                                "total_amount" => $total_amount,
+                                "status" => $status,
+                                "created_at" => $created_at,
+                                "action" => '<div class="dropdown">
+                                              <button class="dropbtn">Action</button>
+                                              <div class="dropdown-content">
+                                                 <ul>
+                                                    <li value="' . $id . '">Verified</li>
+                                                    <li value="' . $id . '">Packed</li>
+                                                    <li value="' . $id . '">Shipped</li>
+                                                    <li value="' . $id . '">Delivered</li>
+                                                 </ul>
+                                              </div>
+                                              </div>'
+                            );
+
+                        }
+                        //end of sorting out the vendor specific order for each vendor
+                    }
+//                    end of checking the user role for admin and vendor
+                }
+
+                return response()->json(['data' => $data_arr]);
             }
-            return response()->json(['data' => $data_arr]);
         }
         $active_tab = 'manage';
         return view('admin.pages.orders', compact('active_tab'));
@@ -474,87 +823,472 @@ class AjaxController extends Controller
 
     public function ajaxMultiOrdersget(Request $request)
     {
+        $currentroles = \Auth::user()->roles;
+        $currentid = \Auth::user()->id;
+
         if ($request->ajax()) {
             $data_arr = array();
+            $dc = array();
+
             if (!empty($request->ret)) {
-                
-                $records = Order::where('status', $request->ret)->get();
-                // $vendor_id = Vendor::where('user_id', \Auth::user()->id)->pluck('id')->first();
-                // $records = Order::with(['vendor_products' => function($query) use ($vendor_id) {
-                //     $query->whereHas('products', function ($query) use ($vendor_id) {
-                //         $query->where('vendor_id', $vendor_id);
-                //     });
-                // }])->where('status', $request->ret)->get(); 
-                foreach ($records as $record) {
-                    $id = $record->id;
-                    $area_detail = @Area::where('id', $record->address_detail->area)->first();
-                    if ($record->delivery_type == 'express') {
-                        $deliver_charge = @$area_detail->express_charge;
-                    } else {
-                        $deliver_charge = @$area_detail->delivery_charge;
-                    }
-                    $order_no = $record->order_no;
-                    $user_id = $record->user_id;
-                    $area_id = $record->area_id;
-                    $status = $record->status;
-                    $verified = $record->verified_at;
-                    $packed = $record->packed_at;
-                    $delivered = $record->delivered_at;
-                    $shipped = $record->shipped_at;
-                    $delivery_type = $record->delivery_type;
-                    $total_amount = $record->total_amount;
-                    $created_at = $record->created_at->format('Y-m-d - H:i:s');
-                    $useraddress = @$record->address_detail->address;
-                    $region = @Region::find($record->address_detail->region_id)->name;
-                    $city = @City::find($record->address_detail->city)->name;
-                    $area = @Area::find($record->address_detail->area)->name;
-                    $colors = Color::all();
-                    $size = Size::all();
-                    $image_data = ProductImages::all();
-                    $images = Image::all();
-                    $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
-                    if($status == 'delivered'){
-                        $show_data = '<form action="/auth/order-details"><input type="hidden" value="'.$order_no.'" name="order_no"><button class="btn-transparent" type="submit">'.$order_no.'</button></form>';
-                    } else {
-                        $show_data = $order_no;
-                    }
-                    $data_arr[] = array(
-                        "order_no" => $show_data,
-                        "user_id" => User::find($user_id)->name,
-                        "user_address" => $useraddress,
-                        "user_d" => $order_detail,
-                        "colors" => $colors,
-                        "size" => $size,
-                        "verify" => $verified,
-                        "deliver" => $delivered,
-                        "pack" => $packed,
-                        "ship" => $shipped,
-                        "image_data" => $image_data,
-                        "images" => $images,
-                        "user_region" => $region,
-                        "user_city" => $city,
-                        "user_area" => $area,
-                        "area_id" => @Area::find($area_id)->name,
-                        "delivery_type" => $delivery_type,
-                        "delivery_charge" => $deliver_charge,
-                        "total_amount" => $total_amount,
-                        "status" => $status,
-                        "created_at" => $created_at,
-                        "action" => '<div class="dropdown">
+                if (!empty($request->start) && !empty($request->end) && !empty($request->orderid)) {
+                    //all order sorting with all three active conditions
+                    $records = Order::whereBetween('created_at', array($request->start, $request->end))
+                        ->where('order_no',$request->orderid)
+                        ->where('status', $request->ret)->get();
+                    foreach ($records as $record) {
+                        $id = $record->id;
+                        if ($currentroles == 'admin') {
+                            //all order sorting for admin with all three active conditions
+                            $area_detail = @Area::where('id', $record->address_detail->area)->first();
+                            if ($record->delivery_type == 'express') {
+                                $deliver_charge = @$area_detail->express_charge;
+                            } else {
+                                $deliver_charge = @$area_detail->delivery_charge;
+                            }
+                            $order_no = $record->order_no;
+                            $user_id = $record->user_id;
+                            $area_id = $record->area_id;
+                            $status = $record->status;
+                            $verified = wordwrap($record->verified_at, 11, "<br />\n");
+                            $packed = wordwrap($record->packed_at, 11, "<br />\n");
+                            $delivered = wordwrap($record->delivered_at, 11, "<br />\n");
+                            $shipped = wordwrap($record->shipped_at, 11, "<br />\n");
+                            $delivery_type = $record->delivery_type;
+                            $total_amount = $record->total_amount;
+                            $created_at = wordwrap($record->created_at->format('Y-m-d - H:i:s'), 11, "<br />\n");
+                            $useraddress = @$record->address_detail->address;
+                            $region = @Region::find($record->address_detail->region_id)->name;
+                            $city = @City::find($record->address_detail->city)->name;
+                            $area = @Area::find($record->address_detail->area)->name;
+                            $colors = Color::all();
+                            $size = Size::all();
+                            $image_data = ProductImages::all();
+                            $images = Image::all();
+                            $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                            if ($status == 'delivered') {
+                                $show_data = '<form action="/auth/order-details"><input type="hidden" value="' . $order_no . '" name="order_no"><button class="btn-transparent" type="submit">' . $order_no . '</button></form>';
+                            } else {
+                                $show_data = $order_no;
+                            }
+                            $data_arr[] = array(
+                                "order_no" => $show_data,
+                                "user_id" => User::find($user_id)->name,
+                                "user_address" => $useraddress,
+                                "user_d" => $order_detail,
+                                "colors" => $colors,
+                                "size" => $size,
+                                "verify" => $verified,
+                                "deliver" => $delivered,
+                                "pack" => $packed,
+                                "ship" => $shipped,
+                                "image_data" => $image_data,
+                                "images" => $images,
+                                "user_region" => $region,
+                                "user_city" => $city,
+                                "user_area" => $area,
+                                "area_id" => @Area::find($area_id)->name,
+                                "delivery_type" => $delivery_type,
+                                "delivery_charge" => $deliver_charge,
+                                "total_amount" => $total_amount,
+                                "status" => $status,
+                                "created_at" => $created_at,
+                                "action" => '<div class="dropdown">
                                       <button class="dropbtn">Action</button>
                                       <div class="dropdown-content">
                                          <ul>
-                                            <li value="'. $id .'" class="'. (($status == 'verified') ? 'hidden' : '') . '">Verified</li>
-                                            <li value="'. $id .'" class="'. (($status == 'packed') ? 'hidden' : '') . '">Packed</li>
-                                            <li value="'. $id .'" class="'. (($status == 'shipped') ? 'hidden' : '') . '">Shipped</li>
-                                            <li value="'. $id .'" class="'. (($status == 'delivered') ? 'hidden' : '') . '">Delivered</li>
+                                            <li value="' . $id . '" class="' . (($status == 'verified') ? 'hidden' : '') . '">Verified</li>
+                                            <li value="' . $id . '" class="' . (($status == 'packed') ? 'hidden' : '') . '">Packed</li>
+                                            <li value="' . $id . '" class="' . (($status == 'shipped') ? 'hidden' : '') . '">Shipped</li>
+                                            <li value="' . $id . '" class="' . (($status == 'delivered') ? 'hidden' : '') . '">Delivered</li>
                                          </ul>
                                       </div>
                                     </div>'
 
-                    );
+                            );
+                        } else {
+                            //vendor specific order sorting with all three active conditions
+                            $vendor = Vendor::where('user_id', $currentid)->first();
+                            $vendorid = $vendor->id;
+                            $ordervalidation = ProductOrder::with('products')->where('order_id', $id)->get();
+                            foreach ($ordervalidation as $op) {
+                                $dc[] = $op->products->vendor_id;
+                            }
+                            if (in_array($vendorid, $dc)) {
+                                $area_detail = @Area::where('id', $record->address_detail->area)->first();
+                                if ($record->delivery_type == 'express') {
+                                    $deliver_charge = @$area_detail->express_charge;
+                                } else {
+                                    $deliver_charge = @$area_detail->delivery_charge;
+                                }
+                                $order_no = $record->order_no;
+                                $user_id = $record->user_id;
+                                $area_id = $record->area_id;
+                                $status = $record->status;
+                                $verified = wordwrap($record->verified_at, 11, "<br />\n");
+                                $packed = wordwrap($record->packed_at, 11, "<br />\n");
+                                $delivered = wordwrap($record->delivered_at, 11, "<br />\n");
+                                $shipped = wordwrap($record->shipped_at, 11, "<br />\n");
+                                $delivery_type = $record->delivery_type;
+                                $total_amount = $record->total_amount;
+                                $created_at = wordwrap($record->created_at->format('Y-m-d - H:i:s'), 11, "<br />\n");
+                                $useraddress = @$record->address_detail->address;
+                                $region = @Region::find($record->address_detail->region_id)->name;
+                                $city = @City::find($record->address_detail->city)->name;
+                                $area = @Area::find($record->address_detail->area)->name;
+                                $colors = Color::all();
+                                $size = Size::all();
+                                $image_data = ProductImages::all();
+                                $images = Image::all();
+                                $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                                if ($status == 'delivered') {
+                                    $show_data = '<form action="/auth/order-details"><input type="hidden" value="' . $order_no . '" name="order_no"><button class="btn-transparent" type="submit">' . $order_no . '</button></form>';
+                                } else {
+                                    $show_data = $order_no;
+                                }
+                                $data_arr[] = array(
+                                    "order_no" => $show_data,
+                                    "user_id" => User::find($user_id)->name,
+                                    "user_address" => $useraddress,
+                                    "user_d" => $order_detail,
+                                    "colors" => $colors,
+                                    "size" => $size,
+                                    "verify" => $verified,
+                                    "deliver" => $delivered,
+                                    "pack" => $packed,
+                                    "ship" => $shipped,
+                                    "image_data" => $image_data,
+                                    "images" => $images,
+                                    "user_region" => $region,
+                                    "user_city" => $city,
+                                    "user_area" => $area,
+                                    "area_id" => @Area::find($area_id)->name,
+                                    "delivery_type" => $delivery_type,
+                                    "delivery_charge" => $deliver_charge,
+                                    "total_amount" => $total_amount,
+                                    "status" => $status,
+                                    "created_at" => $created_at,
+                                    "action" => '<div class="dropdown">
+                                      <button class="dropbtn">Action</button>
+                                      <div class="dropdown-content">
+                                         <ul>
+                                            <li value="' . $id . '" class="' . (($status == 'verified') ? 'hidden' : '') . '">Verified</li>
+                                            <li value="' . $id . '" class="' . (($status == 'packed') ? 'hidden' : '') . '">Packed</li>
+                                            <li value="' . $id . '" class="' . (($status == 'shipped') ? 'hidden' : '') . '">Shipped</li>
+                                            <li value="' . $id . '" class="' . (($status == 'delivered') ? 'hidden' : '') . '">Delivered</li>
+                                         </ul>
+                                      </div>
+                                    </div>'
+
+                                );
+                            }
+                        }
+                    }
+                    return response()->json(['data' => $data_arr]);
+                }else if(!empty($request->start) && !empty($request->end) && empty($request->orderid)){
+                    //two filter conditions for sorting orders in all remaining tables.
+                    $records = Order::whereBetween('created_at', array($request->start, $request->end))
+                        ->where('status', $request->ret)->get();
+                    foreach ($records as $record) {
+                        $id = $record->id;
+                        if ($currentroles == 'admin') {
+                            //listing all the orders for admin with two filter conditions
+                            $area_detail = @Area::where('id', $record->address_detail->area)->first();
+                            if ($record->delivery_type == 'express') {
+                                $deliver_charge = @$area_detail->express_charge;
+                            } else {
+                                $deliver_charge = @$area_detail->delivery_charge;
+                            }
+                            $order_no = $record->order_no;
+                            $user_id = $record->user_id;
+                            $area_id = $record->area_id;
+                            $status = $record->status;
+                            $verified = wordwrap($record->verified_at, 11, "<br />\n");
+                            $packed = wordwrap($record->packed_at, 11, "<br />\n");
+                            $delivered = wordwrap($record->delivered_at, 11, "<br />\n");
+                            $shipped = wordwrap($record->shipped_at, 11, "<br />\n");
+                            $delivery_type = $record->delivery_type;
+                            $total_amount = $record->total_amount;
+                            $created_at = wordwrap($record->created_at->format('Y-m-d - H:i:s'), 11, "<br />\n");
+                            $useraddress = @$record->address_detail->address;
+                            $region = @Region::find($record->address_detail->region_id)->name;
+                            $city = @City::find($record->address_detail->city)->name;
+                            $area = @Area::find($record->address_detail->area)->name;
+                            $colors = Color::all();
+                            $size = Size::all();
+                            $image_data = ProductImages::all();
+                            $images = Image::all();
+                            $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                            if ($status == 'delivered') {
+                                $show_data = '<form action="/auth/order-details"><input type="hidden" value="' . $order_no . '" name="order_no"><button class="btn-transparent" type="submit">' . $order_no . '</button></form>';
+                            } else {
+                                $show_data = $order_no;
+                            }
+                            $data_arr[] = array(
+                                "order_no" => $show_data,
+                                "user_id" => User::find($user_id)->name,
+                                "user_address" => $useraddress,
+                                "user_d" => $order_detail,
+                                "colors" => $colors,
+                                "size" => $size,
+                                "verify" => $verified,
+                                "deliver" => $delivered,
+                                "pack" => $packed,
+                                "ship" => $shipped,
+                                "image_data" => $image_data,
+                                "images" => $images,
+                                "user_region" => $region,
+                                "user_city" => $city,
+                                "user_area" => $area,
+                                "area_id" => @Area::find($area_id)->name,
+                                "delivery_type" => $delivery_type,
+                                "delivery_charge" => $deliver_charge,
+                                "total_amount" => $total_amount,
+                                "status" => $status,
+                                "created_at" => $created_at,
+                                "action" => '<div class="dropdown">
+                                      <button class="dropbtn">Action</button>
+                                      <div class="dropdown-content">
+                                         <ul>
+                                            <li value="' . $id . '" class="' . (($status == 'verified') ? 'hidden' : '') . '">Verified</li>
+                                            <li value="' . $id . '" class="' . (($status == 'packed') ? 'hidden' : '') . '">Packed</li>
+                                            <li value="' . $id . '" class="' . (($status == 'shipped') ? 'hidden' : '') . '">Shipped</li>
+                                            <li value="' . $id . '" class="' . (($status == 'delivered') ? 'hidden' : '') . '">Delivered</li>
+                                         </ul>
+                                      </div>
+                                    </div>'
+
+                            );
+                        } else {
+                            //listing the vendor specific order with two filter conditions
+                            $vendor = Vendor::where('user_id', $currentid)->first();
+                            $vendorid = $vendor->id;
+                            $ordervalidation = ProductOrder::with('products')->where('order_id', $id)->get();
+                            foreach ($ordervalidation as $op) {
+                                $dc[] = $op->products->vendor_id;
+                            }
+                            if (in_array($vendorid, $dc)) {
+                                $area_detail = @Area::where('id', $record->address_detail->area)->first();
+                                if ($record->delivery_type == 'express') {
+                                    $deliver_charge = @$area_detail->express_charge;
+                                } else {
+                                    $deliver_charge = @$area_detail->delivery_charge;
+                                }
+                                $order_no = $record->order_no;
+                                $user_id = $record->user_id;
+                                $area_id = $record->area_id;
+                                $status = $record->status;
+                                $verified = wordwrap($record->verified_at, 11, "<br />\n");
+                                $packed = wordwrap($record->packed_at, 11, "<br />\n");
+                                $delivered = wordwrap($record->delivered_at, 11, "<br />\n");
+                                $shipped = wordwrap($record->shipped_at, 11, "<br />\n");
+                                $delivery_type = $record->delivery_type;
+                                $total_amount = $record->total_amount;
+                                $created_at = wordwrap($record->created_at->format('Y-m-d - H:i:s'), 11, "<br />\n");
+                                $useraddress = @$record->address_detail->address;
+                                $region = @Region::find($record->address_detail->region_id)->name;
+                                $city = @City::find($record->address_detail->city)->name;
+                                $area = @Area::find($record->address_detail->area)->name;
+                                $colors = Color::all();
+                                $size = Size::all();
+                                $image_data = ProductImages::all();
+                                $images = Image::all();
+                                $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                                if ($status == 'delivered') {
+                                    $show_data = '<form action="/auth/order-details"><input type="hidden" value="' . $order_no . '" name="order_no"><button class="btn-transparent" type="submit">' . $order_no . '</button></form>';
+                                } else {
+                                    $show_data = $order_no;
+                                }
+                                $data_arr[] = array(
+                                    "order_no" => $show_data,
+                                    "user_id" => User::find($user_id)->name,
+                                    "user_address" => $useraddress,
+                                    "user_d" => $order_detail,
+                                    "colors" => $colors,
+                                    "size" => $size,
+                                    "verify" => $verified,
+                                    "deliver" => $delivered,
+                                    "pack" => $packed,
+                                    "ship" => $shipped,
+                                    "image_data" => $image_data,
+                                    "images" => $images,
+                                    "user_region" => $region,
+                                    "user_city" => $city,
+                                    "user_area" => $area,
+                                    "area_id" => @Area::find($area_id)->name,
+                                    "delivery_type" => $delivery_type,
+                                    "delivery_charge" => $deliver_charge,
+                                    "total_amount" => $total_amount,
+                                    "status" => $status,
+                                    "created_at" => $created_at,
+                                    "action" => '<div class="dropdown">
+                                      <button class="dropbtn">Action</button>
+                                      <div class="dropdown-content">
+                                         <ul>
+                                            <li value="' . $id . '" class="' . (($status == 'verified') ? 'hidden' : '') . '">Verified</li>
+                                            <li value="' . $id . '" class="' . (($status == 'packed') ? 'hidden' : '') . '">Packed</li>
+                                            <li value="' . $id . '" class="' . (($status == 'shipped') ? 'hidden' : '') . '">Shipped</li>
+                                            <li value="' . $id . '" class="' . (($status == 'delivered') ? 'hidden' : '') . '">Delivered</li>
+                                         </ul>
+                                      </div>
+                                    </div>'
+
+                                );
+                            }
+                        }
+                    }
+                    return response()->json(['data' => $data_arr]);
+                    //end of search filter with 2 active filter conditions
+                } else{
+                    $records = Order::where('status', $request->ret)->get();
+                    foreach ($records as $record) {
+                        $id = $record->id;
+                        if ($currentroles == 'admin') {
+                            $area_detail = @Area::where('id', $record->address_detail->area)->first();
+                            if ($record->delivery_type == 'express') {
+                                $deliver_charge = @$area_detail->express_charge;
+                            } else {
+                                $deliver_charge = @$area_detail->delivery_charge;
+                            }
+                            $order_no = $record->order_no;
+                            $user_id = $record->user_id;
+                            $area_id = $record->area_id;
+                            $status = $record->status;
+                            $verified = wordwrap($record->verified_at, 11, "<br />\n");
+                            $packed = wordwrap($record->packed_at, 11, "<br />\n");
+                            $delivered = wordwrap($record->delivered_at, 11, "<br />\n");
+                            $shipped = wordwrap($record->shipped_at, 11, "<br />\n");
+                            $delivery_type = $record->delivery_type;
+                            $total_amount = $record->total_amount;
+                            $created_at = wordwrap($record->created_at->format('Y-m-d - H:i:s'), 11, "<br />\n");
+                            $useraddress = @$record->address_detail->address;
+                            $region = @Region::find($record->address_detail->region_id)->name;
+                            $city = @City::find($record->address_detail->city)->name;
+                            $area = @Area::find($record->address_detail->area)->name;
+                            $colors = Color::all();
+                            $size = Size::all();
+                            $image_data = ProductImages::all();
+                            $images = Image::all();
+                            $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                            if ($status == 'delivered') {
+                                $show_data = '<form action="/auth/order-details"><input type="hidden" value="' . $order_no . '" name="order_no"><button class="btn-transparent" type="submit">' . $order_no . '</button></form>';
+                            } else {
+                                $show_data = $order_no;
+                            }
+                            $data_arr[] = array(
+                                "order_no" => $show_data,
+                                "user_id" => User::find($user_id)->name,
+                                "user_address" => $useraddress,
+                                "user_d" => $order_detail,
+                                "colors" => $colors,
+                                "size" => $size,
+                                "verify" => $verified,
+                                "deliver" => $delivered,
+                                "pack" => $packed,
+                                "ship" => $shipped,
+                                "image_data" => $image_data,
+                                "images" => $images,
+                                "user_region" => $region,
+                                "user_city" => $city,
+                                "user_area" => $area,
+                                "area_id" => @Area::find($area_id)->name,
+                                "delivery_type" => $delivery_type,
+                                "delivery_charge" => $deliver_charge,
+                                "total_amount" => $total_amount,
+                                "status" => $status,
+                                "created_at" => $created_at,
+                                "action" => '<div class="dropdown">
+                                      <button class="dropbtn">Action</button>
+                                      <div class="dropdown-content">
+                                         <ul>
+                                            <li value="' . $id . '" class="' . (($status == 'verified') ? 'hidden' : '') . '">Verified</li>
+                                            <li value="' . $id . '" class="' . (($status == 'packed') ? 'hidden' : '') . '">Packed</li>
+                                            <li value="' . $id . '" class="' . (($status == 'shipped') ? 'hidden' : '') . '">Shipped</li>
+                                            <li value="' . $id . '" class="' . (($status == 'delivered') ? 'hidden' : '') . '">Delivered</li>
+                                         </ul>
+                                      </div>
+                                    </div>'
+
+                            );
+                        } else {
+                            $vendor = Vendor::where('user_id', $currentid)->first();
+                            $vendorid = $vendor->id;
+                            $ordervalidation = ProductOrder::with('products')->where('order_id', $id)->get();
+                            foreach ($ordervalidation as $op) {
+                                $dc[] = $op->products->vendor_id;
+                            }
+                            if (in_array($vendorid, $dc)) {
+                                $area_detail = @Area::where('id', $record->address_detail->area)->first();
+                                if ($record->delivery_type == 'express') {
+                                    $deliver_charge = @$area_detail->express_charge;
+                                } else {
+                                    $deliver_charge = @$area_detail->delivery_charge;
+                                }
+                                $order_no = $record->order_no;
+                                $user_id = $record->user_id;
+                                $area_id = $record->area_id;
+                                $status = $record->status;
+                                $verified = wordwrap($record->verified_at, 11, "<br />\n");
+                                $packed = wordwrap($record->packed_at, 11, "<br />\n");
+                                $delivered = wordwrap($record->delivered_at, 11, "<br />\n");
+                                $shipped = wordwrap($record->shipped_at, 11, "<br />\n");
+                                $delivery_type = $record->delivery_type;
+                                $total_amount = $record->total_amount;
+                                $created_at = wordwrap($record->created_at->format('Y-m-d - H:i:s'), 11, "<br />\n");
+                                $useraddress = @$record->address_detail->address;
+                                $region = @Region::find($record->address_detail->region_id)->name;
+                                $city = @City::find($record->address_detail->city)->name;
+                                $area = @Area::find($record->address_detail->area)->name;
+                                $colors = Color::all();
+                                $size = Size::all();
+                                $image_data = ProductImages::all();
+                                $images = Image::all();
+                                $order_detail = ProductOrder::with('products')->where('order_id', $id)->get();
+                                if ($status == 'delivered') {
+                                    $show_data = '<form action="/auth/order-details"><input type="hidden" value="' . $order_no . '" name="order_no"><button class="btn-transparent" type="submit">' . $order_no . '</button></form>';
+                                } else {
+                                    $show_data = $order_no;
+                                }
+                                $data_arr[] = array(
+                                    "order_no" => $show_data,
+                                    "user_id" => User::find($user_id)->name,
+                                    "user_address" => $useraddress,
+                                    "user_d" => $order_detail,
+                                    "colors" => $colors,
+                                    "size" => $size,
+                                    "verify" => $verified,
+                                    "deliver" => $delivered,
+                                    "pack" => $packed,
+                                    "ship" => $shipped,
+                                    "image_data" => $image_data,
+                                    "images" => $images,
+                                    "user_region" => $region,
+                                    "user_city" => $city,
+                                    "user_area" => $area,
+                                    "area_id" => @Area::find($area_id)->name,
+                                    "delivery_type" => $delivery_type,
+                                    "delivery_charge" => $deliver_charge,
+                                    "total_amount" => $total_amount,
+                                    "status" => $status,
+                                    "created_at" => $created_at,
+                                    "action" => '<div class="dropdown">
+                                      <button class="dropbtn">Action</button>
+                                      <div class="dropdown-content">
+                                         <ul>
+                                            <li value="' . $id . '" class="' . (($status == 'verified') ? 'hidden' : '') . '">Verified</li>
+                                            <li value="' . $id . '" class="' . (($status == 'packed') ? 'hidden' : '') . '">Packed</li>
+                                            <li value="' . $id . '" class="' . (($status == 'shipped') ? 'hidden' : '') . '">Shipped</li>
+                                            <li value="' . $id . '" class="' . (($status == 'delivered') ? 'hidden' : '') . '">Delivered</li>
+                                         </ul>
+                                      </div>
+                                    </div>'
+
+                                );
+                            }
+                        }
+                    }
+                    return response()->json(['data' => $data_arr]);
                 }
-                return response()->json(['data' => $data_arr]);
             } else{
                 return response()->json(['data' => "gey there"]);
             }
@@ -565,12 +1299,9 @@ class AjaxController extends Controller
     public function ajaxProductsget(Request $request){
         if($request->ajax()){
             $draw = $request->get('draw');
-
             $rowperpage = $request->get("length");
-
             $totalRecords = Product::select('count(*) as allcount')->count();
             $totalRecordswithFilter = Product::select('count(*) as allcount')->count();
-
             $allProducts = Product::orderBy('created_at', 'DESC')->with('sizes')
             ->when(auth()->user()->roles == 'vendor', function ($query) {
                 $vendor_data = Vendor::where('user_id', auth()->user()->id)->pluck('id')->first();
@@ -635,9 +1366,9 @@ class AjaxController extends Controller
                             });
                     }])->where('order_no',$request->order_no)->get();
                     foreach ($records as $record) {
-                        foreach($record->order_products as $recorded){                            
+                        foreach($record->order_products as $recorded){
                             $id = $record->id;
-                            
+
                             $order_detail = ProductSize::with('product')->where('product_id', $recorded->product_id)->first();
                             $user_detail = Order::where('id',1)->first();
                             $address_book_data = AddressBook::where('id', $user_detail->address_book_id)->first();
@@ -725,7 +1456,7 @@ class AjaxController extends Controller
                         );
                     }
                 }
-                
+
                 return response()->json(['data' => $data_arr]);
             } else{
                 return response()->json(['data' => "gey there"]);
@@ -733,4 +1464,23 @@ class AjaxController extends Controller
         }
         return view('admin.pages.order_detail');
     }
+
+//    getting the order_id for the autocomplete in search filter
+  public function orderid(Request $request){
+      $search = $request->search;
+
+      if($search == ''){
+          $employees = Order::orderby('order_no','asc')->select('order_no','order_no')->limit(8)->get();
+      }else{
+          $employees = Order::orderby('order_no','asc')->select('order_no','order_no')->where('order_no', 'like', '%' .$search . '%')->limit(8)->get();
+      }
+
+      $response = array();
+      foreach($employees as $employee){
+          $response[] = array("value"=>$employee->order_no,"label"=>$employee->order_no);
+      }
+
+      return response()->json($response);
+  }
+
 }

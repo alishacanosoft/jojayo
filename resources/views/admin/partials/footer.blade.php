@@ -1482,7 +1482,6 @@ $(function () {
 <script src="/admin/js/jasny-bootstrap.min.js"></script>
 <!-- EASY PIE CHART-->
 <script src="/admin/js/jquery.easypiechart.min.js"></script>
-
 <!-- sparkline CHART-->
 <script src="/admin/js/index.min.js"></script>
 
@@ -1598,7 +1597,6 @@ $('.datatable_action').dataTable({
 });
 </script>
 </body>
-@yield('scripts')
 </html>
 
 <script type="text/javascript">
@@ -2315,3 +2313,5 @@ $('.iframe-btn').fancybox({
       })
     });
 </script>
+@yield('scripts')
+
