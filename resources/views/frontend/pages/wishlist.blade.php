@@ -73,7 +73,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if(!empty($my_wish))
                             @foreach($my_wish as $list)
                             @php
                             $starting_price = App\Models\ProductSize::where('product_id', $list->product_id)->first();
@@ -116,7 +115,6 @@
                                 </td> 
                             </tr>
                             @endforeach
-                            @endif                      
                         </tbody>
                     </table>
                     </div>
