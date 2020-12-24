@@ -441,7 +441,6 @@
       </div>
     </div>
 
-    <div class="related-products"></div>
 
 @endsection
 @section('scripts')
