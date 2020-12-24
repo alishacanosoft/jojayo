@@ -60,27 +60,18 @@
             @endif
         </div>
 
+
         <div class="ps-footer__copyright">
-            <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-            <p>© 2018 Jojayo. All Rights Reserved</p>
-            </div>
-            <div class="col-lg-6">
-            <div class="footer-payments"><div>We Using Safe Payment For:</div>
-                <ul class="payments">
-                    <li><a href="#"><img src="/frontend/images/payment-method/esewa.png" alt=""></a></li>
-                    <li><a href="#"><img src="/frontend/images/payment-method/khalti.png" alt=""></a></li>
-                    <li><a href="#"><img src="/frontend/images/payment-method/cod.png" alt=""></a></li>
-                </ul>
-            </div>
-            </div>
+          <p>© 2020 Jojayo. All Rights Reserved</p>
+          <p><span>We Using Safe Payment For:</span>
+                <a href="#"><img src="/frontend/images/payment-method/esewa.png" alt=""></a>
+                <a href="#"><img src="/frontend/images/payment-method/khalti.png" alt=""></a>
+                <a href="#"><img src="/frontend/images/payment-method/cod.png" alt=""></a>
+            </p>
         </div>
-                </div>
-       
-          
-            
-        </div>
+
+
+        
 
       </div>
     </footer>
