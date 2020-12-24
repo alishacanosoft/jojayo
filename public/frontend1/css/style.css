@@ -13808,7 +13808,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-order-tracking {
-  padding: 100px 0;
+  padding: 50px 0;
 }
 
 .ps-order-tracking .ps-section__header {
@@ -18010,4 +18010,11 @@ section.ps-section--account .ps-block--category-2 span.ps-product__price{
 .ps-dropdown ul li a:hover {
   background-color: #eeeeee;
   text-decoration: underline;
+}
+
+
+/*** My Order Tracking Page ****/
+
+.container .order-not-found{
+  text-align: center;
 }
