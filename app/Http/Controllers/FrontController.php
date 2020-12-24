@@ -245,7 +245,7 @@ class FrontController extends Controller
             return response()->json($all_products);
         }
         $brands = $this->brand->get();
-        $allcount = $this->products->count();
+        $allcount = $this->products  ->where('status', 'verified')->has('sizes')->count();
         return view('frontend.pages.shop', compact('all_products','allcount', 'lastpage', 'requested','brands'));
     }
 

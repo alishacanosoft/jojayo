@@ -128,9 +128,7 @@ class WishlistController extends Controller
                 'message' => 'Product Not found.',
                 'alert-type' => 'error'
             );
-            return redirect()->back0
-            +++0
-            45;mk;()->with($notification);
+            return redirect()->back()->with($notification);
         }
 
         $success = $this->wish->delete();
