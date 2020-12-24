@@ -333,9 +333,7 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['middleware' => ['auth', 'customers']], function () {
-    Route::get('/dashboard', function () {
-        return view('frontend.pages.dashboard');
-    });
+    Route::get('/dashboard', 'FrontController@customerDashboard')->name('customer.dashboard');
 
     Route::get('/account-information', function () {
         return view('frontend.pages.account-information');

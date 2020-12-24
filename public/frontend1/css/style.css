@@ -3636,6 +3636,8 @@ textarea.form-control {
   .ps-block--category-2 .ps-block__thumbnail {
     max-width: 100px;
     padding-top: 20px;
+    padding-left: 20px;
+
   }
 }
 
@@ -17935,3 +17937,71 @@ line-height: 1em;
  .container .order-detail > * {
   margin-bottom: 30px;
 }
+
+/*** Customer Dashboard***/
+
+.ps-top-categories .ps-block__header {
+  margin-bottom: 30px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+
+.ps-top-categories .ps-block__header h3 {
+  margin-bottom: 0;
+  font-size: 24px;
+ 
+}
+
+.customer-recent-products{
+  font-weight: 600;
+}
+
+.ps-block--category-2.ps-block--category-auto-part .ps-block__content ul li a{
+  color:#000;
+}
+
+
+@media (min-width: 1440px) {
+  section.ps-section--account .ps-top-categories .row {
+    max-width: calc(100% / 8);
+  }
+}
+
+@media (max-width: 1199px) {
+  section.ps-section--account .ps-top-categories {
+    padding: 60px 0;
+  }
+}
+
+
+@media (max-width: 991px) {
+  section.ps-section--account .ps-top-categories {
+    padding: 50px 0;
+  }
+}
+
+@media (max-width: 767px) {
+  section.ps-section--account .ps-top-categories {
+    padding: 40px 0;
+  }
+}
+
+@media (max-width: 479px) {
+  section.ps-section--account .ps-top-categories {
+    padding: 35px 0;
+  }
+}
+
+section.ps-section--account .ps-block--category-2 span.ps-product__price:hover {
+  color: unset;
+}
+
+section.ps-section--account .ps-block--category-2 span.ps-product__price{
+  color: #690;
+}
+
+.recent-order-number{
+  font-weight: 600;
+}
+
