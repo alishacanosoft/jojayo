@@ -30,7 +30,7 @@
 
 
     @csrf
-    <title>Seller Login | JOJAYO</title>
+    <title>Seller Login | JoJaYo</title>
     <link rel="icon" href="favicon" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
