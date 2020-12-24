@@ -3,12 +3,33 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
     <meta name="description"
           content="attendance, client management, finance, freelance, freelancer, goal tracking, Income Managment, lead management, payroll, project management, project manager, support ticket, task management, timecard">
     <meta name="keywords"
           content="	attendance, client management, finance, freelance, freelancer, goal tracking, Income Managment, lead management, payroll, project management, project manager, support ticket, task management, timecard">
-    <title>Ecommerce Website</title>
-            <link rel="icon" href="/frontend/img/logo.png" type="image/png">
+   
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="JoJayo">
+    <link rel="canonical" href="https://jojayo.com/" />
+    <link rel="icon" href="{{asset('images/favicon.ico')}}" />
+    <link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}" />
+    <link rel="android-chrome-192x192" href="{{asset('images/android-chrome-192x192.png')}}" />
+    <link rel="android-chrome-512x512" href="{{asset('images/android-chrome-512x512.png')}}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('images/site.webmanifest')}}">
+
+
+    <meta property="og:type" content="ecommerce-website" />
+    <meta property="og:title" content="JOJAYO" />
+    <meta property="og:description" content="JOJAYO" />
+    <meta property="og:url" content="https://jojayo.com/" />
+    <meta property="og:site_name" content="JOJAYO" />
+    <meta property="og:image" content="{{asset('images/jojayo_logo.png')}}" />
+    
+    <title>JoJayo | Ecommerce Website</title>
         <!-- =============== VENDOR STYLES ===============-->
     <!-- FONT AWESOME-->
     <link rel="stylesheet" href="/admin/css/font-awesome.min.css">
@@ -213,14 +234,17 @@
                 </li>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="/uploads/users/{{ \Auth::user()->image }}" class="img-xs user-image"
-                             alt="User Image"/>
+                        <img src="<?php if(Auth::user()->image && str_contains(Auth::user()->image, 'https')){?>
+                            {{Auth::user()->image}}<?php }else{ if(Auth::user()->image){?>{{asset('/uploads/users/'.Auth::user()->image)}}<?php }else{?>{{asset('/images/dummy.jpg')}}<?php }}?>" 
+                            class="img-xs user-image"
+                             alt="{{ \Auth::user()->name }}"/>
                         <span class="hidden-xs">{{ \Auth::user()->name }}</span>
                     </a>
                     <ul class="dropdown-menu animated zoomIn">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="/uploads/users/{{ \Auth::user()->image }}" class="img-circle" alt="User Image"/>
+                            <img src="<?php if(Auth::user()->image && str_contains(Auth::user()->image, 'https')){?>
+                            {{Auth::user()->image}}<?php }else{ if(Auth::user()->image){?>{{asset('/uploads/users/'.Auth::user()->image)}}<?php }else{?>{{asset('/images/dummy.jpg')}}<?php }}?>" class="img-circle" alt="{{ \Auth::user()->name }}"/>
                             <p>
                                 {{ \Auth::user()->name }}
                             </p>
