@@ -9090,6 +9090,10 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
   cursor: pointer;
 }
 
+.ps-product--detail .ps-product__shopping .ps-product__actions a:hover {
+  color: #27aae1;
+}
+
 .ps-product--detail .ps-product__shopping.extend {
   align-items: flex-start;
   flex-flow: column wrap;
