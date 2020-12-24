@@ -18005,3 +18005,9 @@ section.ps-section--account .ps-block--category-2 span.ps-product__price{
   font-weight: 600;
 }
 
+/*** Header Section dropdown****/
+
+.ps-dropdown ul li a:hover {
+  background-color: #eeeeee;
+  text-decoration: underline;
+}

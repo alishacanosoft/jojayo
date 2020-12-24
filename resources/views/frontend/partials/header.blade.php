@@ -334,9 +334,17 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
                         </ul>
             <ul class="navigation__extra">
-                <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
-              <li><a href="{{url('/vendor/login')}}">Sell on JoJayo</a></li>
               <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
+
+              <li>
+                <div class="ps-dropdown"><a href="#">Sell on JoJayo</a>
+                  <ul class="ps-dropdown-menu">
+                  <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
+                  <li><a href="{{url('/vendor')}}">Become Seller</a></li>
+                  </ul>
+                </div>
+              </li>
+
 
             </ul>
           </div>
@@ -556,9 +564,16 @@
                 <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
             </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
-              <li><a href="{{url('/vendor/')}}">Sell on JoJayo</a></li>
-              <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>             
+            <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>     
+              <li>
+                <div class="ps-dropdown"><a href="#">Sell on JoJayo</a>
+                  <ul class="ps-dropdown-menu">
+                  <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
+                  <li><a href="{{url('/vendor')}}">Become Seller</a></li>
+                  </ul>
+                </div>
+              </li>
+                      
             </ul>
           </div>
         </div>
@@ -572,9 +587,15 @@
       </div>
       <div class="header__right">
         <ul class="navigation__extra">
-            <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
-          <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
-          <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
+        <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>     
+            <li>
+                <div class="ps-dropdown"><a href="#">Sell on JoJayo</a>
+                  <ul class="ps-dropdown-menu">
+                  <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
+                  <li><a href="{{url('/vendor')}}">Become Seller</a></li>
+                  </ul>
+                </div>
+            </li>
 
         </ul>
       </div>
