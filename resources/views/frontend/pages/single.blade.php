@@ -465,7 +465,7 @@
                _method: "POST",
                color_id: color_id
            },
-           success: function(response) { console.log(response)
+           success: function(response) { 
                $('.size_data').html('');
                $.each(response, function(key, value) {
                    var li_class = '';
