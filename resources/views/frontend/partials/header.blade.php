@@ -338,6 +338,16 @@
               <li><a href="{{url('/sell-on-jojayo')}}">Sell on JoJayo</a></li>
               <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
 
+              <li>
+                <div class="ps-dropdown"><a href="#">Sell on JoJayo</a>
+                  <ul class="ps-dropdown-menu">
+                  <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
+                  <li><a href="{{url('/vendor')}}">Become Seller</a></li>
+                  </ul>
+                </div>
+              </li>
+
+
             </ul>
           </div>
         </div>

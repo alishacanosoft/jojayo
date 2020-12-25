@@ -172,6 +172,24 @@ class FrontController extends Controller
         return view('frontend.pages.blog-search',compact('allPosts','query','latestPosts','bcategories'));
     }
 
+    public function customerDashboard()
+    {
+
+        $latestOrders = Order::where('user_id', \Auth::user()->id)->orderBy('created_at', 'desc')->take(1)->get();;
+       
+        if($latestOrders->count()>0){
+            $latestProducts = $this->products->with('colors', 'images')->orderBy('created_at', 'desc')->whereHas('colors', function ($q) {
+                $q->whereNull('deleted_at')->where('status',1);
+            })->take(2)->get();
+        }else{
+            $latestProducts = $this->products->with('colors', 'images')->orderBy('created_at', 'desc')->whereHas('colors', function ($q) {
+                $q->whereNull('deleted_at')->where('status',1);
+            })->take(4)->get();
+        }
+
+        return view('frontend.pages.dashboard',compact('latestProducts','latestOrders'));
+    }
+
     public function vendorProduct(Request $request, $slug){
         $vendor_data = $this->vendor->where('vendor_slug', $slug)->first();
         $vendor_id = $vendor_data->id;
@@ -741,9 +759,23 @@ die;
     }
 
     public function wishlist(){
+        $latestProducts = $this->products->with('colors', 'images')->orderBy('created_at', 'desc')->whereHas('colors', function ($q) {
+            $q->whereNull('deleted_at')->where('status',1);
+        })->take(4)->get();
         $user_id = auth()->user()->id;
         $my_wish = \App\Models\Wishlist::where('user_id', $user_id)->get();
-        return view('frontend.pages.wishlist', compact('my_wish'));
+
+        if($my_wish->count()>0){
+            $latestProducts = $this->products->with('colors', 'images')->orderBy('created_at', 'desc')->whereHas('colors', function ($q) {
+                $q->whereNull('deleted_at')->where('status',1);
+            })->take(2)->get();
+        }else{
+            $latestProducts = $this->products->with('colors', 'images')->orderBy('created_at', 'desc')->whereHas('colors', function ($q) {
+                $q->whereNull('deleted_at')->where('status',1);
+            })->take(4)->get();
+        }
+      
+        return view('frontend.pages.wishlist', compact('my_wish','latestProducts'));
     }
 
     public function transactionType(Request $request){

@@ -338,7 +338,7 @@ class OrderController extends Controller
                 'message' => 'Order number not specified!',
                 'alert-type' => 'warning'
             );
-            return redirect()->route('orders.index')->with($notification);
+            return redirect()->view('frontend.partials.tracking-not-found');
         }
         //$vendor_id = \App\Models\Vendor::where('user_id', auth()->user()->id)->pluck('id')->first();
         $order_data = $this->order->with('order_products')->where('order_no', $request->orderid)->first();

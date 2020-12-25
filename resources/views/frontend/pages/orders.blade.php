@@ -35,10 +35,9 @@
                             <tr>
                                 <th></th>
                                 <th>Order No</th>
-                                <th>Purchased by</th>
                                 <th>Area</th>
                                 <th>Total Amount</th>
-                                <th>Order Created At</th>
+                                <th>Order Date</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -119,7 +118,6 @@
                     },
                 },
                 { "data": "order_no" },
-                { "data": "user_id" },
                 { "data": "area_id" },
                 { "data": "total_amount" },
                 { "data": "created_at" },
@@ -127,7 +125,7 @@
                     "data":"status"
                 },
             ],
-            "lengthMenu": [[10, 50, 100, 150, 200, -1], [10, 50, 100, 150, 200, "All"]],
+            "lengthMenu": [[10, -1], [10, "All"]],
         } );
 
         // Add event listener for opening and closing details

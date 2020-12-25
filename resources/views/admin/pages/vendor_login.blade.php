@@ -4,8 +4,33 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="JoJayo">
+    <meta name="description" content="JOJAYO" />
+    <meta name="keywords" content="jojayo, shopping, e-commerce" />
+    <link rel="canonical" href="https://jojayo.com/" />
+
+    <link rel="icon" href="{{asset('images/favicon.ico')}}" />
+    <link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}" />
+    <link rel="android-chrome-192x192" href="{{asset('images/android-chrome-192x192.png')}}" />
+    <link rel="android-chrome-512x512" href="{{asset('images/android-chrome-512x512.png')}}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('images/site.webmanifest')}}">
+
+
+    <meta property="og:type" content="ecommerce-website" />
+    <meta property="og:title" content="JOJAYO" />
+    <meta property="og:description" content="JOJAYO" />
+    <meta property="og:url" content="https://jojayo.com/" />
+    <meta property="og:site_name" content="JOJAYO" />
+    <meta property="og:image" content="{{asset('images/jojayo_logo.png')}}" />
+
+
     @csrf
-    <title>Seller Login</title>
+    <title>Seller Login | JoJaYo</title>
     <link rel="icon" href="favicon" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -701,7 +726,7 @@
                 <form class="signup-form" action="{{ route('users.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">
                         @csrf
                         <div class="header-form signup">
-                            <span>CREATE YOUR VENDOR ACCOUNT.</span>
+                            <span>CREATE YOUR VENDOR ACCOUNT</span>
                         </div>
                     <div class="form-row">
                         <div class="col">
@@ -762,7 +787,7 @@
                             <input type="submit" value="Signup Now" id="submit"/>
                         </div>
                         <div class="dotted-section text-center">
-                            <h6 class="font-15">Or Already have an account?</h6>
+                            <h6 class="font-15">Already have an account?</h6>
                             <a href="#" class="switch font-15">Sign In !</a>
                         </div>
                     </form>
@@ -770,11 +795,6 @@
             </div>
         </div>
     </section>
-{{--    <footer>--}}
-{{--        <p>--}}
-{{--            ALl rights reserved by: <a href="/">Jojayo</a>--}}
-{{--        </p>--}}
-{{--    </footer>--}}
 </div>
 
 

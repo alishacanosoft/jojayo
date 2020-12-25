@@ -137,9 +137,7 @@
                   <div class="ps-product__desc">
                   
                     <p>Sold By:<a href="{{url('/vendor/'.$data->VendorName->vendor_slug)}}"><strong> {{$data->VendorName->company}}</strong></a></p>
-                    <ul class="ps-list--dot">
-                        {!! $data->specification !!}
-                    </ul>
+                    
                   </div>
               
                   <div class="ps-product__variations">
@@ -340,7 +338,7 @@
                       <li><a href="{{ route('single-product', $b_pro->slug) }}" data-toggle="tooltip" data-placement="top" title="Add to Whishlist"><i class="icon-heart"></i></a></li>
                     </ul>
                   </div>
-                  <div class="ps-product__container"><a class="ps-product__vendor" href="">{{ $b_pro->VendorName->company }}</a>
+                  <div class="ps-product__container"><a class="ps-product__vendor" href="{{url('/vendor/'.$b_pro->VendorName->vendor_slug)}}">{{ $b_pro->VendorName->company }}</a>
                     <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $b_pro->slug) }}">{{ $b_pro->name }}</a>
                       <div class="ps-product__rating">
                         <select class="ps-rating" data-read-only="true">
@@ -403,7 +401,7 @@
                      </ul>
                   </div>
                   <div class="ps-product__container">
-                     <a class="ps-product__vendor" href="#">Vendor Shop</a>
+                     <a class="ps-product__vendor" href="{{url('/vendor/'.$related_products->VendorName->vendor_slug)}}">{{$related_products->VendorName->company}}</a>
                      <div class="ps-product__content">
                         <a class="ps-product__title"
                            href="{{ route('single-product', $related_products->slug) }}">{{ ucwords($related_products->name) }}</a>
@@ -443,7 +441,6 @@
       </div>
     </div>
 
-    <div class="related-products"></div>
 
 @endsection
 @section('scripts')
@@ -468,7 +465,7 @@
                _method: "POST",
                color_id: color_id
            },
-           success: function(response) { console.log(response)
+           success: function(response) { 
                $('.size_data').html('');
                $.each(response, function(key, value) {
                    var li_class = '';

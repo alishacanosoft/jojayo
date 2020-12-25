@@ -177,6 +177,7 @@ class UserController extends Controller
       $rules = $this->user->getRules();
       $request->validate($rules);
       $data = $request->all();
+      $data['name'] = $request->name;
       $data['email'] = $request->email;
       $password = $request->password;
       $confirm = $request->confirm;
@@ -186,7 +187,7 @@ class UserController extends Controller
       }
       $data['password'] = Hash::make($request->password);
       $data['contact'] = $request->contact;
-      $data['image'] = $request->image;
+     
       $data['roles'] = 'customers';
       $this->user->fill($data);
       $customer_data = array();
@@ -444,7 +445,7 @@ class UserController extends Controller
 
     public function UpdateUser(Request $request, $id){
       $user_data = $this->user->find($id);
-    
+      $oldimage=$user_data->image;
       $user_data->name=$request->input('name');
       $user_data->email=$request->input('email');
       $user_data->contact=$request->input('contact');
@@ -472,6 +473,23 @@ class UserController extends Controller
         }
       }
 
+
+      
+      if(!empty($request->file('image'))){
+        $image = $request->file('image');
+        $path=base_path().'/public/uploads/users';
+        $name= uniqid().'_'.$image->getClientOriginalName();
+        if($image->move($path,$name)){
+            $user_data->image=$name;
+            if (!empty($oldimage) && file_exists(public_path().'/uploads/users/'.$oldimage)){
+                unlink(public_path().'/uploads/users/'.$oldimage);
+                unlink(public_path().'/uploads/users/Thumb-'.$old_image);
+            }
+        }
+
+    }
+     
+    
       $rules = $this->user->getRules('update');
     //   $user_data->validate($rules);
       $status=$user_data->update();

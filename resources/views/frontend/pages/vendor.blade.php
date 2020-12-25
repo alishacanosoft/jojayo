@@ -29,7 +29,7 @@
                                 <h4>Low Fees</h4>
                                 <div class="ps-block__desc" data-mh="about-desc">
                                   <p>It doesn’t take much to list your items and once you make a sale, Jojayo’s transaction fee is just 2.5%.</p>
-                                </div><a href="#">Learn more</a>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -40,7 +40,7 @@
                                 <h4>Powerful Tools</h4>
                                 <div class="ps-block__desc" data-mh="about-desc">
                                   <p>Our tools and services make it easy to manage, promote and grow your business.</p>
-                                </div><a href="#">Learn more</a>
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -51,7 +51,7 @@
                                 <h4>Support 24/7</h4>
                                 <div class="ps-block__desc" data-mh="about-desc">
                                   <p>Our tools and services make it easy to manage, promote and grow your business.</p>
-                                </div><a href="#">Learn more</a>
+                                </div>
                               </div>
                             </div>
                           </div>

@@ -46,7 +46,8 @@
                                 <!-- User picture-->
                                 <div class="user-block-picture">
                                     <div class="user-block-status">
-                                        <img src="/uploads/users/{{ \Auth::user()->image }}" alt="Avatar" width="60"
+                                        <img src="<?php if(Auth::user()->image && str_contains(Auth::user()->image, 'https')){?>
+                            {{Auth::user()->image}}<?php }else{ if(Auth::user()->image){?>{{asset('/uploads/users/'.Auth::user()->image)}}<?php }else{?>{{asset('/images/dummy.jpg')}}<?php }}?>" alt="{{ \Auth::user()->name }}" width="60"
                                             height="60" class="img-thumbnail img-circle">
                                         <div class="circle circle-success circle-lg"></div>
                                     </div>

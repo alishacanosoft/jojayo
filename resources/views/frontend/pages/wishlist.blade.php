@@ -18,7 +18,47 @@
                     {{frontWarning()}}
                 @elseif(session()->has('error'))
                     {{frontError()}}
-                @endif                  
+                @endif   
+                
+                    <div class="ps-top-categories">
+                        <div class="container">
+                            <div class="ps-block__header">
+                                <h3>Recent Arrival Products</h3>
+                            </div>
+                            <div class="ps-section__content">
+                                <div class="row align-content-lg-stretch">
+                                
+                                @foreach($latestProducts as $key => $product)
+                                    @php
+                                    $starting_price = App\Models\ProductSize::where('product_id', $product->id)->first();
+                                    $product_image = (count($product->images)>0)?product_img($product->images[0]['images'][0]['image']):'';
+                                    @endphp
+                                        <div class="col-sm-6 col-md-6 col-12">
+                                            <div class="ps-block--category-2 ps-block--category-auto-part" data-mh="categories">
+                                                <div class="ps-block__thumbnail"><img src="{{ $product_image ? $product_image : asset('/images/noimage.png')}}" alt="{{$product->slug}}"></div>
+                                                <div class="ps-block__content">
+                                                <ul>
+                                                    <li>
+                                                        <h4><a class="customer-recent-products" href="{{ route('single-product', $product->slug) }}">{{ strtoupper($product->name) }}</a></h4>
+                                                    </li>
+                                                </ul>
+                                                <span class="ps-product__price"> NPR {{ number_format($starting_price['selling_price']) }}</span>
+
+                                                <ul>
+                                                    <li class="more"><a href="{{url('/shop')}}">More<i class="icon-chevron-right"></i></a></li>
+                                                </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @if(!empty($my_wish))
                     <h3>Wishlist</h3>
                           
                     <div class="table-responsive">
@@ -33,7 +73,6 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @if(!empty($my_wish))
                             @foreach($my_wish as $list)
                             @php
                             $starting_price = App\Models\ProductSize::where('product_id', $list->product_id)->first();
@@ -76,10 +115,10 @@
                                 </td> 
                             </tr>
                             @endforeach
-                            @endif                      
                         </tbody>
                     </table>
                     </div>
+                    @endif
   
 
                 </div>

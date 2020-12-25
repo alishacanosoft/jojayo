@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div id="tracking"></div>
+      <div id="tracking"></div>      
 </div>
 @endsection
 @section('scripts')

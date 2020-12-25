@@ -4,9 +4,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="author" content="JoJayo">
+    <link rel="canonical" href="https://jojayo.com/" />
+    <link rel="icon" href="{{asset('images/favicon.ico')}}" />
+    <link rel="apple-touch-icon" href="{{asset('images/apple-touch-icon.png')}}" />
+    <link rel="android-chrome-192x192" href="{{asset('images/android-chrome-192x192.png')}}" />
+    <link rel="android-chrome-512x512" href="{{asset('images/android-chrome-512x512.png')}}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('images/favicon-32x32.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('images/favicon-16x16.png')}}">
+    <link rel="manifest" href="{{asset('images/site.webmanifest')}}">
+
+
+    <meta property="og:type" content="ecommerce-website" />
+    <meta property="og:title" content="JOJAYO" />
+    <meta property="og:description" content="JOJAYO" />
+    <meta property="og:url" content="https://jojayo.com/" />
+    <meta property="og:site_name" content="JOJAYO" />
+    <meta property="og:image" content="{{asset('images/jojayo_logo.png')}}" />
     @csrf
-    <title>Seller Login</title>
-    <link rel="icon" href="favicon" type="image/png">
+    <title>Admin Login | JoJayo</title>
     <link rel="stylesheet" href="/admin/css/font-awesome.min.css">
     <link rel="stylesheet" href="/admin/css/toastr.min.css">
     <link rel="stylesheet" href="/admin/css/bootstrap.min.css" id="bscss">
