@@ -338,11 +338,13 @@ class OrderController extends Controller
                 'message' => 'Order number not specified!',
                 'alert-type' => 'warning'
             );
-            return redirect()->view('frontend.partials.tracking-not-found');
+            return redirect()->back()->with($notification);
         }
         //$vendor_id = \App\Models\Vendor::where('user_id', auth()->user()->id)->pluck('id')->first();
         $order_data = $this->order->with('order_products')->where('order_no', $request->orderid)->first();
-       
+        if($order_data == null){
+            return view('frontend.partials.tracking-not-found');
+        }
         $area_id = AddressBook::where('id', $order_data->address_book_id)->first();
         $delivery_charge = Area::where('id', $area_id->area)->first();
         $normal_charge = '';

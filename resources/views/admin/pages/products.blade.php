@@ -946,5 +946,4 @@ $('.stockupd').change(function(){
         }
         });
 </script>
-
 @endsection
