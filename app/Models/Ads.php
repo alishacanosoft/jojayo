@@ -16,7 +16,7 @@ class Ads extends Model
             'end_date' => 'required|string',
             'place' => 'required|string',
             'status' => 'sometimes|in:draft,publish',
-            'image' => 'required|string'
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];
         if ($act !== 'add'){
             $rules['title'] = 'required|string';

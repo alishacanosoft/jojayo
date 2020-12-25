@@ -17,10 +17,8 @@ class CreateStatementsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('vendor_id')->nullable();            
             $table->foreign('vendor_id')->references('id')->on('vendors');
-            $table->unsignedBigInteger('order_id')->nullable();            
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->string('statement');
             $table->string('transaction_no');
-            $table->enum('status', ['Paid', 'Unpaid'])->default('Unpaid');
             $table->timestamp('order_created');
             $table->timestamps();
         });

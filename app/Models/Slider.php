@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Slider extends Model
 {
-    protected $fillable = ['name','url','image','status'];
+    protected $fillable = ['name','url','image','location','status'];
 
     public function getRules($act = 'add'){
         $rules = [

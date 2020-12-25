@@ -22,11 +22,13 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\ProductImages;
 use App\Models\ProductSize;
 use URL;
+use Illuminate\Support\Facades\DB;
 use GuzzleHttp\Client;
 use App\Service\ProductService;
 use App\Service\SparrowService;
 use App\Models\Vendor;
 use App\Models\Category;
+use App\Models\Ads;
 use App\Models\Statement;
 
 class FrontController extends Controller
@@ -47,9 +49,10 @@ class FrontController extends Controller
     protected $vendor = null;
     protected $blog = null;
     protected $bcategory = null;
+    protected $ads = null;
 
 
-    public function __construct(Category $bcategory,Blog $blog,ProductSize $product_sizes, Slider $slider, ProductImages $product_image, ProductCategory $product_categories, Product $products, Region $regions, City $city, Area $area, AddressBook $address_book, Brand $brand, SecondaryCategory $secondary_categories, Page $page, CategoryBrand $category_brand, Vendor $vendor)
+    public function __construct(Category $bcategory,Blog $blog,ProductSize $product_sizes, Slider $slider, ProductImages $product_image, ProductCategory $product_categories, Product $products, Region $regions, City $city, Area $area, AddressBook $address_book, Brand $brand, SecondaryCategory $secondary_categories, Page $page, CategoryBrand $category_brand, Vendor $vendor, Ads $ads)
     {
         $this->bcategory = $bcategory;
         $this->blog = $blog;
@@ -67,6 +70,7 @@ class FrontController extends Controller
         $this->product_image = $product_image;
         $this->slider = $slider;
         $this->vendor = $vendor;
+        $this->ads = $ads;
     }
 
     public function index()
@@ -93,8 +97,12 @@ class FrontController extends Controller
         $women_fashion = ProductService::getProduct("Women's Fashion", 20); //dd($women_fashion);
         $kid_fashion = ProductService::getProduct("Kid's Fashion", 20); //dd($women_fashion);
         $available_brands = $this->brand->get();
-        $all_slider = $this->slider->get();
-        return view('frontend.pages.index', compact('latest_products', 'available_brands', 'women_fashion', 'kid_fashion','men_fashion', 'all_slider', 'flash', 'end_time'));
+        $all_slider = $this->slider->where('location', 'main')->get();
+        $slider_section = $this->ads->where('place', 'slider-section')->take(2)->get();
+        $women = $this->ads->where('place', 'women-section')->first();
+        $men = $this->ads->where('place', 'men-section')->first();
+        $kid = $this->ads->where('place', 'kid-section')->first();
+        return view('frontend.pages.index', compact('latest_products', 'available_brands', 'women_fashion', 'kid_fashion','men_fashion', 'all_slider', 'flash', 'end_time', 'women', 'men', 'kid','slider_section'));
     }
 
     public function singleProduct($slug)
@@ -239,7 +247,8 @@ class FrontController extends Controller
         }
         $brands = $this->brand->get();
         $allcount = $this->products->count();
-        return view('frontend.pages.shop', compact('all_products','allcount', 'lastpage', 'requested','brands'));
+        $shop_slider = $this->slider->where('location', 'shop')->get();
+        return view('frontend.pages.shop', compact('all_products','allcount', 'lastpage', 'requested','brands','shop_slider'));
     }
 
     public function flash(Request $request)
@@ -663,7 +672,12 @@ die;
    
         
     public function getVendorData($id){
-        $data = Statement::where('vendor_id', $id)->groupBy('order_created')->get();
+        $data= Order::with(['vendor_products' => function($query) use ($id) {
+            $query->whereHas('products', function ($query) use ($id) {
+                $query->where('vendor_id', $id);
+            });
+        }])
+        ->groupBy(DB::raw('Date(created_at)'))->get();        
         return view('admin.pages.ajax.date', compact('data'));
     }
     
@@ -677,8 +691,8 @@ die;
         } elseif(date('d', strtotime($date)) <= 7){
             $end_date = date('Y-m-7',strtotime($date));
         }
-        $data = Statement::where('vendor_id', $id)->whereBetween('order_created', [$date, $end_date])->groupBy('order_id')->get();        
-        return view('admin.pages.finance_table', compact('data','id'));        
+        $data = Order::whereBetween('created_at', [$date, $end_date])->get();
+        return view('admin.pages.finance_table', compact('data','id','date','end_date'));        
     }
 
     public function printFinance(Request $request){
@@ -694,15 +708,26 @@ die;
     }
 
     public function transaction(Request $request){
-        $all_vendor = $this->vendor->get();        
-        return view('admin.pages.transaction', compact('all_vendor'));
+        $total = $request->total;
+        $vendor_id = $request->vendor_id;
+        $statement = $request->statement;
+        $all_vendor = $this->vendor->get();
+        return view('admin.pages.transaction',compact('total','vendor_id','statement','all_vendor'));
     }
     
     public function updateTransaction(Request $request){
-        $find = Statement::where('vendor_id', $request->vendor_id)->where('transaction_no', $request->transaction_no)->groupBy('order_created')->first();
-        $data['paid_amount'] = $request->paid_amount;
-        $data['due_amount'] = $request->due_amount;
-        $status = Statement::where('transaction_no', $request->transaction_no)->update(array('paid_amount' => $request->paid_amount, 'due_amount' => $request->due_amount, 'status' => $request->status, 'narration' => $request->narration));
+        $vendor_id = $this->vendor->where('id', $request->vendor_id)->first();                
+        $transaction_no = getTransactionId(substr(strtoupper(str_replace(' ', '', @$vendor_id->company)),0, 5));                 
+        Statement::updateOrCreate(
+            ['vendor_id' => $request->vendor_id, 'statement' => $request->statement],
+            ['transaction_no' => $transaction_no, 
+            'statement' => $request->statement,
+            'vendor_id' => $request->vendor_id, 
+            'paid_amount' =>  $request->paid_amount,
+            'due_amount' =>  $request->due_amount,
+            'narration' =>  $request->narration
+            ]
+        );
         return redirect()->back();
     }
 
@@ -719,6 +744,32 @@ die;
         $user_id = auth()->user()->id;
         $my_wish = \App\Models\Wishlist::where('user_id', $user_id)->get();
         return view('frontend.pages.wishlist', compact('my_wish'));
+    }
+
+    public function transactionType(Request $request){
+        $date = $request->date;
+        $vendor_id = $request->vendor_id;
+        $type = $request->type;
+        if(date('d', strtotime($date)) > 7 && date('d', strtotime($date)) < 14){ 
+            $end_date = date('Y-m-14', strtotime($date));
+        } elseif(date('d', strtotime($date)) > 14 && date('d', strtotime($date)) < 21){
+            $end_date = date('Y-m-21', strtotime($date));
+        } elseif(date('d', strtotime($date)) > 22 && date('d', strtotime($date)) < 28){
+            $end_date = date('Y-m-28', strtotime($date));
+        } else{
+            $end_date = date('Y-m-07', strtotime($date));
+        }        
+        $data= Order::with('vendor_products')
+        // ->whereHas('products', function ($query) use ($vendor_id) {
+        //     $query->where('vendor_id', $vendor_id);
+        // })
+        ->whereHas('vendor_products',function($query) use($vendor_id){
+            $query->whereHas('products',function($query)use($vendor_id){
+                $query->where('vendor_id',$vendor_id);
+            });
+        })
+        ->whereBetween('created_at', [$date, $end_date])->get();//dd($data);
+        return view('admin.partials.type', compact('data', 'date', 'type', 'end_date'));
     }
 
 }

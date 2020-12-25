@@ -334,8 +334,8 @@
                             <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
                         </ul>
             <ul class="navigation__extra">
-                <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
-              <li><a href="{{url('/vendor/login')}}">Sell on JoJayo</a></li>
+                <li><a href="{{url('/seller/login')}}">Seller Login</a></li>
+              <li><a href="{{url('/sell-on-jojayo')}}">Sell on JoJayo</a></li>
               <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
 
             </ul>
@@ -556,8 +556,8 @@
                 <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li> 
             </ul>
             <ul class="navigation__extra">
-              <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
-              <li><a href="{{url('/vendor/')}}">Sell on JoJayo</a></li>
+              <li><a href="{{url('/seller/login')}}">Seller Login</a></li>
+              <li><a href="{{url('/sell-on-jojayo')}}">Sell on JoJayo</a></li>
               <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>             
             </ul>
           </div>
@@ -572,8 +572,8 @@
       </div>
       <div class="header__right">
         <ul class="navigation__extra">
-            <li><a href="{{url('/vendor/login')}}">Seller Login</a></li>
-          <li><a href="{{url('/vendor')}}">Sell on JoJayo</a></li>
+            <li><a href="{{url('/seller/login')}}">Seller Login</a></li>
+          <li><a href="{{url('/sell-on-jojayo')}}">Sell on JoJayo</a></li>
           <li><a href="{{url('/order-tracking')}}">Track Your Order</a></li>
 
         </ul>

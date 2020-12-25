@@ -36,8 +36,16 @@
                                 <td>{{ $ad_lists->end_date }}</td>
                                 <td>{{ $ad_lists->status }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-xs edit" value="{{ $ad_lists->id }}" style="float: none;"><i class="fa fa-pencil-square-o"></i></button>
-                                    <button type="button" class="btn-xs btn btn-danger table-delete" style="float: none;margin: 5px;" data-target="#sign-in-modal"><i class="fa fa-trash-o"></i></button>
+                                    <a href="{{ route('ads.edit', $ad_lists->id) }}" class="btn btn-primary btn-xs" style="margin-right: 5px">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </a>
+                                    <a style="display:inline-block" onclick="return confirm('Are you sure you want to delete this user?')">
+                                        <form method="POST" action="{{ route('ads.destroy', $ad_lists->id) }}" accept-charset="UTF-8">
+                                            <input name="_method" type="hidden" value="DELETE">
+                                            <input name="_token" type="hidden" value="{{ csrf_token() }}">
+                                            <button class="btn btn-danger btn-xs" type="submit"><i class="fa fa-trash-o"></i></button>
+                                        </form>
+                                    </a>                                    
                                 </td>
                             </tr>
                             @endforeach @endif
@@ -46,81 +54,83 @@
                      </div>
                   </div>
                   <div class="tab-pane @if($active_tab == 'create') active @endif" id="create">
-                  <form action="{{ route('ads.store') }}" method="POST" class="form-horizontal">
+                    @if(!empty($data))
+                    {{ Form::open(['url'=>route('ads.update', $data->id), 'class'=>'form-horizontal', 'id'=>'slider_add', 'files'=>true,'method'=>'patch']) }}
+                    @else
+                    <form action="{{ route('ads.store') }}" method="POST" class="form-horizontal" enctype="multipart/form-data">                    
+                    @endif
                     @csrf
                     <div class="row">                        
                         <div class="col-sm-12">
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><strong>Name</strong> <span class="text-danger">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="{{ @$data->title }}" name="title" id="name" placeholder="Enter title of the ad">                            
+                                <input type="text" class="form-control" value="{{ @$data->title }}" name="title" id="name" placeholder="Enter title of the ad">
+                                @if($errors->has('title'))
+                                    <span class='validation-errors text-danger'>{{ $errors->first('title') }}</span>
+                                @endif                       
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><strong>Link</strong> <span class="text-danger">*</span></label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" value="{{ @$data->link }}" name="url" id="link" placeholder="Paste the redirect link">
+                                <input type="text" class="form-control" value="{{ @$data->url }}" name="url" id="link" placeholder="Paste the redirect link">
+                                @if($errors->has('url'))
+                                    <span class='validation-errors text-danger'>{{ $errors->first('url') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><strong>Start Date</strong> <span class="text-danger">*</span></label>
                             <div class="col-sm-8">
                                 <input type="date" class="form-control" value="{{ @$data->start_date }}" name="start_date" id="start_date" placeholder="Enter ads starting date">
+                                @if($errors->has('start_date'))
+                                    <span class='validation-errors text-danger'>{{ $errors->first('start_date') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><strong>End Date</strong> <span class="text-danger">*</span></label>
                             <div class="col-sm-8">
                                 <input type="date" class="form-control" value="{{ @$data->end_date }}" name="end_date" id="end_date" placeholder="Enter ads ending date">
+                                @if($errors->has('end_date'))
+                                    <span class='validation-errors text-danger'>{{ $errors->first('end_date') }}</span>
+                                @endif
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><strong>Ad location</strong> <span class="text-danger">*</span></label>
                             <div class="col-sm-8">
                                 <select class="form-control" name="place">
-                                    <option>Option A</option>
-                                    <option>Option B</option>
+                                    <option value="slider-first">Slider first</option>
+                                    <option value="slider-second">Slider second</option>
+                                    <option value="women-section">Women section</option>
+                                    <option value="men-section">Men section</option>
+                                    <option value="kid-section">Kid section</option>
                                 </select>
+                                @if($errors->has('place'))
+                                    <span class='validation-errors text-danger'>{{ $errors->first('place') }}</span>
+                                @endif
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label"><strong>Ad banner</strong> <span class="text-danger">*</span></label>
-                            <div class="col-sm-3">
-                                <div class="fileinput fileinput-new" data-provides="fileinput">
-                                    <div class="fileinput-new thumbnail" style="width: 210px;">
-                                    @php
-                                    $image = "http://placehold.it/350x260";
-                                    if(!empty($data->image)){
-                                        $image = $data->image;
-                                    }
-                                    @endphp
-                                        <input type="hidden" id="thumbnail">
-                                        <img src="{{ $image }}" id="thumbnailholder" alt="Please Connect Your Internet">
-                                    </div>
-                                    <div class="fileinput-preview fileinput-exists thumbnail" style="width: 210px;"></div>
-                                    <div>
-                                    <span class="btn btn-default btn-file">
-                                        <span class="fileinput-new">
-                                            <a href="{{ url('/vendor/filemanager/dialog.php?type=4&field_id=thumbnail&descending=1&sort_by=date&lang=undefined&akey=061e0de5b8d667cbb7548b551420eb821075e7a6') }}" class="btn iframe-btn btn-primary" type="button">
-                                                <i class="fa fa-picture-o"></i> Choose
-                                            </a>
-                                            <!-- <input type="file" name="image" value="upload" data-buttontext="Choose File" id="myImg" data-parsley-id="26"> -->
-                                            <input type="hidden" name="image" id="thumbnailthumbnail" value="{{ @$data->image }}">
-                                            <span class="fileinput-exists">Change</span>
-                                        </span>
-                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                    </span>
-                                    </div>
-                                    <div id="valid_msg" style="color: #e11221"></div>
+                        <div class="form-group medium-image">
+                            <label class="col-sm-2 control-label"><strong>Image</strong> <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <div class="mt-0">
+                                    <input type="file" id="files" name="image" style="opacity:1">
                                 </div>
+                                @if(!empty($data->image))
+                                <span class="pip">
+                                    <img class="imageThumb" src="{{ asset('/uploads/ads/Thumb-'.$data->image) }}">                      
+                                </span>
+                                @endif
                             </div>
                             @if ($errors->has('image'))
-                            <div class="col-lg-3">
+                            <div class="col-lg-12">
                                 <span class="validation-errors text-danger">{{ $errors->first('image') }}</span>
                             </div>
                             @endif
                         </div>
-
                         <div class="form-group">
                             <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-8">

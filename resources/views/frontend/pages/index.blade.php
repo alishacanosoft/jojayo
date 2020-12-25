@@ -19,9 +19,14 @@
                   @endif
                 </div>
             </div>
-            <div class="ps-section__right"><a class="ps-collection" href="#">
-            <img src="img/promotion-1.jpg" alt=""></a>
-            <a class="ps-collection" href="#"><img src="img/promotion-2.jpg" alt=""></a>
+            <div class="ps-section__right">
+              @if(!empty($slider_section))
+              @foreach($slider_section as $section_list)
+              <a class="ps-collection" href="{{ $section_list->url }}">
+                <img src="{{ asset('/uploads/ads/'.$section_list->image) }}" alt="">
+              </a>
+              @endforeach
+              @endif              
             </div>
             </div>
         </div>
@@ -171,9 +176,12 @@
             <h3>Women's Fashion</h3>
             <ul class="ps-section__links">
               <!-- <li><a href="#">New Arrivals</a></li> -->
-
-            </ul>
+            </ul>            
           </div>
+          <br>
+          @if(!empty($women))
+            <a href="{{ $women->url }}"><img src="{{ asset('uploads/ads/'.$women->image) }}" alt=""></a>
+          @endif
           <div class="ps-section__content">
             <div class="ps-carousel--nav owl-slider" data-owl-auto="false" data-owl-loop="false" data-owl-speed="10000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="7" data-owl-item-xs="2" data-owl-item-sm="2" data-owl-item-md="3" data-owl-item-lg="4" data-owl-item-xl="6" data-owl-duration="1000" data-owl-mousedrag="on">
             @if (!empty($women_fashion))
@@ -246,6 +254,10 @@
               <div class="ps-section__header">
                   <h3>Men's Fashion</h3>
               </div>
+              <br>
+              @if(!empty($men))
+                <a href="{{ $men->url }}"><img src="{{ asset('uploads/ads/'.$men->image) }}" alt=""></a>
+              @endif
               <div class="ps-section__content">
                   <div class="ps-carousel--nav owl-slider" data-owl-auto="false" data-owl-loop="false"
                       data-owl-speed="10000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="7"
@@ -322,6 +334,10 @@
               <div class="ps-section__header">
                   <h3>Kid's Fashion</h3>
               </div>
+              <br>
+              @if(!empty($kid))
+                <a href="{{ $kid->url }}"><img src="{{ asset('uploads/ads/'.$kid->image) }}" alt=""></a>
+              @endif
               <div class="ps-section__content">
                   <div class="ps-carousel--nav owl-slider" data-owl-auto="false" data-owl-loop="false"
                       data-owl-speed="10000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="7"

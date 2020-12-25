@@ -45,9 +45,14 @@ class SliderController extends Controller
         $data = $request->all();
         $data['name'] = $request->name;
         $data['url'] = $request->url;
+        $data['location'] = $request->location;
         $data['status'] = $request->status;
-        if($request->hasFile('image')){  
-            $slider_image = uploadImage($request->image, 'slider', '840x395');
+        if($request->hasFile('image')){
+            $dimension = '1230x420';
+            if($request->location == 'shop'){
+                $dimension = '1650x399';
+            }
+            $slider_image = uploadImage($request->image, 'slider', $dimension);
             $data['image'] = $slider_image;
         }
         $this->slider->fill($data);
@@ -147,13 +152,21 @@ class SliderController extends Controller
     public function destroy($id)
     {
         $this->slider = $this->slider->find($id);
+        $old_image = $this->slider->image;
         if(!$this->slider){
-            request()->session()->flash('error','Slider Not found');
-            return redirect()->route('sliders.index');
+            $notification = array(
+                'alert-type' => 'error',
+                'message' => 'Slider not found.'
+            );
+            return redirect()->route('sliders.index')->with($notification);
         }
-
         $success = $this->slider->delete();
         if($success){
+            if(file_exists(public_path().'/uploads/slider/'.$old_image))
+            {
+                unlink(public_path().'/uploads/slider/'.$old_image);
+                unlink(public_path().'/uploads/slider/Thumb-'.$old_image);
+            }  
             $notification = array(
                 'alert-type' => 'error',
                 'message' => 'Slider deleted successfully.'

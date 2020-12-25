@@ -12,8 +12,11 @@
       <div class="ps-container">
         <div class="ps-shop-banner">
           <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
-          <a href="#"><img src="img/slider/shop-default/1.jpg" alt=""></a>
-          <a href="#"><img src="img/slider/shop-default/2.jpg" alt=""></a>
+          @if(!empty($shop_slider))
+          @foreach($shop_slider as $slider_list)
+          <a href="{{ url($slider_list->url) }}"><img src="{{ asset('/uploads/slider/'.$slider_list->image) }}" alt="{{ $slider_list->name }}"></a>
+          @endforeach
+          @endif          
           </div>
         </div>
         

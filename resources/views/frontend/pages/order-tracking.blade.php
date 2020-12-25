@@ -21,161 +21,40 @@
             <p>To track your order please enter your Order ID in the box below and press the "Track Order" button.</p>
           </div>
           <div class="ps-section__content">
-            <form class="ps-form--order-tracking" action="#" method="get">
+            <form class="ps-form--order-tracking" method="get" id="trackingForm">
               <div class="form-group">
                 <label>Order ID</label>
                 <input class="form-control" type="text" name="orderid" placeholder="Enter Your Order ID"/>
               </div>
               <div class="form-group">
-                <button class="ps-btn ps-btn--fullwidth">Track Your Order</button>
+                <button type="submit" class="ps-btn ps-btn--fullwidth submit">Track Your Order</button>
               </div>
             </form>
           </div>
         </div>
       </div>
-
-      <div class="container order-details-container">
-
-          <div class="ps-section__header order-tracking">
-            <h3>Your Order Details</h3>
-          </div>
-
-          <div class="ps-section__header order-number">
-                  <h5>Order ID Goes Here</h5>
-          </div>
-
-
-          <div class="container">
-              <div class="row order-detail">
-                          
-                  <div class="col-lg-3 col-md-3 col-sm-12 col-12">
-                      <div class="tcontent-left">
-                          <p>Order Placed</p>
-                          <p class="order-detail-date">Dec 22, 2020 15:49</p>
-                          <hr class="break-line">
-                          <p>Indrachowk</p>
-                      </div>
-                  </div>
-      
-                  <div class="col-lg-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                      <div class="tcontent-middle">
-                          <div class="track">
-                              <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
-                              <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
-                              <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
-                              <div class="step active"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
-                          </div>       
-                      </div>
-                      <div class="clearfix"></div>
-                      <!-- <div class="transit">
-                          <h4> Order Status </h4>
-                      </div> -->
-                  </div>
-      
-                  <div class="col-lg-3 col-lg-3 col-md-3 col-sm-12 col-12">
-                      <div class="tcontent-right">
-                          <p>Estimated delivery</p>
-                          <p class="order-detail-date">Estimated delivery within 2 days </p>
-                          <hr class="break-line">
-                          <p>itahari</p>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-        <div class="ps-section__content">
-            <div class="ps-block--vendor-dashboard">
-              <div class="ps-block__header">
-                <h3>Travel History</h3>
-              </div>
-              <div class="ps-block__content">
-                <div class="table-responsive">
-                  <table class="table ps-table ps-table--vendor">
-                    <thead>
-                      <tr> 
-                        <th>Date/Time</th>
-                        <th>Activity</th>
-                        <th>Location</th>
-                        <th>Remarks</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Nov 4, 2020</td>
-                        <td>Order Placed</td>
-                        <td>Kathmandu</td>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <td>Nov 5, 2020</td>
-                        <td>Order Confirmed</td>
-                        <td>Kathmandu</td>
-                        <td>Done</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <div class="ps-block--vendor-dashboard">
-              <div class="ps-block__header">
-                <h3>Shipment Facts</h3>
-              </div>
-              <div class="ps-block__content">
-                <div class="row">
-                  <div class="col">
-                    <div class="table-responsive">
-                      <table class="table shipment ps-table ps-table--vendor">
-                        <thead>
-                          <tr> 
-                            <th>Order ID</th>
-                            <td>A747KTH201222P104</td>
-                          </tr>
-                          <tr> 
-                            <th>Weight</th>
-                            <td>2 KG</td>
-                          </tr>
-                          <tr> 
-                            <th>Product Price</th>
-                            <td>NPR 3000</td>
-                          </tr>
-                        </thead>
-                      
-                      </table>
-                    </div>
-                  </div>
-
-                  <div class="col">
-                    <div class="table-responsive">
-                      <table class="table shipment ps-table ps-table--vendor">
-                        <thead>
-                          <tr> 
-                            <th>Dimension</th>
-                            <td>200 * 14</td>
-                          </tr>
-                          <tr> 
-                            <th>Payment Type</th>
-                            <td>Cash On Delivery</td>
-                          </tr>
-                          <tr> 
-                            <th>Mode of Delivery</th>
-                            <td>Regular Delivery</td>
-                          </tr>
-                        </thead>
-                      
-                      </table>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-        </div>
-      </div>
-
-
-
+      <div id="tracking"></div>
 </div>
+@endsection
+@section('scripts')
+<script>
+  $('.submit').on('click', function(){
+    event.preventDefault();
+    var formdata = $("#trackingForm").serialize();
+    $.ajax({      
+    type: "GET",
+    url: "{{ route('tracking') }}",
+    data: formdata,
+    success: function(response) {
+        $('#tracking').append(response);
+        $('html, body').animate({
+          scrollTop: $("#tracking").offset().top
+      }, 2000);
+    },
+    error: function() {
+        console.log('error handling here');
+    }
+    })
+  })
+</script>
 @endsection

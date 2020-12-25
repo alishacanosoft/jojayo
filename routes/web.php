@@ -27,7 +27,7 @@ Route::get('/login', function () {
     }
 })->name('signinform');
 
-Route::get('/vendor/login', 'FrontController@vendorLogin')->name('vendorLogin');
+Route::get('/seller/login', 'FrontController@vendorLogin')->name('vendorLogin');
 
 Route::get('/signup', function () {
     if (Auth::user()->roles == 'customers') {
@@ -64,7 +64,7 @@ Route::get('/categories', function () {
     return redirect('/shop');
 });
 
-Route::get('/vendor', 'FrontController@becomeVendor');
+Route::get('/sell-on-jojayo', 'FrontController@becomeVendor');
 Route::get('/vendor/{vendor}', 'FrontController@vendorProduct')->name('vendor.store');
 
 Route::get('/contact', 'ContactController@contact');
@@ -320,7 +320,8 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     Route::get('/ajaxRequest/{id}/pdfExport', 'AjaxController@getPdf')->name('ajaxRequest.getPdf');
     Route::get('ajaxRequest/orderDetail', 'AjaxController@ajaxOrderDetail')->name('ajaxRequest.orderDetail');
     Route::post('/ajaxRequest/monthlyExport', 'AjaxController@getmonthPdf')->name('ajaxRequest.getmonthPdf');
-
+    
+    Route::post('/get/transaction/type', 'FrontController@transactionType')->name('transaction.detail');
     //Finanace
     Route::get('/finance/account-statement', 'FrontController@statement');
     Route::get('/get_vendor_data/{id}', 'FrontController@getVendorData');
@@ -416,6 +417,8 @@ Route::get('/my-orders', 'OrderController@myOrders');
 Route::get('/order-tracking', function () {
     return view('frontend.pages.order-tracking');
 });
+
+Route::get('/get/order-tracking', 'OrderController@tracking')->name('tracking');
 
 Route::get('/my-wishlist', 'FrontController@wishlist');
 

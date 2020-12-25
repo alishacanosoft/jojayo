@@ -28,7 +28,26 @@
         background: transparent;
         border: none;
         cursor: pointer;
-    }     
+    }
+    .modal-header .close {
+        margin-top: -20px;
+    }
+    .modal-header{border:1px solid #e9ecef;}
+    .payed, .due{
+        border: 1px solid #000;
+        padding: 2px;
+        color: #fff;
+    }
+    .payed{
+        background-color: green;
+        border-color: green;
+    }
+    .due{
+        background-color: red;
+        border-color: red;
+        margin-left: 2px;
+    }
+    
 </style>
 
 @endsection

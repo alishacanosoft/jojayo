@@ -196,17 +196,25 @@ class OrderController extends Controller
                 $type = $order_data['order_data']->delivery_type == 'normal' ? 'delivery_charge' : 'express_charge';
                 $order_data['shipping'] = Area::where('id', $order_data['order_data']->address_detail->area)->pluck($type)->first();
                 $order_data['products'] = ProductOrder::with('products','userDetail')->where('order_id', $request->id)->get();
+                
+                $new_vendor_data = array();
                 foreach($order_data['products'] as $row){
-                    $product_trans = new Statement();
-                    $transaction_data['transaction_no'] = getTransactionId(substr(strtoupper(str_replace(' ', '', @$row->products->VendorName->company)),0, 5));
-                    $transaction_data['order_id'] = $request->id;
-                    $transaction_data['status'] = 'Unpaid';
-                    $transaction_data['vendor_id'] = $row->products->vendor_id;
-                    $transaction_data['order_created'] = $order_data['order_data']->created_at;
-                    $product_trans->fill($transaction_data);
-                    Statement::updateOrCreate($transaction_data);
-                    //$product_trans->save();
+                    $new_vendor_data[] = $row->products->vendor_id;
                 }
+                $my_data = array_unique($new_vendor_data);
+                // foreach($my_data as $row){
+                    
+                //     $product_trans = new Statement();
+                //     $transaction_data['transaction_no'] = getTransactionId(substr(strtoupper(str_replace(' ', '', @$row->products->VendorName->company)),0, 5));
+                //     // $transaction_data['order_id'] = $request->id;
+                //     // $transaction_data['status'] = 'Unpaid';
+                //     //$transaction_data['statement'] = $account_statement;
+                //     $transaction_data['vendor_id'] = $row;
+                //     $transaction_data['order_created'] = $order_data['order_data']->created_at;
+                //     $product_trans->fill($transaction_data);
+                //     Statement::updateOrCreate($transaction_data);
+                //     //$product_trans->save();
+                // }
                 
                 //Mail::to('lenna.incognitech@gmail.com')->send(new OrderDelivered($order_data));
                 $notification = array(
@@ -322,5 +330,28 @@ class OrderController extends Controller
             }
         
         return view('frontend.pages.orders', compact('data_arr'));
+    }
+
+    public function tracking(Request $request){
+        if(!isset($request->orderid)){
+            $notification = array(
+                'message' => 'Order number not specified!',
+                'alert-type' => 'warning'
+            );
+            return redirect()->route('orders.index')->with($notification);
+        }
+        //$vendor_id = \App\Models\Vendor::where('user_id', auth()->user()->id)->pluck('id')->first();
+        $order_data = $this->order->with('order_products')->where('order_no', $request->orderid)->first();
+       
+        $area_id = AddressBook::where('id', $order_data->address_book_id)->first();
+        $delivery_charge = Area::where('id', $area_id->area)->first();
+        $normal_charge = '';
+        if($order_data->delivery_type == 'express'){
+            $charge = $delivery_charge->express_charge;
+        } else {
+            $charge = $delivery_charge->delivery_charge;            
+        }
+        $normal_charge = $delivery_charge->delivery_charge;
+        return view('frontend.partials.order-tracking', compact('order_data','delivery_charge','charge'));
     }
 }

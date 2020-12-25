@@ -55,15 +55,28 @@ class AdsController extends Controller
         $data['start_date'] = $request->start_date;
         $data['end_date'] = $request->end_date;
         $data['place'] = $request->place;
-        $data['image'] = $request->image;
+        if($request->hasFile('image')){
+            $dimension = '390x193';
+            if($request->place !== 'slider-first' || $request->place !== 'slider-second'){
+                $dimension = '1170x245';
+            }
+            $ads_image = uploadImage($request->image, 'ads', $dimension);
+            $data['image'] = $ads_image;
+        }
         $this->ads->fill($data);
         $status = $this->ads->save();
         if($status){
-            $request->session()->flash('success','Ad created successfully.');
+            $notification = array(
+                'alert-type' => 'success',
+                'message' => 'Ad created successfully.'
+            );            
         } else {
-            $request->session()->flash('error','Problem while creating ad.');
+            $notification = array(
+                'alert-type' => 'error',
+                'message' => 'Problem while creating ad.'
+            );
         }
-        return redirect()->back();
+        return redirect()->back()->with($notification);
     }
 
     /**
@@ -85,11 +98,16 @@ class AdsController extends Controller
      */
     public function edit($id)
     {
+        $active_tab = 'create';
         $data = $this->ads->find($id);
         if(!$data) {
-            return response()->json('Ads not found');
+            $notification = array(
+                'alert-type' => 'error',
+                'message' => 'Ad not found!'
+            );
+            return redirect()->back()->with($notification);
         }
-        return response()->json($data);
+        return view('admin.pages.ads', compact('data','active_tab'));
     }
 
     /**
@@ -108,15 +126,32 @@ class AdsController extends Controller
         }
         $rules = $this->ads->getRules('update');
         $request->validate($rules);
+        if($request->hasFile('image')){  
+            $ads_image = uploadImage($request->image, 'ads', '840x395');
+            $data['image'] = $ads_image;            
+            if(file_exists(public_path().'/uploads/ads/'.$this->ads->image))
+            {
+                unlink(public_path().'/uploads/ads/'.$this->ads->image);
+                unlink(public_path().'/uploads/ads/Thumb-'.$this->ads->image);
+            }            
+        } else {
+            $data['image'] = $this->ads->image; 
+        }
         $data = $request->all();
         $this->ads->fill($data);
         $success = $this->ads->save();
         if($success){
-            $request->session()->flash('success','Ad updated successfully.');
+            $notification = array(
+                'alert-type' => 'success',
+                'message' => 'Ad updated successfully.'
+            );            
         } else {
-            $request->session()->flash('error','Problem while updating ad.');
+            $notification = array(
+                'alert-type' => 'error',
+                'message' => 'Problem while updating ad.'
+            );            
         }
-        return redirect()->route('ads.index');
+        return redirect()->route('ads.index')->with($notification);
     }
 
     /**
@@ -127,6 +162,32 @@ class AdsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->ads = $this->ads->find($id);
+        $old_image = $this->ads->image;
+        if(!$this->ads){
+            $notification = array(
+                'alert-type' => 'error',
+                'message' => 'Ad not found.'
+            ); 
+            return redirect()->route('ads.index')->with($notification);
+        }
+        $success = $this->ads->delete();
+        if($success){
+            if(file_exists(public_path().'/uploads/ads/'.$old_image))
+            {
+                unlink(public_path().'/uploads/ads/'.$old_image);
+                unlink(public_path().'/uploads/ads/Thumb-'.$old_image);
+            }  
+            $notification = array(
+                'alert-type' => 'error',
+                'message' => 'Ad deleted successfully.'
+            );
+        } else {
+            $notification = array(
+                'alert-type' => 'error',
+                'message' => 'Sorry! Slider could not be deleted at this moment.'
+            );
+        }
+        return redirect()->route('sliders.index')->with($notification);
     }
 }

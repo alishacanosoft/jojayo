@@ -104,6 +104,7 @@ class UserController extends Controller
         if($data['roles'] == 'vendor'){
             $vendor_data['user_id'] = $user_id;
             $vendor_data['company'] = $request->company;
+            $vendor_data['vendor_slug'] = str_replace(' ', '-', $request->company);
             $vendor_data['company_address'] = $request->company_address;
             $vendor_data['pan'] = $request->pan;
             $vendor_data['vendor_address'] = $request->vendor_address ? $request->vendor_address : $request->company_address;

@@ -73,6 +73,16 @@
                                 <input type="text" class="form-control" value="{{ @$data->url }}" name="url" id="url" placeholder="Paste the redirect link">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"><strong>Slider Location</strong> <span class="text-danger">*</span></label>
+                            <div class="col-sm-8">
+                                <select name="location" id="location" class="form-control">
+                                    <option selected disabled>--Select slider location--</option>
+                                    <option value="main" @if(@$data->location == 'main') selected @endif>Main page</option>
+                                    <option value="shop" @if(@$data->location == 'shop') selected @endif>Shop page</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group medium-image">
                             <label class="col-sm-2 control-label"><strong>Image</strong> <span class="text-danger">*</span></label>
                             <div class="col-sm-8">
@@ -91,7 +101,6 @@
                             </div>
                             @endif
                         </div>
-
                         <div class="form-group">
                             <label class="col-sm-2 control-label"></label>
                             <div class="col-sm-8">

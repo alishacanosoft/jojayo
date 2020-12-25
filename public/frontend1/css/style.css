@@ -12601,7 +12601,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-product-list .ps-section__content {
-  padding-top: 55px;
+  padding-top: 15px;
 }
 
 .ps-product-list--2 .ps-section__header {
@@ -13806,7 +13806,7 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 .ps-order-tracking {
-  padding: 100px 0;
+  padding: 40px 0;
 }
 
 .ps-order-tracking .ps-section__header {
