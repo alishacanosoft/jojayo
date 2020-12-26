@@ -1,5 +1,7 @@
 @extends('frontend.layouts.master')
 @section('content')
+
+
 <div class="ps-breadcrumb">
    <div class="ps-container">
       <ul class="breadcrumb">
@@ -8,6 +10,8 @@
       </ul>
    </div>
 </div>
+
+
 <div class="ps-page--shop">
       <div class="ps-container">
         <div class="ps-shop-banner">
@@ -27,9 +31,14 @@
         </div>
       
         <div class="ps-layout--shop">
-          <div class="ps-layout__left" >
+          <div class="ps-layout__left" data-sticky="true" >
+
+       
+            <div class="sidebarInner">
             <aside class="widget widget_shop">
                <h4 class="widget-title">Categories</h4>
+        
+
                <ul class="ps-list--categories">
                   @foreach($primary_categories as $prime)
                   @foreach($prime->secondaryCategories as $secondary)
@@ -61,23 +70,23 @@
                </ul>
             </aside>
             <aside class="widget widget_shop">
-            @include('frontend.pages.filters.brands')
-            <figure>
-                <h4 class="widget-title">By Price</h4>
-                <div class="form-row" style="height: 35px;">
-                    <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
-                        <input type="number" value="{{$requested['min_price']>0?$requested['min_price']:''}}" min="100" class="form-control" placeholder="150" id="minPrice" style="height: 32px;padding:2px 8px;">
-                     </div>
+               @include('frontend.pages.filters.brands')
+               <figure>
+                  <h4 class="widget-title">By Price</h4>
+                  <div class="form-row" style="height: 35px;">
                      <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
-                        <input type="number" value="{{$requested['max_price']>0?$requested['max_price']:''}}" min="200" class="form-control" placeholder="250" id="maxPrice" style="height: 32px;padding:2px 8px;">
+                           <input type="number" value="{{$requested['min_price']>0?$requested['min_price']:''}}" min="100" class="form-control" placeholder="150" id="minPrice" style="height: 32px;padding:2px 8px;">
+                        </div>
+                        <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
+                           <input type="number" value="{{$requested['max_price']>0?$requested['max_price']:''}}" min="200" class="form-control" placeholder="250" id="maxPrice" style="height: 32px;padding:2px 8px;">
+                        </div>
+                        <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
+                           <button class="btn btn-primary" style="padding: 5px 10px;" id="byPrice">
+                           <i class="fa fa-caret-right" style="font-size: 20px"></i>
+                           </button>
                      </div>
-                     <div class="form-group col-md-4" style="height: 35px; margin-bottom:0;">
-                        <button class="btn btn-primary" style="padding: 5px 10px;" id="byPrice">
-                        <i class="fa fa-caret-right" style="font-size: 20px"></i>
-                        </button>
-                    </div>
-                </div>
-            </figure>
+                  </div>
+               </figure>
 
               <figure>
                 <h4 class="widget-title">By Rating</h4>
@@ -111,6 +120,7 @@
                 <a href="#">XL</a>
               </figure>
             </aside>
+            </div>
           </div>
                 
           <div class="ps-layout__right">    
@@ -230,6 +240,7 @@
             </div>
          </div>
       </div>
+
       <div class="modal" id="shop-filter-lastest" tabindex="-1" role="dialog">
          <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -240,14 +251,37 @@
          </div>
       </div>
 
+
+
+
+
 @endsection
 
 
 @section('scripts')
 @include('frontend.layouts.load-more')
+<!-- 
+<script type="text/javascript">
+            var sticky = $('.ps-layout__right');
+         console.log(sticky.length);
+            if (sticky.length > 0) {
+               var Shopsidebar = new StickySidebar('.ps-layout__left', {
+                  topSpacing: 80,
+                  bottomSpacing: 20,
+                  containerSelector: '.ps-layout--shop',
+                  innerWrapperSelector: '.sidebarInner'
+               });
+            }
+
+
+
+
+</script> -->
+
 
 <script>  
     
+
     $('#chkfilter').on('keyup', function() {
     var query = this.value;
 

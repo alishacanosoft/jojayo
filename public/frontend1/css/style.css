@@ -18022,3 +18022,11 @@ section.ps-section--account .ps-block--category-2 span.ps-product__price{
 .container .order-not-found{
   text-align: center;
 }
+
+.ps-layout__left.shop-left--sticky {
+    position: sticky;
+    top: 70px;
+    width: 100%;
+    /* z-index: 1000; */
+    height: max-content;
+}
