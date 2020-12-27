@@ -26,60 +26,7 @@
             </div>
         </div>
        
-        <!-- features -->
-        <div class="ps-site-features">
-            <div class="ps-container">
-                <div class="ps-block--site-features">
-                    <ul>
-                        <li class="icon-position-features">
-                            <div class="ps-block__item">
-                                <div class="ps-block__left"><i class="icon-rocket"></i></div>
-                                <div class="ps-block__right">
-                                    <h4>Express Delivery</h4>
-                                    <p>Inside KTM Valley</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="icon-position-features">
-                            <div class="ps-block__item">
-                                <div class="ps-block__left"><i class="icon-sync"></i></div>
-                                <div class="ps-block__right">
-                                    <h4>7 Days Return</h4>
-                                    <p>If goods have problems</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="icon-position-features">
-                            <div class="ps-block__item">
-                                <div class="ps-block__left"><i class="icon-credit-card"></i></div>
-                                <div class="ps-block__right">
-                                    <h4>Secure Payment</h4>
-                                    <p>100% secure payment</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="icon-position-features">
-                            <div class="ps-block__item">
-                                <div class="ps-block__left"><i class="icon-bubbles"></i></div>
-                                <div class="ps-block__right">
-                                    <h4>24/7 Support</h4>
-                                    <p>Dedicated support</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="icon-position-features">
-                            <div class="ps-block__item">
-                                <div class="ps-block__left"><i class="icon-gift"></i></div>
-                                <div class="ps-block__right">
-                                    <h4>Gift Service</h4>
-                                    <p>Support gift service</p>
-                                </div>
-                            </div>
-                         </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+     
 
         <!-- Flash sales -->
         @if (!empty($flash) && count($flash) > 0)
@@ -141,15 +88,7 @@
                     @endif
                     </p>
                     <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $recent_products->product->slug) }}">{{ $recent_products->product->name }}</a>
-                      <div class="ps-product__rating">
-                                    <select class="ps-rating" data-read-only="true">
-                                      <option value="1">1</option>
-                                      <option value="1">2</option>
-                                      <option value="1">3</option>
-                                      <option value="1">4</option>
-                                      <option value="2">5</option>
-                                    </select>
-                      </div>
+                    
                       
                     </div>
                   </div>
@@ -205,15 +144,7 @@
                         <a class="ps-product__vendor" href="{{ route('vendor.store', $women_products->VendorName->vendor_slug) }}">{{ $women_products->VendorName->company }}</a>
 
                           <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $women_products->slug) }}">{{ $women_products->name }}</a>
-                            <div class="ps-product__rating">
-                                          <select class="ps-rating" data-read-only="true">
-                                            <option value="1">1</option>
-                                            <option value="1">2</option>
-                                            <option value="1">3</option>
-                                            <option value="1">4</option>
-                                            <option value="2">5</option>
-                                          </select>
-                            </div>
+                            
                             
                             <p class="ps-product__price sale">NPR {{ $total_price }}
                                 @if ($discount > 0)
@@ -283,15 +214,7 @@
                                       <a class="ps-product__vendor" href="{{ route('vendor.store', $men_products->VendorName->vendor_slug) }}">{{ $men_products->VendorName->company }}</a>
                                       <div class="ps-product__content"><a class="ps-product__title"
                                               href="{{ route('single-product', $men_products->slug) }}">{{ $men_products->name }}</a>
-                                          <div class="ps-product__rating">
-                                              <select class="ps-rating" data-read-only="true">
-                                                  <option value="1">1</option>
-                                                  <option value="1">2</option>
-                                                  <option value="1">3</option>
-                                                  <option value="1">4</option>
-                                                  <option value="2">5</option>
-                                              </select>
-                                          </div>
+                                        
                                           <p class="ps-product__price sale">NPR {{ $total_price }}
                                               @if ($discount > 0)
                                                   <del>NPR {{ $total_price + $discount }}</del>
@@ -360,15 +283,7 @@
                                       <a class="ps-product__vendor" href="{{ route('vendor.store', $kid_products->VendorName->vendor_slug) }}">{{ $kid_products->VendorName->company }}</a>
                                       <div class="ps-product__content"><a class="ps-product__title"
                                               href="{{ route('single-product', $kid_products->slug) }}">{{ $kid_products->name }}</a>
-                                          <div class="ps-product__rating">
-                                              <select class="ps-rating" data-read-only="true">
-                                                  <option value="1">1</option>
-                                                  <option value="1">2</option>
-                                                  <option value="1">3</option>
-                                                  <option value="1">4</option>
-                                                  <option value="2">5</option>
-                                              </select>
-                                          </div>
+                                       
                                           <p class="ps-product__price sale">NPR {{ $total_price }}
                                               @if ($discount > 0)
                                                   <del>NPR {{ $total_price + $discount }}</del>
@@ -429,15 +344,7 @@
                           <img src="{{ $product_image ? $product_image : asset('/images/noimage.png')}}" alt="{{$recent_products->slug}}"></a></div>
                         <div class="ps-product__content"><a class="ps-product__title" href="{{ route('single-product', $recent_products->slug) }}">
                         {{ $recent_products->name }}</a>
-                        <div class="ps-product__rating">
-                              <select class="ps-rating" data-read-only="true">
-                                <option value="1">1</option>
-                                <option value="1">2</option>
-                                <option value="1">3</option>
-                                <option value="1">4</option>
-                                <option value="2">5</option>
-                              </select>
-                        </div>
+                   
                           <p class="ps-product__price">NPR {{ number_format($starting_price['selling_price']) }}</p>
                         
                         </div>
@@ -451,29 +358,5 @@
       </div>
        
 
-        <!-- Newsletter section -->
-        <div class="ps-newsletter">
-        <div class="ps-container">
-          <form class="ps-form--newsletter" action="#" method="post">
-            <div class="row">
-                          <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                            <div class="ps-form__left">
-                              <h3>Newsletter</h3>
-                              <p>Subcribe to get information about products and coupons</p>
-                            </div>
-                          </div>
-                          <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                            <div class="ps-form__right">
-                              <div class="form-group--nest">
-                                <input class="form-control" type="email" placeholder="Email address">
-                                <button class="ps-btn">Subscribe</button>
-                              </div>
-                            </div>
-                          </div>
-            </div>
-          </form>
-        </div>
-        </div>
-       
     </div>
 @endsection

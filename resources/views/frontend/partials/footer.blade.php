@@ -1,44 +1,102 @@
-    <footer class="ps-footer">
-      <div class="ps-container">
-        <div class="ps-footer__widgets">
-          <aside class="widget widget_footer widget_contact-us">
-            <h4 class="widget-title">Contact us</h4>
-            <div class="widget_content">
+ 
+  
 
-              
-              <p><a href="tel:{{ $sensitive_data->mobile }}"> <i class="icon-telephone"></i> {{ $sensitive_data->mobile }}</a> & 
-              <a href="tel:{{ $sensitive_data->mobile1 }}">{{ $sensitive_data->mobile1}}</a> </p>
-              <p><i class="icon-map-marker"> </i>{{ $sensitive_data->location }}</p>
-              <p><a href="mailto:{{ $sensitive_data->email }}"><i class="icon-envelope"> </i>{{ $sensitive_data->email }}</a></p>
-              <ul class="ps-list--social">
-                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-              </ul>
+
+    <footer class="ps-footer ps-footer--2">
+      <div class="ps-container">
+
+        <div class="ps-site-features">
+            <div class="container">
+            <div class="ps-block--site-features ps-block--site-features-2">
+                <div class="ps-block__item">
+                <div class="ps-block__left"><i class="icon-rocket"></i></div>
+                <div class="ps-block__right">
+                    <h4>Express Delivery</h4>
+                    <p>Inside KTM Valley</p>
+                </div>
+                </div>
+                <div class="ps-block__item">
+                <div class="ps-block__left"><i class="icon-sync"></i></div>
+                <div class="ps-block__right">
+                <h4>7 Days Return</h4>
+                    <p>If goods have problems</p>
+                </div>
+                </div>
+                <div class="ps-block__item">
+                <div class="ps-block__left"><i class="icon-credit-card"></i></div>
+                <div class="ps-block__right">
+                    <h4>Secure Payment</h4>
+                    <p>100% secure payment</p>
+                </div>
+                </div>
+                <div class="ps-block__item">
+                <div class="ps-block__left"><i class="icon-bubbles"></i></div>
+                <div class="ps-block__right">
+                    <h4>24/7 Support</h4>
+                    <p>Dedicated support</p>
+                </div>
+                </div>
             </div>
-          </aside>
-          <aside class="widget widget_footer">
-            <h4 class="widget-title">Quick links</h4>
-            <ul class="ps-list--link">
-              <li><a href="{{ url('/privacy-policy') }}">Policy</a></li>
-              <li><a href="{{url('/blogs')}}">Blogs</a></li>
-            </ul>
-          </aside>
-          <aside class="widget widget_footer">
-            <h4 class="widget-title">Company</h4>
-            <ul class="ps-list--link">
-              <li><a href="{{ url('/about-us') }}">About Us</a></li>
-              <li><a href="{{url('/contact')}}">Contact</a></li>
-            </ul>
-          </aside>
-          <aside class="widget widget_footer">
-            <h4 class="widget-title">Bussiness</h4>
-            <ul class="ps-list--link">
-              <li><a href="#">Checkout</a></li>
-              <li><a href="#">My Account</a></li>
-              <li><a href="{{ url('/shop') }}">Shop</a></li>
-            </ul>
-          </aside>
+            </div>
+        </div>
+        <!-- features -->
+  
+        <div class="ps-footer__content">
+          <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
+            <aside class="widget widget_footer widget_contact-us">
+                <h4 class="widget-title">Contact us</h4>
+                <div class="widget_content">
+                
+                <p><a href="tel:{{ $sensitive_data->mobile }}"> <i class="icon-telephone"></i> {{ $sensitive_data->mobile }}</a> & 
+                <a href="tel:{{ $sensitive_data->mobile1 }}">{{ $sensitive_data->mobile1}}</a> </p>
+                <p><i class="icon-map-marker"> </i>{{ $sensitive_data->location }}</p>
+                <p><a href="mailto:{{ $sensitive_data->email }}"><i class="icon-envelope"> </i>{{ $sensitive_data->email }}</a></p>
+               
+                </div>
+            </aside>
+            </div>
+
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
+            <aside class="widget widget_footer">
+                <h4 class="widget-title">Quick links</h4>
+                <ul class="ps-list--link">
+                <li><a href="{{ url('/privacy-policy') }}">Policy</a></li>
+                <li><a href="{{url('/blogs')}}">Blogs</a></li>
+                </ul>
+            </aside>
+        
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
+              <aside class="widget widget_footer">
+                <h4 class="widget-title">Company</h4>
+                <ul class="ps-list--link">
+                <li><a href="{{ url('/about-us') }}">About Us</a></li>
+                <li><a href="{{url('/contact')}}">Contact</a></li>
+                <li><a href="{{ url('/shop') }}">Shop</a></li>
+                </ul>
+              </aside>
+            </div>
+          
+            <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12 ">
+              <aside class="widget widget_newletters">
+                <h4 class="widget-title">Newsletter</h4>
+                <form class="ps-form--newletter" action="#" method="get">
+                  <div class="form-group--nest">
+                    <input class="form-control" type="text" placeholder="Email Address">
+                    <button class="ps-btn">Subscribe</button>
+                  </div>
+                  <ul class="ps-list--social">
+                    <li><a class="facebook" href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                    <li><a class="twitter" href="#" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                    <li><a class="instagram" href="#" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                    <li><a class="linkedin" href="#" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a class="youtube" href="#" target="_blank"><i class="fa fa-youtube"></i></a></li>
+                  </ul>
+                </form>
+              </aside>
+            </div>
+          </div>
         </div>
 
         <div class="ps-footer__links">
@@ -60,7 +118,6 @@
             @endif
         </div>
 
-
         <div class="ps-footer__copyright">
           <p>© 2020 Jojayo. All Rights Reserved</p>
           <p><span>We Using Safe Payment For:</span>
@@ -69,13 +126,11 @@
                 <a href="#"><img src="/frontend/images/payment-method/cod.png" alt=""></a>
             </p>
         </div>
-
-
-        
-
       </div>
     </footer>
-   
+  
+  
+  
     <!-- Scroll up -->
 
     <a id="scroll-top" class="backtotop show-scroll" href="#page-top">

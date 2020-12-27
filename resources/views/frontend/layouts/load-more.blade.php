@@ -25,7 +25,7 @@
                $('.ajax-load').show();
          },
          success(callback_resonse){
-            let receive = callback_resonse.data; console.log(receive)
+            let receive = callback_resonse.data;
             $('.ajax-load').hide();
             let html = "";
             let listhtml = "";
