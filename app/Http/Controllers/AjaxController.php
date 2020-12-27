@@ -733,4 +733,47 @@ class AjaxController extends Controller
         }
         return view('admin.pages.order_detail');
     }
+
+
+    public function ajaxCustomerorder(Request $request){
+        if($request->ajax()){
+            $draw = $request->get('draw');
+            $rowperpage = $request->get("length");
+            $totalRecords = Order::where('user_id', auth()->user()->id)->select('count(*) as allcount')->count();
+            $totalRecordswithFilter = Order::where('user_id', auth()->user()->id)->select('count(*) as allcount')->count();      
+            $allProducts = Order::
+            
+            where('user_id', auth()->user()->id)
+            ->get();
+    
+            $data_arr = array();
+            $message = "'Are you sure you want to delete this?'";
+            foreach($allProducts as $orderList){
+                $id = $orderList->id;
+                $order_no = $orderList->order_no;
+                $total_amount = $orderList->total_amount;
+                $created_at = date('F m, Y', strtotime($orderList->created_at));
+                $status = $orderList->status;
+                $product_orders = ProductOrder::with(['products','colorInfo', 'sizeInfo'])->where('order_id', $orderList->id)->get();            
+                $data_arr[] = array(
+                    "id" => "<input type='checkbox' class='sorting_disabled' name='delete_items' value= ". $id .">",
+                    "order_no" => $order_no,
+                    "total_amount" => $total_amount,
+                    "product_orders" => $product_orders,
+                    "created_at" => $created_at,
+                    "status" => $status        
+                ); 
+            }    
+            //dd($data_arr);   
+            $response = array(
+                "draw" => intval($draw),
+                "iTotalRecords" => $totalRecords,
+                "iTotalDisplayRecords" => $totalRecordswithFilter,
+                "aaData" => $data_arr
+            );
+    
+            echo json_encode($response);
+            exit;
+        }
+    }
 }

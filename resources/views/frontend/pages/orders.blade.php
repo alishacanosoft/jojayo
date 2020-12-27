@@ -35,7 +35,6 @@
                             <tr>
                                 <th></th>
                                 <th>Order No</th>
-                                <th>Area</th>
                                 <th>Total Amount</th>
                                 <th>Order Date</th>
                                 <th>Status</th>
@@ -44,7 +43,7 @@
 
                     </table>
                     </div>
-
+                    <div id="my_image" class="hidden"></div>
                 </div>
             </div>
         </div>
@@ -58,42 +57,40 @@
 <script>
     $(document).ready(function() {
         $('#all-orders').DataTable();
+        
     })
-
+    
     function formats ( d ) {
-        //console.log(d);
-        var inner_table = '<table class="child_row-verified  table table-striped table-bordered nowrap"><thead><tr><th>Send To</th><th>Product</th><th>Order Detail</th><th>Product Image</th></tr></thead><tbody>'
-        inner_table += '<tr><td rowspan="'+ d.user_d.length +'">'+d.user_id + '</b><br/> '+ d.user_region + ', <br/> ' + d.user_city + ', <br/> '+ d.user_area + ', '+ d.user_address +'</td>' ;
-        $.each(d.user_d, function( index, value ) {
-            var color;
-            var size;
-            var imageid;
-            var imagename;
-            $.each(d.colors, function( index, v ) {
-                if(v.id ===  value.color_id){
-                    color = "Color: " + v.name;
-                }
+        
+        console.log(d);
+        var inner_table = '<table class="child_row-verified  table table-striped table-bordered nowrap"><thead><tr><th>Product</th><th>Order Detail</th><th>Product Image</th></tr></thead><tbody>'
+        inner_table += '' ;
+        $.each(d.product_orders, function( index, value ) {            
+            var color = value.color_info.name;
+            var size = value.size_info.name;
+            var imagename = '';   
+            var return_image = ''; 
+            
+            var tmp ='';
+            var return_first = (function () {
+                var tmp = $.ajax({
+                    'type': "POST",
+                    'url': "get/product/size/data/"+value.color_info.id+"/"+value.products.id,                    
+                    'success': function (data) {
+                        tmp = data;
+                        console.log(tmp);
+                    }
+                }).done(function(data){
+                        return data;
+                });
+            return tmp;
             });
-            $.each(d.size, function( index, siz ) {
-                if(siz.id ===  value.size_id){
-                    size = ", <br/> Size: " + siz.name;
-                }
-            });
-            $.each(d.image_data, function( index, i ) {
-                if(i.product_id ===  value.product_id && i.color_id ===  value.color_id ){
-                    imageid = i.id;
-                }
-            });
-            $.each(d.images, function( index, img ) {
-                if(img.imageable_id ===  imageid ){
-                    imagename = '<a class="thumbnail-order" href="#thumb">' +
-                        '<img src="/uploads/products/'+  img.image +'" style="height:10rem;" alt=""/>' +
+            imagename = '<a class="thumbnail-order" href="#thumb">' +
+                        '<img src="/uploads/products/'+tmp+'" style="height:10rem;" alt=""/>' +
                         '' +
-                        '</a>' ;
-                }
-            });
-            inner_table += '<td>'+value.products.name+'</td><td>'
-                + color + size + ",<br/>Quantity: "+ value.quantity
+                        '</a>';
+            inner_table += '<td>'+value.products.name+'</td><td>Color: '+ color +
+                ' Size: '+ size + ",<br/>Quantity: "+ value.quantity
                 +'</td><td style=" text-align: center;">'
                 + imagename +'</td></tr>'
             ;
@@ -105,7 +102,7 @@
             processing: true,
             paging: true,
             ajax: {
-                url: "{{route('ajaxRequest.orders')}}",
+                url: "{{route('ajaxRequest.customerOrder')}}",
             },
             "columns": [
                 {
@@ -118,7 +115,6 @@
                     },
                 },
                 { "data": "order_no" },
-                { "data": "area_id" },
                 { "data": "total_amount" },
                 { "data": "created_at" },
                 {

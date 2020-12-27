@@ -309,6 +309,8 @@ Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     Route::get('ajaxRequest', 'AjaxController@ajaxRequest');
     Route::get('ajaxRequest', 'AjaxController@ajaxRequestGet')->name('ajaxRequest.post');
 
+    Route::get('ajaxRequest/myorders', 'AjaxController@ajaxCustomerorder')->name('ajaxRequest.customerOrder');
+    
     Route::get('order-details', 'OrderController@orderDetail')->name('orderDetail');
 
     Route::get('/get-cities/{id}', 'CityController@getCity');
